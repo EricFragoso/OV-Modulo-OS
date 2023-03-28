@@ -5,7 +5,7 @@ export function Home() {
  return(
   <View style={styles.container}>
     <Text style={styles.companyName}>Overview</Text>
-    <Text>Teste Aplicativo 2</Text>
+    <Text>Teste Aplicativo</Text>
     <TextInput style={styles.input}/>
   </View>
  )
