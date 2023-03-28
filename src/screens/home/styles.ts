@@ -27,8 +27,7 @@ export const styles = StyleSheet.create({
 
     inputText: {
       fontSize: 16,
-      fontWeight: 'bold',
-      
+      fontWeight: 'bold'
     },
 
     inputField: {
