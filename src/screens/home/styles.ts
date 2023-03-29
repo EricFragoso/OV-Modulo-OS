@@ -9,7 +9,7 @@ export const styles = StyleSheet.create({
     },
 
     header: {
-      width: 392,
+      width: '100%',
       height: 120,
       backgroundColor: '#459EE8',
       alignItems: 'center',
@@ -45,19 +45,5 @@ export const styles = StyleSheet.create({
       
     },
 
-    button: {
-      alignItems: 'center',
-      justifyContent: 'center',
-      width: 120,
-      height: 60,
-      backgroundColor: '#FFF',
-      borderWidth: 1.5,
-      borderColor: '#459EE8',
-      borderRadius: 10,
-    },
 
-    buttonText: {
-      color: '#2B3049',
-      fontSize: 24
-    }
   })

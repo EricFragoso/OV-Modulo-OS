@@ -1,7 +1,15 @@
-import { Text, View, TextInput, TouchableOpacity } from 'react-native'
+import { Text, View, TextInput,  } from 'react-native'
 import { styles } from './styles'
+
+import { Button } from '../../components/button'
  
 export function Home() {
+
+  function handleUserLogin(codigo: string) {
+    console.log(`Login usercode: ${codigo}`);
+    
+  }
+
  return(
   
   <View 
@@ -28,11 +36,7 @@ export function Home() {
     />
     </View>
 
-    <TouchableOpacity style={styles.button}>
-      <Text style={styles.buttonText}>
-        Entrar
-      </Text>
-    </TouchableOpacity>
+    <Button text='Enviar' callFunc={() => handleUserLogin('123')} />
 
   </View>
  )
