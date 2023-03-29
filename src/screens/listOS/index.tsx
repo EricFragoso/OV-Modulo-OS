@@ -1,6 +1,8 @@
 import { Text, View, FlatList} from "react-native";
 import { styles } from "./styles";
 
+import { Card } from "../../components/card";
+
 export function ListOS() {
     return(
         <View 
@@ -12,8 +14,8 @@ export function ListOS() {
                     Lista de OS
                 </Text>
             </View>
-            <View>
-                
+            <View style={styles.listContainer}>
+                <Card></Card>
             </View>
         </View>
     )

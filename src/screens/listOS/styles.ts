@@ -12,10 +12,15 @@ container: {
     height: 120,
     backgroundColor: '#459EE8',
     alignItems: 'center',
+    marginBottom: 48,
     paddingTop: 52
   },
   headerText: {
     fontWeight: 'bold',
     fontSize: 32
   },
+  listContainer: {
+    flex: 1,
+    marginHorizontal: 28
+  }
 })
