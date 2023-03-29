@@ -2,27 +2,27 @@ import { View, Text,TouchableOpacity } from 'react-native'
 import { styles } from './styles'
 
 type Props = {
-    numberOS: string
+    numberOS: number
     company: string
     name: string
     callFunc: () => void
   }
 
-export function Card() {
+export function Card(props: Props) {
     return (
         <View>
             <TouchableOpacity style={styles.card} >
                 <View style={styles.firstColumn}>
                     <Text style={styles.cardHeader}>
-                      OS1
+                      OS {props.numberOS}
                     </Text>
                     <Text style={styles.cardText}>
-                      Empresa 1
+                      {props.company}                    
                     </Text>
                 </View>
                 <View style={styles.secondColumn}>
                     <Text style={styles.cardText}>
-                      Demandante 1
+                      {props.name}
                     </Text>
                 </View>
             </TouchableOpacity>

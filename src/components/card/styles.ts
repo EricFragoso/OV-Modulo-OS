@@ -13,6 +13,7 @@ export const styles = StyleSheet.create({
         paddingVertical: 28,
         paddingLeft: 28,
         paddingRight: 60,
+        marginBottom: 28
   },
 
   cardHeader: {
