@@ -1,11 +1,14 @@
-import { StatusBar } from "react-native";
+import { StatusBar, View } from "react-native";
+import { Routes } from "./src/routes";
 import { Home } from "./src/screens/home";
+
 
 export default function App() {
   return (
-    <>
-    <StatusBar barStyle="dark-content" />
-    <Home />
-    </>
+    <View>
+      <StatusBar barStyle="dark-content" />
+      <Routes />
+    </View>
+    
   );
 }
