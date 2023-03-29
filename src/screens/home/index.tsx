@@ -1,12 +1,21 @@
-import { Text, View, TextInput,  } from 'react-native'
+import React, { useState } from 'react'
+import { Text, View, TextInput, Alert  } from 'react-native'
 import { styles } from './styles'
 
 import { Button } from '../../components/button'
  
 export function Home() {
 
+  const [userCode, setUserCode] = useState('')
+
   function handleUserLogin(codigo: string) {
-    console.log(`Login usercode: ${codigo}`);
+    if(codigo == ''){
+      return Alert.alert("Atenção", "Código em branco")
+    } else if(codigo == '00'){
+      return Alert.alert("Atenção", "Código inválido")
+    }
+
+    console.log(codigo);
     
   }
 
@@ -31,12 +40,14 @@ export function Home() {
     
     <TextInput 
     style={styles.inputField}
+    keyboardType='numeric'
     placeholder='Insira o código'
     placeholderTextColor={'#000'}
+    onChangeText={inputText => setUserCode(inputText)}
     />
     </View>
 
-    <Button text='Enviar' callFunc={() => handleUserLogin('123')} />
+    <Button text='Enviar' callFunc={() => handleUserLogin(userCode)} />
 
   </View>
  )
