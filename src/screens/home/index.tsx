@@ -27,7 +27,7 @@ export function Home() {
     <View style={styles.header}>
 
     <Text 
-    style={styles.companyName}>
+    style={styles.headerText}>
       Overview
     </Text>
       </View>

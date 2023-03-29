@@ -4,7 +4,6 @@ export const styles = StyleSheet.create({
     container: {
       flex: 1,
       backgroundColor: '#DAECFA',
-      
       alignItems: 'center',
     },
 
@@ -16,7 +15,7 @@ export const styles = StyleSheet.create({
       paddingTop: 52
     },
 
-    companyName: {
+    headerText: {
       fontWeight: 'bold',
       fontSize: 48
     },
