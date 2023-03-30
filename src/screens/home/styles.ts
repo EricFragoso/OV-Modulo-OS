@@ -10,7 +10,8 @@ export const styles = StyleSheet.create({
   content: {
     flex: 1,
     justifyContent: 'flex-start',
-    gap: 8
+    alignItems: 'center',
+    gap: 4
   },
 
   header: {
