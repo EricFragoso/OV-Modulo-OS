@@ -32,7 +32,7 @@ export function Button(props: Props) {
 						fontWeight: "bold",
 					}}
 				>
-					Entrar
+					{props.text}
 				</Text>
 			</TouchableOpacity>
 		</View>

@@ -36,7 +36,7 @@ export function Home() {
 			</View>
 
 			<Button
-				text="Enviar"
+				text="Entrar"
 				fontSize={24}
 				callFunc={() => handleUserLogin(userCode)}
 			/>
