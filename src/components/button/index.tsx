@@ -1,3 +1,4 @@
+import React from "react";
 import { View, Text, TouchableOpacity } from "react-native";
 
 type Props = {
@@ -16,19 +17,21 @@ export function Button(props: Props) {
 					alignItems: "center",
 					justifyContent: "center",
 					paddingHorizontal: 28,
-					paddingVertical: 14,
+					paddingVertical: 4,
 					backgroundColor: "#FFF",
 					borderWidth: 1.5,
 					borderColor: "#459EE8",
 					borderRadius: props.borderRadius || 10,
-					marginBottom: props.marginBottom || 12,
+					marginTop: 60,
+					height: 50,
+
 				}}
 				onPress={props.callFunc}
 			>
 				<Text
 					style={{
 						color: "#2B3049",
-						fontSize: props.fontSize || 24,
+						fontSize: props.fontSize || 20,
 						fontWeight: "bold",
 					}}
 				>
