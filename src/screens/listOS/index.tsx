@@ -14,10 +14,9 @@ export function ListOS() {
         {numberOS: 5, company:'Empresa 5', name:'Demandante 5'},
         {numberOS: 6, company:'Empresa 6', name:'Demandante 6'},
 ]
-    function handleShowOSDetail() {
+    function handleShowOSDetail(numberOS: number) {
         return(
-            console.log('Chamando Detalhamento OS')
-            
+            console.log(`Chamando Detalhamento da OS ${numberOS} `)
         )
     }
 
@@ -42,7 +41,7 @@ export function ListOS() {
                         numberOS={listaOS.numberOS} 
                         company={listaOS.company} 
                         name={listaOS.name}
-                        callFunc={() => handleShowOSDetail()}
+                        callFunc={() => handleShowOSDetail(listaOS.numberOS)}
                         ></Card>
                         ))
                     }

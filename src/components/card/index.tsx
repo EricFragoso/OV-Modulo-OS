@@ -11,7 +11,7 @@ type Props = {
 export function Card(props: Props) {
     return (
         <View>
-            <TouchableOpacity style={styles.card} >
+            <TouchableOpacity style={styles.card} onPress={props.callFunc}>
                 <View style={styles.firstColumn}>
                     <Text style={styles.cardHeader}>
                       OS {props.numberOS}
