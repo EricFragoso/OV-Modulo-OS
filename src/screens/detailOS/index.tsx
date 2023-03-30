@@ -7,6 +7,8 @@ import { BackButton } from "../../components/backButton";
 import { Button } from "../../components/button";
 import { ButtonFilled } from "../../components/buttonFilled";
 import QRCodeScanner from "react-native-qrcode-scanner";
+import React, { useState } from "react";
+import { ModalInserirAtivo } from "../modalInserirAtivo";
 
 export function DetailOS() {
 	const ListaAtivos = [
@@ -17,6 +19,8 @@ export function DetailOS() {
 		{ id: 5, nameAtivo: "Ativo 5", value: "R$1000,00" },
 		{ id: 6, nameAtivo: "Ativo 6", value: "R$1000,00" },
 	];
+	const [modalVisible, setModalVisible] = useState(false);
+
 	function handleShowAtivo(idAtivo: number) {
 		return console.log(`Chamando Detalhamento da OS ${idAtivo} `);
 	}
@@ -27,6 +31,21 @@ export function DetailOS() {
 
 	function handleQRCode() {
 		console.log("Abrindo Câmera");
+	}
+
+	function handleOpenModal() {
+		setModalVisible(true);
+		console.log("Abrindo Modal");
+	}
+
+	function handleAddAtivo() {
+		console.log("Adicionando Ativo");
+
+		setModalVisible(false);
+	}
+
+	function handleCloseModal() {
+		setModalVisible(false);
 	}
 
 	return (
@@ -91,8 +110,13 @@ export function DetailOS() {
 							text="Inserir Código Ativo"
 							fontSize={12}
 							borderRadius={5}
-							callFunc={handleQRCode}
+							callFunc={handleOpenModal}
 						></ButtonFilled>
+						<ModalInserirAtivo
+							modalVisible={modalVisible}
+							fecharModal={handleCloseModal}
+							adicionarAtivo={handleAddAtivo}
+						/>
 					</View>
 				</ScrollView>
 			</View>
