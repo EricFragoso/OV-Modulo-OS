@@ -6,6 +6,7 @@ import { ScrollView } from "react-native";
 import { BackButton } from "../../components/backButton";
 import { Button } from "../../components/button";
 import { ButtonFilled } from "../../components/buttonFilled";
+import QRCodeScanner from "react-native-qrcode-scanner";
 
 export function DetailOS() {
 	const ListaAtivos = [
