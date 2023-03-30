@@ -1,8 +1,7 @@
-import { Text, View, FlatList} from "react-native";
+import { Text, View, ScrollView } from "react-native";
 import { styles } from "./styles";
 
 import { Card } from "../../components/card";
-import { ScrollView } from "react-native";
 
 export function ListOS() {
 
