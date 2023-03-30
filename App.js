@@ -7,8 +7,8 @@ export default function App() {
   return (
     <View>
       <StatusBar barStyle="dark-content" />
-      <Routes />
+      <Home />
     </View>
-    
+
   );
 }

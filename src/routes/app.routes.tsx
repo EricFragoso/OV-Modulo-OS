@@ -1,4 +1,5 @@
 import { createNativeStackNavigator } from '@react-navigation/native-stack'
+import React from 'react';
 
 import { Home } from '../screens/home';
 import { ListOS } from '../screens/listOS';

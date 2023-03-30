@@ -23,23 +23,25 @@ export function Home() {
 				<Text style={styles.headerText}>Overview</Text>
 			</View>
 
-			<View style={styles.input}>
-				<Text style={styles.inputText}>Código do usuário</Text>
+			<View style={styles.content}>
+				<View style={styles.input}>
+					<Text style={styles.inputText}>Código do usuário</Text>
 
-				<TextInput
-					style={styles.inputField}
-					keyboardType="numeric"
-					placeholder="Insira o código"
-					placeholderTextColor={"#000"}
-					onChangeText={(inputText) => setUserCode(inputText)}
+					<TextInput
+						style={styles.inputField}
+						keyboardType="numeric"
+						placeholder="Insira o código"
+						placeholderTextColor={"#000"}
+						onChangeText={(inputText) => setUserCode(inputText)}
+					/>
+				</View>
+
+				<Button
+					text="Enviar"
+					fontSize={24}
+					callFunc={() => handleUserLogin(userCode)}
 				/>
 			</View>
-
-			<Button
-				text="Enviar"
-				fontSize={24}
-				callFunc={() => handleUserLogin(userCode)}
-			/>
 		</View>
 	);
 }
