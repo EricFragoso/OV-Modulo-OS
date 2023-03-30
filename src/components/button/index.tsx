@@ -22,8 +22,8 @@ export function Button(props: Props) {
 					borderWidth: 1.5,
 					borderColor: "#459EE8",
 					borderRadius: props.borderRadius || 10,
-					marginTop: 60,
-					height: 50,
+					marginTop: 8,
+					height: 40,
 
 				}}
 				onPress={props.callFunc}

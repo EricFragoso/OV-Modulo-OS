@@ -9,9 +9,10 @@ export const styles = StyleSheet.create({
 
   content: {
     flex: 1,
-    justifyContent: 'flex-start',
+    justifyContent: 'center',
     alignItems: 'center',
-    gap: 4
+    width: '80%',
+    gap: 20
   },
 
   header: {
@@ -28,7 +29,7 @@ export const styles = StyleSheet.create({
   },
 
   input: {
-    marginTop: 116
+
   },
 
   inputText: {
@@ -37,8 +38,6 @@ export const styles = StyleSheet.create({
   },
 
   inputField: {
-    marginTop: 8,
-    marginBottom: 40,
     width: 240,
     height: 40,
     borderRadius: 5,
@@ -48,7 +47,6 @@ export const styles = StyleSheet.create({
     color: '#000',
     paddingLeft: 8,
     fontSize: 20,
-
   },
 
 
