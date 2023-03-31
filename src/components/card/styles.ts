@@ -1,39 +1,40 @@
-import { StyleSheet } from 'react-native'
+import { StyleSheet } from "react-native";
 
 export const styles = StyleSheet.create({
+	card: {
+		width: "100%",
+		alignItems: "center",
+		justifyContent: "space-between",
+		flexDirection: "row",
+		backgroundColor: "#B5D8F6",
+		borderRadius: 10,
+		paddingVertical: 22,
+		paddingLeft: 28,
+		paddingRight: 12,
+		marginTop: 48,
+	},
 
-    card: {
-        alignItems: 'flex-start',
-        justifyContent: 'space-between',
-        flexDirection: 'row',
-        width: 336,
-        height: 130,
-        backgroundColor: '#B5D8F6',
-        borderRadius: 10,
-        paddingVertical: 28,
-        paddingLeft: 28,
-        paddingRight: 60,
-        marginBottom: 28
-  },
+	cardHeader: {
+		color: "#2B3049",
+		fontSize: 20,
+		fontWeight: "bold",
+		marginBottom: 8,
+	},
 
-  cardHeader: {
-    color: '#2B3049',
-    fontSize: 24,
-    fontWeight: 'bold',
-    marginBottom: 28,
-  },
-  
-  cardText: {
-      color: '#2B3049',
-      fontSize: 16,
-      fontWeight: '500',
-    },
+	cardText: {
+		color: "#2B3049",
+		fontSize: 16,
+		fontWeight: "500",
+		marginBottom: 8,
+	},
 
-    firstColumn: {
-        
-    },
+	firstColumn: {
+		flex: 1,
+	},
 
-    secondColumn: {
-        marginTop: 56
-    },
-})
+	secondColumn: {
+		alignItems: "flex-start",
+	},
+
+	iconColumn: {},
+});

@@ -26,6 +26,5 @@ export const styles = StyleSheet.create({
 	listContainer: {
 		flex: 1,
 		marginHorizontal: 28,
-		marginTop: 48,
 	},
 });

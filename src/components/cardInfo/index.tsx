@@ -50,7 +50,12 @@ export function CardInfo(props: Props) {
 			</View>
 			<View style={styles.bodyCard}>
 				{bodyListText.map((bodyListText) => (
-					<Text style={styles.bodyText}>{bodyListText}</Text>
+					<Text
+						key={bodyListText}
+						style={styles.bodyText}
+					>
+						{bodyListText}
+					</Text>
 				))}
 			</View>
 		</View>

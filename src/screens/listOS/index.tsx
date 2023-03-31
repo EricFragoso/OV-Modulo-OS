@@ -8,12 +8,32 @@ import { MenuHamburger } from "../../components/menuHamburger";
 
 export function ListOS() {
 	const ListaOS = [
-		{ numberOS: 1, company: "Empresa 1", name: "Demandante 1" },
-		{ numberOS: 2, company: "Empresa 2", name: "Demandante 2" },
-		{ numberOS: 3, company: "Empresa 3", name: "Demandante 3" },
-		{ numberOS: 4, company: "Empresa 4", name: "Demandante 4" },
-		{ numberOS: 5, company: "Empresa 5", name: "Demandante 5" },
-		{ numberOS: 6, company: "Empresa 6", name: "Demandante 6" },
+		{ numberOS: 1694, client: "Oceano Azul S.A.", name: "Ruan Morais" },
+		{
+			numberOS: 2784,
+			client: "Soluções Inovadoras Ltda.",
+			name: "João Luiz",
+		},
+		{
+			numberOS: 3213,
+			client: "Nova Horizonte Tecnologia Ltda.",
+			name: "Vitor Ramalho",
+		},
+		{
+			numberOS: 4024,
+			client: "Fortaleza Empreendimentos Imobiliários Ltda.",
+			name: "Pedro César",
+		},
+		{
+			numberOS: 5780,
+			client: "Vortex Consultoria e Treinamentos Ltda.",
+			name: "Roberto Delgado",
+		},
+		{
+			numberOS: 6302,
+			client: "Montanha de Ouro Investimentos e Participações S.A.",
+			name: "Luiz Santino",
+		},
 	];
 
 	const navigation = useNavigation();
@@ -35,7 +55,7 @@ export function ListOS() {
 						<Card
 							key={listaOS.numberOS}
 							numberOS={listaOS.numberOS}
-							company={listaOS.company}
+							client={listaOS.client}
 							name={listaOS.name}
 							callFunc={() => handleShowOSDetail(listaOS.numberOS)}
 						></Card>
