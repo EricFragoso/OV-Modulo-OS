@@ -68,7 +68,7 @@ export function DetailOS() {
 							<Text style={styles.headerTextCard}>Informações</Text>
 						</View>
 						<View style={styles.companyInfo}>
-							<Text style={styles.companyName}>Nome da Empresa</Text>
+							<Text style={styles.companyName}>Cliente</Text>
 							<Text style={styles.companyCnpj}>CNPJ: 00.000.000/0000-00</Text>
 							<View style={styles.row}>
 								<View style={styles.column}>
@@ -106,6 +106,7 @@ export function DetailOS() {
 							text="Escanear Ativo"
 							fontSize={12}
 							borderRadius={5}
+							marginBottom={8}
 							callFunc={handleQRCode}
 						></Button>
 						<ButtonFilled

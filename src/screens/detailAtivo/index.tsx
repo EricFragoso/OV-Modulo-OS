@@ -6,22 +6,22 @@ import { Button } from "../../components/button";
 import { CardInfo } from "../../components/cardInfo";
 import { styles } from "./styles";
 import { TextInput } from "react-native-gesture-handler";
+import { RadioButton } from "react-native-paper";
 
 export function DetailAtivo() {
 	const [userCode, setUserCode] = useState("");
 	const navigation = useNavigation();
+	const [checked, setChecked] = React.useState("30 Dias");
 
 	function handleCallPreviousPage() {
 		navigation.goBack();
 		console.log("Página anterior");
 	}
 
+	function handleSalvarDetalhamento() {}
+
 	return (
-		<KeyboardAvoidingView
-			contentContainerStyle={styles.container}
-			behavior="position"
-			enabled
-		>
+		<View style={styles.container}>
 			<View style={styles.header}>
 				<Text style={styles.headerText}>Detalhamento</Text>
 			</View>
@@ -34,17 +34,17 @@ export function DetailAtivo() {
 					<CardInfo
 						headerText="Atendentes"
 						bodyText="Atendente1"
-						listText={[""]}
+						listText={["João", "Ana"]}
 					/>
 					<CardInfo
 						headerText="Serviços Executados"
 						bodyText="Atendente1"
-						listText={[""]}
+						listText={["Limpeza", "Troca de Peça"]}
 					/>
 					<CardInfo
 						headerText="Peças Repostas"
 						bodyText="Atendente1"
-						listText={["João", "Ana"]}
+						listText={["Peça 1", "Peça 2"]}
 					/>
 					<View style={styles.card}>
 						<View style={styles.headerCard}>
@@ -59,10 +59,39 @@ export function DetailAtivo() {
 								placeholderTextColor={"#000"}
 								onChangeText={(inputText) => setUserCode(inputText)}
 							/>
+							{/*	<View>
+								<Text>Estado de conservação do aparelho</Text>
+								<RadioButton
+									value="30 Dias"
+									status={checked === "30 Dias" ? "checked" : "unchecked"}
+									onPress={() => setChecked("30 Dias")}
+									
+								/>
+								<RadioButton
+									value="60 Dias"
+									status={checked === "60 Dias" ? "checked" : "unchecked"}
+									onPress={() => setChecked("60 Dias")}
+								/>
+								<RadioButton
+									value="90 Dias"
+									status={checked === "90 Dias" ? "checked" : "unchecked"}
+									onPress={() => setChecked("90 Dias")}
+								/>
+							</View> 
+							<View>
+								<Text>Data da próxima manutenção</Text>
+							</View>
+							<View>
+								<Text>Fotos</Text>
+							</View>*/}
 						</View>
 					</View>
+					<Button
+						text="Salvar"
+						callFunc={handleSalvarDetalhamento}
+					/>
 				</ScrollView>
 			</View>
-		</KeyboardAvoidingView>
+		</View>
 	);
 }
