@@ -7,11 +7,20 @@ import { ButtonFilled } from "../../components/buttonFilled";
 
 type Props = {
 	modalVisible: boolean;
+	textItem: string;
 	fecharModal?: () => void;
-	adicionarAtivo: () => void;
+	adicionarItem: (item: string) => void;
 };
 
-export function ModalInserirAtivo(props: Props) {
+export function ModalInserir(props: Props) {
+	const [item, setItem] = useState("");
+
+	const addCloseModal = () => {
+		props.adicionarItem(item);
+		setItem("");
+		props.fecharModal();
+	};
+
 	return (
 		<Modal
 			animationType="fade"
@@ -21,7 +30,7 @@ export function ModalInserirAtivo(props: Props) {
 			<View style={styles.card}>
 				<View style={styles.bodyCard}>
 					<View style={styles.header}>
-						<Text style={styles.headerTextCard}>Insira o código do ativo</Text>
+						<Text style={styles.headerTextCard}>{props.textItem}</Text>
 						<TouchableOpacity onPress={props.fecharModal}>
 							<Icon
 								name="x"
@@ -30,12 +39,12 @@ export function ModalInserirAtivo(props: Props) {
 						</TouchableOpacity>
 					</View>
 					<TextInput
-						keyboardType="number-pad"
+						onChangeText={setItem}
 						style={styles.inputField}
 					/>
 					<ButtonFilled
 						text="Adicionar"
-						callFunc={props.adicionarAtivo}
+						callFunc={addCloseModal}
 						fontSize={12}
 						borderRadius={5}
 					></ButtonFilled>

@@ -3,8 +3,12 @@ export declare global {
 		interface RootParamList {
 			home: undefined;
 			listos: undefined;
-			detailos: undefined;
-			detailativo: undefined;
+			detailos: {
+				numberOS: number;
+			};
+			detailativo: {
+				idAtivo: number;
+			};
 		}
 	}
 }

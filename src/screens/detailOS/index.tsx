@@ -1,15 +1,19 @@
-import { Text, View, FlatList } from "react-native";
-import { styles } from "./styles";
+import { Text, View, ScrollView } from "react-native";
+import React, { useState } from "react";
+import { ModalInserir } from "../modalInserirItem";
+import { useNavigation, useRoute } from "@react-navigation/native";
+import QRCodeScanner from "react-native-qrcode-scanner";
 
 import { ImageCard } from "../../components/imageCard";
-import { ScrollView } from "react-native";
 import { BackButton } from "../../components/backButton";
 import { Button } from "../../components/button";
 import { ButtonFilled } from "../../components/buttonFilled";
-import QRCodeScanner from "react-native-qrcode-scanner";
-import React, { useState } from "react";
-import { ModalInserirAtivo } from "../modalInserirAtivo";
-import { useNavigation } from "@react-navigation/native";
+
+import { styles } from "./styles";
+
+type RouteParams = {
+	numberOS: number;
+};
 
 export function DetailOS() {
 	const ListaAtivos = [
@@ -21,10 +25,14 @@ export function DetailOS() {
 		{ id: 6, nameAtivo: "Ativo 6", value: "R$1000,00" },
 	];
 	const [modalVisible, setModalVisible] = useState(false);
+
 	const navigation = useNavigation();
+	const route = useRoute();
+	const { numberOS } = route.params as RouteParams;
 
 	function handleShowAtivo(idAtivo: number) {
-		return navigation.navigate("detailativo");
+		console.log(idAtivo);
+		navigation.navigate("detailativo", { idAtivo });
 	}
 
 	function handleCallPreviousPage() {
@@ -58,7 +66,7 @@ export function DetailOS() {
 
 			<View style={styles.headerOS}>
 				<BackButton callFunc={handleCallPreviousPage}></BackButton>
-				<Text style={styles.headerOSText}> OS 1</Text>
+				<Text style={styles.headerOSText}> OS {numberOS}</Text>
 			</View>
 
 			<View style={styles.listContainer}>
@@ -115,10 +123,11 @@ export function DetailOS() {
 							borderRadius={5}
 							callFunc={handleOpenModal}
 						></ButtonFilled>
-						<ModalInserirAtivo
+						<ModalInserir
+							textItem="Insira o código"
 							modalVisible={modalVisible}
 							fecharModal={handleCloseModal}
-							adicionarAtivo={handleAddAtivo}
+							adicionarItem={handleAddAtivo}
 						/>
 					</View>
 				</ScrollView>

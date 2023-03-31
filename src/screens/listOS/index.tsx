@@ -18,7 +18,7 @@ export function ListOS() {
 	const navigation = useNavigation();
 
 	function handleShowOSDetail(numberOS: number) {
-		return navigation.navigate("detailos");
+		return navigation.navigate("detailos", { numberOS });
 	}
 
 	return (

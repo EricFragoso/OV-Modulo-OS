@@ -1,17 +1,30 @@
 import React, { useState } from "react";
-import { useNavigation } from "@react-navigation/native";
+import { useNavigation, useRoute } from "@react-navigation/native";
 import { View, Text, ScrollView, KeyboardAvoidingView } from "react-native";
-import { BackButton } from "../../components/backButton";
-import { Button } from "../../components/button";
-import { CardInfo } from "../../components/cardInfo";
-import { styles } from "./styles";
 import { TextInput } from "react-native-gesture-handler";
 import { RadioButton } from "react-native-paper";
 
+import { BackButton } from "../../components/backButton";
+import { Button } from "../../components/button";
+import { CardInfo } from "../../components/cardInfo";
+
+import { styles } from "./styles";
+
+type RouteParams = {
+	idAtivo: number;
+};
+
 export function DetailAtivo() {
 	const [userCode, setUserCode] = useState("");
-	const navigation = useNavigation();
 	const [checked, setChecked] = React.useState("30 Dias");
+
+	const navigation = useNavigation();
+	const route = useRoute();
+	const { idAtivo } = route.params as RouteParams;
+
+	const listAtendentes = [""];
+	const listServicos = [""];
+	const listPecas = [""];
 
 	function handleCallPreviousPage() {
 		navigation.goBack();
@@ -27,24 +40,24 @@ export function DetailAtivo() {
 			</View>
 			<View style={styles.headerAtivo}>
 				<BackButton callFunc={handleCallPreviousPage}></BackButton>
-				<Text style={styles.headerAtivoText}> Ativo 1</Text>
+				<Text style={styles.headerAtivoText}>Ativo {idAtivo}</Text>
 			</View>
 			<View style={styles.listContainer}>
 				<ScrollView showsVerticalScrollIndicator={false}>
 					<CardInfo
 						headerText="Atendentes"
-						bodyText="Atendente1"
-						listText={["João", "Ana"]}
+						modalText="Insira o atendente"
+						listText={listAtendentes}
 					/>
 					<CardInfo
 						headerText="Serviços Executados"
-						bodyText="Atendente1"
-						listText={["Limpeza", "Troca de Peça"]}
+						modalText="Insira o Serviço"
+						listText={listServicos}
 					/>
 					<CardInfo
 						headerText="Peças Repostas"
-						bodyText="Atendente1"
-						listText={["Peça 1", "Peça 2"]}
+						modalText="Insira a Peça"
+						listText={listPecas}
 					/>
 					<View style={styles.card}>
 						<View style={styles.headerCard}>
