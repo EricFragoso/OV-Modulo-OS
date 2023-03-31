@@ -1,15 +1,16 @@
-import { View, Text } from "react-native";
+import { Text, View } from "react-native";
+import React from "react";
 import { styles } from "./styles";
 
 type Props = {
 	headerText: string;
 	bodyText?: string;
-	listText?: [""];
+	listText?: Array<string>;
 	callFunc?: () => void;
 };
 
 export function CardInfo(props: Props) {
-	const bodyTextList = [""];
+	const bodyListText = props.listText;
 
 	return (
 		<View style={styles.card}>
@@ -17,8 +18,8 @@ export function CardInfo(props: Props) {
 				<Text style={styles.headerTextCard}>{props.headerText}</Text>
 			</View>
 			<View style={styles.bodyCard}>
-				{bodyTextList.map((bodyTextList) => (
-					<Text style={styles.bodyText}>{bodyTextList}</Text>
+				{bodyListText.map((bodyListText) => (
+					<Text style={styles.bodyText}>{bodyListText}</Text>
 				))}
 			</View>
 		</View>

@@ -35,4 +35,45 @@ export const styles = StyleSheet.create({
 		fontWeight: "bold",
 		textAlign: "center",
 	},
+
+	card: {
+		backgroundColor: "#2B3049",
+		borderRadius: 10,
+		marginBottom: 28,
+	},
+	headerCard: {
+		backgroundColor: "#2B3049",
+		borderRadius: 10,
+		paddingVertical: 8,
+		paddingLeft: 12,
+	},
+	headerTextCard: {
+		color: "#FFFFFF",
+		fontSize: 16,
+		fontWeight: "bold",
+	},
+	bodyCard: {
+		backgroundColor: "#459EE8",
+		borderBottomLeftRadius: 10,
+		borderBottomRightRadius: 10,
+		paddingHorizontal: 20,
+		paddingVertical: 16,
+	},
+	bodyText: {
+		color: "#2B3049",
+		fontSize: 16,
+		fontWeight: "bold",
+		marginBottom: 16,
+	},
+	inputField: {
+		width: "100%",
+		height: 60,
+		borderRadius: 5,
+		backgroundColor: "#FFF",
+		borderWidth: 1.5,
+		borderColor: "#459EE8",
+		color: "#000",
+		paddingLeft: 8,
+		fontSize: 12,
+	},
 });

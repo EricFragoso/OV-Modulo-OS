@@ -9,6 +9,7 @@ import { ButtonFilled } from "../../components/buttonFilled";
 import QRCodeScanner from "react-native-qrcode-scanner";
 import React, { useState } from "react";
 import { ModalInserirAtivo } from "../modalInserirAtivo";
+import { useNavigation } from "@react-navigation/native";
 
 export function DetailOS() {
 	const ListaAtivos = [
@@ -20,13 +21,14 @@ export function DetailOS() {
 		{ id: 6, nameAtivo: "Ativo 6", value: "R$1000,00" },
 	];
 	const [modalVisible, setModalVisible] = useState(false);
+	const navigation = useNavigation();
 
 	function handleShowAtivo(idAtivo: number) {
-		return console.log(`Chamando Detalhamento da OS ${idAtivo} `);
+		return navigation.navigate("detailativo");
 	}
 
 	function handleCallPreviousPage() {
-		console.log("Página anterior");
+		navigation.goBack();
 	}
 
 	function handleQRCode() {
