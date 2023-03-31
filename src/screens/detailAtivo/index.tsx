@@ -9,6 +9,7 @@ import { Button } from "../../components/button";
 import { CardInfo } from "../../components/cardInfo";
 
 import { styles } from "./styles";
+import { MenuHamburger } from "../../components/menuHamburger";
 
 type RouteParams = {
 	idAtivo: number;
@@ -37,6 +38,7 @@ export function DetailAtivo() {
 		<View style={styles.container}>
 			<View style={styles.header}>
 				<Text style={styles.headerText}>Detalhamento</Text>
+				<MenuHamburger />
 			</View>
 			<View style={styles.headerAtivo}>
 				<BackButton callFunc={handleCallPreviousPage}></BackButton>
@@ -64,12 +66,12 @@ export function DetailAtivo() {
 							<Text style={styles.headerTextCard}>Detalhes</Text>
 						</View>
 						<View style={styles.bodyCard}>
-							<Text>Laudo</Text>
+							<Text style={styles.label}>Laudo</Text>
 							<TextInput
 								style={styles.inputField}
 								multiline
 								placeholder="Descreva"
-								placeholderTextColor={"#000"}
+								placeholderTextColor={"#808080"}
 								onChangeText={(inputText) => setUserCode(inputText)}
 							/>
 							{/*	<View>

@@ -10,6 +10,7 @@ import { Button } from "../../components/button";
 import { ButtonFilled } from "../../components/buttonFilled";
 
 import { styles } from "./styles";
+import { MenuHamburger } from "../../components/menuHamburger";
 
 type RouteParams = {
 	numberOS: number;
@@ -62,6 +63,7 @@ export function DetailOS() {
 		<View style={styles.container}>
 			<View style={styles.header}>
 				<Text style={styles.headerText}>Detalhamento</Text>
+				<MenuHamburger />
 			</View>
 
 			<View style={styles.headerOS}>

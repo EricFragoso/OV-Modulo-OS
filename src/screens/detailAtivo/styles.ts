@@ -14,11 +14,16 @@ export const styles = StyleSheet.create({
 	header: {
 		width: "100%",
 		height: 120,
-		backgroundColor: "#459EE8",
+		flexDirection: "row",
+		justifyContent: "space-between",
 		alignItems: "center",
+		backgroundColor: "#459EE8",
 		paddingTop: 52,
+		paddingHorizontal: 32,
 	},
 	headerText: {
+		flex: 1,
+		textAlign: "center",
 		fontWeight: "bold",
 		fontSize: 32,
 	},
@@ -65,6 +70,11 @@ export const styles = StyleSheet.create({
 		fontWeight: "bold",
 		marginBottom: 16,
 	},
+	label: {
+		fontWeight: "500",
+		marginBottom: 4,
+	},
+
 	inputField: {
 		width: "100%",
 		height: 60,

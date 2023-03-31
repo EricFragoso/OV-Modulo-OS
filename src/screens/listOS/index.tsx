@@ -4,6 +4,7 @@ import { styles } from "./styles";
 import { Card } from "../../components/card";
 import React from "react";
 import { useNavigation } from "@react-navigation/native";
+import { MenuHamburger } from "../../components/menuHamburger";
 
 export function ListOS() {
 	const ListaOS = [
@@ -25,6 +26,7 @@ export function ListOS() {
 		<View style={styles.container}>
 			<View style={styles.header}>
 				<Text style={styles.headerText}>Lista de OS</Text>
+				<MenuHamburger />
 			</View>
 
 			<View style={styles.listContainer}>

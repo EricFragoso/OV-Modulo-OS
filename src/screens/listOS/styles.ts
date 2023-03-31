@@ -1,26 +1,31 @@
-import { StyleSheet } from "react-native"
+import { StyleSheet } from "react-native";
 
 export const styles = StyleSheet.create({
+	container: {
+		flex: 1,
+		backgroundColor: "#FFF",
+		alignItems: "center",
+	},
+	header: {
+		width: "100%",
+		height: 120,
+		flexDirection: "row",
+		justifyContent: "space-between",
+		alignItems: "center",
+		backgroundColor: "#459EE8",
 
-container: {
-    flex: 1,
-    backgroundColor: '#DAECFA',
-    alignItems: 'center',
-  },
-  header: {
-    width: '100%',
-    height: 120,
-    backgroundColor: '#459EE8',
-    alignItems: 'center',
-    marginBottom: 48,
-    paddingTop: 52
-  },
-  headerText: {
-    fontWeight: 'bold',
-    fontSize: 32
-  },
-  listContainer: {
-    flex: 1,
-    marginHorizontal: 28
-  }
-})
+		paddingTop: 52,
+		paddingHorizontal: 32,
+	},
+	headerText: {
+		flex: 1,
+		textAlign: "center",
+		fontWeight: "bold",
+		fontSize: 32,
+	},
+	listContainer: {
+		flex: 1,
+		marginHorizontal: 28,
+		marginTop: 48,
+	},
+});
