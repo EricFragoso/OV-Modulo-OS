@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useNavigation, useRoute } from "@react-navigation/native";
-import { View, Text, ScrollView, KeyboardAvoidingView } from "react-native";
+import { View, Text, ScrollView, Image } from "react-native";
 import { TextInput } from "react-native-gesture-handler";
 import { RadioButton } from "react-native-paper";
 
@@ -37,6 +37,10 @@ export function DetailAtivo() {
 	return (
 		<View style={styles.container}>
 			<View style={styles.header}>
+				<Image
+					style={styles.imagem}
+					source={require("../../assets/img/CG-Preto.png")}
+				/>
 				<Text style={styles.headerText}>Detalhamento</Text>
 				<MenuHamburger />
 			</View>

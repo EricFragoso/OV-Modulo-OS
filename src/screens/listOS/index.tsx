@@ -1,4 +1,4 @@
-import { Text, View, ScrollView } from "react-native";
+import { Text, View, ScrollView, Image } from "react-native";
 import { styles } from "./styles";
 
 import { Card } from "../../components/card";
@@ -45,6 +45,10 @@ export function ListOS() {
 	return (
 		<View style={styles.container}>
 			<View style={styles.header}>
+				<Image
+					style={styles.imagem}
+					source={require("../../assets/img/CG-Preto.png")}
+				/>
 				<Text style={styles.headerText}>Lista de OS</Text>
 				<MenuHamburger />
 			</View>

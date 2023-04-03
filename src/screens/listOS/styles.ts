@@ -27,4 +27,8 @@ export const styles = StyleSheet.create({
 		flex: 1,
 		marginHorizontal: 28,
 	},
+	imagem: {
+		width: 44,
+		height: 44,
+	},
 });

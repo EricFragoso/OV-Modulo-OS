@@ -3,16 +3,24 @@ import { StyleSheet } from "react-native";
 export const styles = StyleSheet.create({
 	container: {
 		flex: 1,
-		backgroundColor: "#DAECFA",
+		width: "100%",
 		alignItems: "center",
 	},
 
 	content: {
 		flex: 1,
-		justifyContent: "center",
+		marginTop: 80,
 		alignItems: "center",
 		width: "80%",
 		gap: 20,
+	},
+
+	firstContent: { alignItems: "center", justifyContent: "center" },
+
+	imagem: {
+		width: 140,
+		height: 140,
+		marginBottom: 40,
 	},
 
 	header: {
@@ -20,17 +28,18 @@ export const styles = StyleSheet.create({
 		height: 120,
 		backgroundColor: "#459EE8",
 		alignItems: "center",
-		justifyContent: "center",
+		justifyContent: "flex-end",
+		paddingBottom: 20,
 	},
 
 	headerText: {
 		fontWeight: "bold",
-		fontSize: 36,
+		fontSize: 32,
 	},
 
 	inputText: {
 		fontSize: 20,
-		fontWeight: "bold",
+		fontWeight: "600",
 	},
 
 	inputField: {

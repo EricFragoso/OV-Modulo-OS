@@ -1,5 +1,12 @@
 import React, { useState } from "react";
-import { Text, View, TextInput, Alert } from "react-native";
+import {
+	Text,
+	View,
+	TextInput,
+	Alert,
+	ImageBackground,
+	Image,
+} from "react-native";
 import { styles } from "./styles";
 
 import { useNavigation } from "@react-navigation/native";
@@ -25,29 +32,39 @@ export function Home() {
 
 	return (
 		<View style={styles.container}>
-			<View style={styles.header}>
-				<Text style={styles.headerText}>Overview</Text>
-			</View>
-
-			<View style={styles.content}>
-				<View>
-					<Text style={styles.inputText}>Código do usuário</Text>
-
-					<TextInput
-						style={styles.inputField}
-						keyboardType="number-pad"
-						placeholder="Insira o código"
-						placeholderTextColor={"#000"}
-						onChangeText={(inputText) => setUserCode(inputText)}
-					/>
+			<ImageBackground
+				style={styles.container}
+				source={require("../../assets/img/HomeBG.png")}
+			>
+				<View style={styles.header}>
+					<Text style={styles.headerText}>CG Climatizações</Text>
 				</View>
 
-				<Button
-					text="Enviar"
-					fontSize={24}
-					callFunc={() => handleUserLogin(userCode)}
-				/>
-			</View>
+				<View style={styles.content}>
+					<View style={styles.firstContent}>
+						<Image
+							style={styles.imagem}
+							source={require("../../assets/img/CG-Transparente.png")}
+						/>
+					</View>
+					<View>
+						<Text style={styles.inputText}>Código do usuário</Text>
+						<TextInput
+							style={styles.inputField}
+							keyboardType="number-pad"
+							placeholder="Insira o código"
+							placeholderTextColor={"#000"}
+							onChangeText={(inputText) => setUserCode(inputText)}
+						/>
+					</View>
+					<Button
+						text="Enviar"
+						fontSize={24}
+						borderRadius={5}
+						callFunc={() => handleUserLogin(userCode)}
+					/>
+				</View>
+			</ImageBackground>
 		</View>
 	);
 }

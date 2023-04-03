@@ -21,6 +21,12 @@ export const styles = StyleSheet.create({
 		paddingTop: 52,
 		paddingHorizontal: 32,
 	},
+
+	imagem: {
+		width: 44,
+		height: 44,
+	},
+
 	headerText: {
 		flex: 1,
 		textAlign: "center",

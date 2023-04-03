@@ -99,4 +99,8 @@ export const styles = StyleSheet.create({
 	containerButton: {
 		marginBottom: 40,
 	},
+	imagem: {
+		width: 44,
+		height: 44,
+	},
 });

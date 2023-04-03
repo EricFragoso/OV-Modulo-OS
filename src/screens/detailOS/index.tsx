@@ -1,4 +1,4 @@
-import { Text, View, ScrollView } from "react-native";
+import { Text, View, ScrollView, Image } from "react-native";
 import React, { useState } from "react";
 import { ModalInserir } from "../modalInserirItem";
 import { useNavigation, useRoute } from "@react-navigation/native";
@@ -62,6 +62,10 @@ export function DetailOS() {
 	return (
 		<View style={styles.container}>
 			<View style={styles.header}>
+				<Image
+					style={styles.imagem}
+					source={require("../../assets/img/CG-Preto.png")}
+				/>
 				<Text style={styles.headerText}>Detalhamento</Text>
 				<MenuHamburger />
 			</View>
