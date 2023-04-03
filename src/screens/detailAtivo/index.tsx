@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useNavigation, useRoute } from "@react-navigation/native";
-import { View, Text, ScrollView, Image } from "react-native";
+import { View, Text, ScrollView, Image, ImageBackground } from "react-native";
 import { TextInput } from "react-native-gesture-handler";
 import { RadioButton } from "react-native-paper";
 
@@ -36,49 +36,53 @@ export function DetailAtivo() {
 
 	return (
 		<View style={styles.container}>
-			<View style={styles.header}>
-				<Image
-					style={styles.imagem}
-					source={require("../../assets/img/CG-Preto.png")}
-				/>
-				<Text style={styles.headerText}>Detalhamento</Text>
-				<MenuHamburger />
-			</View>
-			<View style={styles.headerAtivo}>
-				<BackButton callFunc={handleCallPreviousPage}></BackButton>
-				<Text style={styles.headerAtivoText}>Ativo {idAtivo}</Text>
-			</View>
-			<View style={styles.listContainer}>
-				<ScrollView showsVerticalScrollIndicator={false}>
-					<CardInfo
-						headerText="Atendentes"
-						modalText="Insira o atendente"
-						listText={listAtendentes}
+			<ImageBackground
+				style={styles.background}
+				source={require("../../assets/img/Overview-50-BG.png")}
+			>
+				<View style={styles.header}>
+					<Image
+						style={styles.imagem}
+						source={require("../../assets/img/CG-Preto.png")}
 					/>
-					<CardInfo
-						headerText="Serviços Executados"
-						modalText="Insira o Serviço"
-						listText={listServicos}
-					/>
-					<CardInfo
-						headerText="Peças Repostas"
-						modalText="Insira a Peça"
-						listText={listPecas}
-					/>
-					<View style={styles.card}>
-						<View style={styles.headerCard}>
-							<Text style={styles.headerTextCard}>Detalhes</Text>
-						</View>
-						<View style={styles.bodyCard}>
-							<Text style={styles.label}>Laudo</Text>
-							<TextInput
-								style={styles.inputField}
-								multiline
-								placeholder="Descreva"
-								placeholderTextColor={"#808080"}
-								onChangeText={(inputText) => setUserCode(inputText)}
-							/>
-							{/*	<View>
+					<Text style={styles.headerText}>Detalhamento</Text>
+					<MenuHamburger />
+				</View>
+				<View style={styles.headerAtivo}>
+					<BackButton callFunc={handleCallPreviousPage}></BackButton>
+					<Text style={styles.headerAtivoText}>Ativo {idAtivo}</Text>
+				</View>
+				<View style={styles.listContainer}>
+					<ScrollView showsVerticalScrollIndicator={false}>
+						<CardInfo
+							headerText="Atendentes"
+							modalText="Insira o atendente"
+							listText={listAtendentes}
+						/>
+						<CardInfo
+							headerText="Serviços Executados"
+							modalText="Insira o Serviço"
+							listText={listServicos}
+						/>
+						<CardInfo
+							headerText="Peças Repostas"
+							modalText="Insira a Peça"
+							listText={listPecas}
+						/>
+						<View style={styles.card}>
+							<View style={styles.headerCard}>
+								<Text style={styles.headerTextCard}>Detalhes</Text>
+							</View>
+							<View style={styles.bodyCard}>
+								<Text style={styles.label}>Laudo</Text>
+								<TextInput
+									style={styles.inputField}
+									multiline
+									placeholder="Descreva"
+									placeholderTextColor={"#808080"}
+									onChangeText={(inputText) => setUserCode(inputText)}
+								/>
+								{/*	<View>
 								<Text>Estado de conservação do aparelho</Text>
 								<RadioButton
 									value="30 Dias"
@@ -103,14 +107,15 @@ export function DetailAtivo() {
 							<View>
 								<Text>Fotos</Text>
 							</View>*/}
+							</View>
 						</View>
-					</View>
-					<Button
-						text="Salvar"
-						callFunc={handleSalvarDetalhamento}
-					/>
-				</ScrollView>
-			</View>
+						<Button
+							text="Salvar"
+							callFunc={handleSalvarDetalhamento}
+						/>
+					</ScrollView>
+				</View>
+			</ImageBackground>
 		</View>
 	);
 }

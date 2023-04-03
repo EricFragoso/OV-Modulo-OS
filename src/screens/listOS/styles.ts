@@ -31,4 +31,10 @@ export const styles = StyleSheet.create({
 		width: 44,
 		height: 44,
 	},
+	background: {
+		flex: 1,
+		width: "100%",
+		alignItems: "center",
+		justifyContent: "center",
+	},
 });

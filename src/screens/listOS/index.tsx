@@ -1,4 +1,4 @@
-import { Text, View, ScrollView, Image } from "react-native";
+import { Text, View, ScrollView, Image, ImageBackground } from "react-native";
 import { styles } from "./styles";
 
 import { Card } from "../../components/card";
@@ -44,28 +44,33 @@ export function ListOS() {
 
 	return (
 		<View style={styles.container}>
-			<View style={styles.header}>
-				<Image
-					style={styles.imagem}
-					source={require("../../assets/img/CG-Preto.png")}
-				/>
-				<Text style={styles.headerText}>Lista de OS</Text>
-				<MenuHamburger />
-			</View>
+			<ImageBackground
+				style={styles.background}
+				source={require("../../assets/img/Overview-50-BG.png")}
+			>
+				<View style={styles.header}>
+					<Image
+						style={styles.imagem}
+						source={require("../../assets/img/CG-Preto.png")}
+					/>
+					<Text style={styles.headerText}>Lista de OS</Text>
+					<MenuHamburger />
+				</View>
 
-			<View style={styles.listContainer}>
-				<ScrollView showsVerticalScrollIndicator={false}>
-					{ListaOS.map((listaOS) => (
-						<Card
-							key={listaOS.numberOS}
-							numberOS={listaOS.numberOS}
-							client={listaOS.client}
-							name={listaOS.name}
-							callFunc={() => handleShowOSDetail(listaOS.numberOS)}
-						></Card>
-					))}
-				</ScrollView>
-			</View>
+				<View style={styles.listContainer}>
+					<ScrollView showsVerticalScrollIndicator={false}>
+						{ListaOS.map((listaOS) => (
+							<Card
+								key={listaOS.numberOS}
+								numberOS={listaOS.numberOS}
+								client={listaOS.client}
+								name={listaOS.name}
+								callFunc={() => handleShowOSDetail(listaOS.numberOS)}
+							></Card>
+						))}
+					</ScrollView>
+				</View>
+			</ImageBackground>
 		</View>
 	);
 }
