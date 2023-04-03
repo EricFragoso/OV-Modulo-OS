@@ -8,6 +8,7 @@ import { ButtonFilled } from "../../components/buttonFilled";
 type Props = {
 	modalVisible: boolean;
 	textItem: string;
+	buttonText: string;
 	fecharModal?: () => void;
 	adicionarItem: (item: string) => void;
 };
@@ -43,7 +44,7 @@ export function ModalInserir(props: Props) {
 						style={styles.inputField}
 					/>
 					<ButtonFilled
-						text="Adicionar"
+						text={props.buttonText}
 						callFunc={addCloseModal}
 						fontSize={12}
 						borderRadius={5}

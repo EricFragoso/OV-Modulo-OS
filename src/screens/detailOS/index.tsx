@@ -131,6 +131,7 @@ export function DetailOS() {
 						></ButtonFilled>
 						<ModalInserir
 							textItem="Insira o código"
+							buttonText="Buscar"
 							modalVisible={modalVisible}
 							fecharModal={handleCloseModal}
 							adicionarItem={handleAddAtivo}

@@ -43,6 +43,7 @@ export function CardInfo(props: Props) {
 				</TouchableOpacity>
 				<ModalInserir
 					textItem={props.modalText}
+					buttonText="Adicionar"
 					modalVisible={modalVisible}
 					fecharModal={handleCloseModal}
 					adicionarItem={handleAddAtivo}
