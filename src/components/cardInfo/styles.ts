@@ -29,7 +29,14 @@ export const styles = StyleSheet.create({
 	bodyText: {
 		color: "#2B3049",
 		fontSize: 16,
-		fontWeight: "bold",
 		marginBottom: 16,
+	},
+	bodyTextEmpty: {
+		color: "#2B3049",
+		fontWeight: "300",
+	},
+
+	bodyTextFilled: {
+		fontWeight: "bold",
 	},
 });

@@ -23,9 +23,9 @@ export function DetailAtivo() {
 	const route = useRoute();
 	const { idAtivo } = route.params as RouteParams;
 
-	const listAtendentes = [""];
-	const listServicos = [""];
-	const listPecas = [""];
+	const listAtendentes = ["Vazio"];
+	const listServicos = ["Vazio"];
+	const listPecas = ["Vazio"];
 
 	function handleCallPreviousPage() {
 		navigation.goBack();
