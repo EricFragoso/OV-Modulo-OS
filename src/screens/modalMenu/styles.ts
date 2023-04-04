@@ -31,7 +31,7 @@ export const styles = StyleSheet.create({
 	},
 
 	bodyText: {
-		fontWeight: "bold",
+		fontFamily: "OpenSans_700Bold",
 	},
 
 	inputField: {

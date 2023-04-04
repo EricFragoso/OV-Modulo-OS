@@ -27,18 +27,21 @@ export const styles = StyleSheet.create({
 		marginTop: 12,
 		marginBottom: 12,
 		fontSize: 20,
-		fontWeight: "bold",
+		fontFamily: "OpenSans_700Bold",
 	},
 
 	cardText: {
 		color: "#2B3049",
 		fontSize: 16,
-		fontWeight: "500",
+		fontFamily: "OpenSans_500Medium",
 	},
 
-	firstColumn: {},
+	firstColumn: {
+		justifyContent: "space-around",
+		marginBottom: 12,
+	},
 
 	secondColumn: {
-		marginTop: 36,
+		marginTop: 44,
 	},
 });

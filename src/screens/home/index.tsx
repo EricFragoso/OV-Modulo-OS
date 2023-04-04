@@ -53,7 +53,7 @@ export function Home() {
 							style={styles.inputField}
 							keyboardType="number-pad"
 							placeholder="Insira o código"
-							placeholderTextColor={"#000"}
+							placeholderTextColor={"#999999"}
 							onChangeText={(inputText) => setUserCode(inputText)}
 						/>
 					</View>

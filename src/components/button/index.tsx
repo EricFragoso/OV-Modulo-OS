@@ -17,7 +17,7 @@ export function Button(props: Props) {
 					alignItems: "center",
 					justifyContent: "center",
 					paddingHorizontal: 28,
-					paddingVertical: 4,
+					paddingVertical: 2,
 					backgroundColor: "#FFF",
 					borderWidth: 1.5,
 					borderColor: "#459EE8",
@@ -32,7 +32,7 @@ export function Button(props: Props) {
 					style={{
 						color: "#2B3049",
 						fontSize: props.fontSize || 20,
-						fontWeight: "bold",
+						fontFamily: "OpenSans_700Bold",
 					}}
 				>
 					{props.text}

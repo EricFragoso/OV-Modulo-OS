@@ -38,8 +38,8 @@ export const styles = StyleSheet.create({
 	headerText: {
 		flex: 1,
 		textAlign: "center",
-		fontWeight: "bold",
-		fontSize: 32,
+		fontFamily: "OpenSans_700Bold",
+		fontSize: 28,
 	},
 	headerAtivo: {
 		flexDirection: "row",
@@ -51,7 +51,7 @@ export const styles = StyleSheet.create({
 	headerAtivoText: {
 		flex: 1,
 		fontSize: 24,
-		fontWeight: "bold",
+		fontFamily: "OpenSans_700Bold",
 		textAlign: "center",
 	},
 
@@ -69,7 +69,7 @@ export const styles = StyleSheet.create({
 	headerTextCard: {
 		color: "#FFFFFF",
 		fontSize: 16,
-		fontWeight: "bold",
+		fontFamily: "OpenSans_700Bold",
 	},
 	bodyCard: {
 		backgroundColor: "#459EE8",
@@ -81,11 +81,11 @@ export const styles = StyleSheet.create({
 	bodyText: {
 		color: "#2B3049",
 		fontSize: 16,
-		fontWeight: "bold",
+		fontFamily: "OpenSans_700Bold",
 		marginBottom: 16,
 	},
 	label: {
-		fontWeight: "500",
+		fontFamily: "OpenSans_500Medium",
 		marginBottom: 4,
 	},
 
@@ -99,5 +99,6 @@ export const styles = StyleSheet.create({
 		color: "#000",
 		paddingLeft: 8,
 		fontSize: 12,
+		fontFamily: "OpenSans_400Regular",
 	},
 });

@@ -31,7 +31,7 @@ export function ListOS() {
 		},
 		{
 			numberOS: 6302,
-			client: "Montanha de Ouro Investimentos e Participações S.A.",
+			client: "Montanha de Ouro Investimentos S.A.",
 			name: "Luiz Santino",
 		},
 	];

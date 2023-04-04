@@ -19,8 +19,8 @@ export const styles = StyleSheet.create({
 	headerText: {
 		flex: 1,
 		textAlign: "center",
-		fontWeight: "bold",
-		fontSize: 32,
+		fontFamily: "OpenSans_700Bold",
+		fontSize: 28,
 	},
 
 	headerOS: {
@@ -33,7 +33,7 @@ export const styles = StyleSheet.create({
 	headerOSText: {
 		flex: 1,
 		fontSize: 24,
-		fontWeight: "bold",
+		fontFamily: "OpenSans_700Bold",
 		textAlign: "center",
 	},
 
@@ -56,7 +56,7 @@ export const styles = StyleSheet.create({
 	headerTextCard: {
 		color: "#FFFFFF",
 		fontSize: 16,
-		fontWeight: "bold",
+		fontFamily: "OpenSans_700Bold",
 	},
 	companyInfo: {
 		backgroundColor: "#459EE8",
@@ -68,13 +68,14 @@ export const styles = StyleSheet.create({
 	companyName: {
 		color: "#2B3049",
 		fontSize: 16,
-		fontWeight: "bold",
+		fontFamily: "OpenSans_700Bold",
 		marginBottom: 16,
 	},
 	companyCnpj: {
 		color: "#2B3049",
 		fontSize: 14,
 		marginBottom: 20,
+		fontFamily: "OpenSans_400Regular",
 	},
 	row: {
 		flexDirection: "row",
@@ -88,12 +89,13 @@ export const styles = StyleSheet.create({
 	label: {
 		color: "#2B3049",
 		fontSize: 14,
-		fontWeight: "bold",
+		fontFamily: "OpenSans_700Bold",
 		marginBottom: 4,
 	},
 	info: {
 		color: "#2B3049",
 		fontSize: 14,
+		fontFamily: "OpenSans_400Regular",
 	},
 
 	containerButton: {

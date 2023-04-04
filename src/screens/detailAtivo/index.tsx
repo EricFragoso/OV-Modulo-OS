@@ -79,7 +79,7 @@ export function DetailAtivo() {
 									style={styles.inputField}
 									multiline
 									placeholder="Descreva"
-									placeholderTextColor={"#808080"}
+									placeholderTextColor={"#999999"}
 									onChangeText={(inputText) => setUserCode(inputText)}
 								/>
 								{/*	<View>

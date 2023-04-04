@@ -26,7 +26,7 @@ export function ButtonFilled(props: Props) {
 					style={{
 						color: "#DAECFA",
 						fontSize: props.fontSize || 24,
-						fontWeight: "bold",
+						fontFamily: "OpenSans_700Bold",
 					}}
 				>
 					{props.text}

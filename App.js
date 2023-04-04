@@ -1,13 +1,21 @@
-import { StatusBar, View } from "react-native";
+import { StatusBar } from "react-native";
 import { Routes } from "./src/routes";
-import { DetailAtivo } from "./src/screens/detailAtivo";
-import { DetailOS } from "./src/screens/detailOS";
-import { Home } from "./src/screens/home";
-import { ListOS } from "./src/screens/listOS";
-import LeitorQRCode from "./src/screens/leitorQRCode";
-
+import { useFonts, OpenSans_700Bold, OpenSans_300Light, OpenSans_400Regular, OpenSans_500Medium, OpenSans_600SemiBold, OpenSans_800ExtraBold } from '@expo-google-fonts/open-sans';
 
 export default function App() {
+  let [fontsLoaded] = useFonts({
+    OpenSans_300Light, 
+    OpenSans_400Regular, 
+    OpenSans_500Medium, 
+    OpenSans_600SemiBold, 
+    OpenSans_700Bold, 
+    OpenSans_800ExtraBold 
+  });
+
+  if (!fontsLoaded) {
+    return null;
+  }
+  
   return (
     <>
       <StatusBar barStyle="dark-content" />

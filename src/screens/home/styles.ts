@@ -33,13 +33,13 @@ export const styles = StyleSheet.create({
 	},
 
 	headerText: {
-		fontWeight: "bold",
+		fontFamily: "OpenSans_700Bold",
 		fontSize: 32,
 	},
 
 	inputText: {
 		fontSize: 20,
-		fontWeight: "600",
+		fontFamily: "OpenSans_600SemiBold",
 	},
 
 	inputField: {
@@ -51,6 +51,7 @@ export const styles = StyleSheet.create({
 		borderColor: "#459EE8",
 		color: "#000",
 		paddingLeft: 8,
-		fontSize: 20,
+		fontSize: 16,
+		fontFamily: "OpenSans_300Light",
 	},
 });

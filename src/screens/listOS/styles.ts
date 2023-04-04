@@ -19,7 +19,7 @@ export const styles = StyleSheet.create({
 	headerText: {
 		flex: 1,
 		textAlign: "center",
-		fontWeight: "bold",
+		fontFamily: "OpenSans_700Bold",
 		fontSize: 32,
 	},
 	listContainer: {

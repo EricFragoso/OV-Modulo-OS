@@ -18,14 +18,14 @@ export const styles = StyleSheet.create({
 	cardHeader: {
 		color: "#2B3049",
 		fontSize: 20,
-		fontWeight: "bold",
+		fontFamily: "OpenSans_700Bold",
 		marginBottom: 8,
 	},
 
 	cardText: {
 		color: "#2B3049",
 		fontSize: 16,
-		fontWeight: "500",
+		fontFamily: "OpenSans_500Medium",
 		marginBottom: 8,
 	},
 

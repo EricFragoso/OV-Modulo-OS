@@ -17,7 +17,7 @@ export const styles = StyleSheet.create({
 	headerTextCard: {
 		color: "#FFFFFF",
 		fontSize: 16,
-		fontWeight: "bold",
+		fontFamily: "OpenSans_700Bold",
 	},
 	bodyCard: {
 		backgroundColor: "#459EE8",
@@ -33,10 +33,10 @@ export const styles = StyleSheet.create({
 	},
 	bodyTextEmpty: {
 		color: "#2B3049",
-		fontWeight: "300",
+		fontFamily: "OpenSans_300Light",
 	},
 
 	bodyTextFilled: {
-		fontWeight: "bold",
+		fontFamily: "OpenSans_600SemiBold",
 	},
 });
