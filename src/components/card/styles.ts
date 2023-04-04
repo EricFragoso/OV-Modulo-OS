@@ -11,7 +11,8 @@ export const styles = StyleSheet.create({
 		paddingVertical: 22,
 		paddingLeft: 28,
 		paddingRight: 12,
-		marginTop: 48,
+		marginTop: 20,
+		marginBottom: 20,
 	},
 
 	cardHeader: {
@@ -34,6 +35,9 @@ export const styles = StyleSheet.create({
 
 	secondColumn: {
 		alignItems: "flex-start",
+		backgroundColor: "#2B3049",
+		height: "100%",
+		padding: 8,
 	},
 
 	iconColumn: {},

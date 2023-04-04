@@ -4,6 +4,7 @@ import { DetailAtivo } from "./src/screens/detailAtivo";
 import { DetailOS } from "./src/screens/detailOS";
 import { Home } from "./src/screens/home";
 import { ListOS } from "./src/screens/listOS";
+import LeitorQRCode from "./src/screens/leitorQRCode";
 
 
 export default function App() {

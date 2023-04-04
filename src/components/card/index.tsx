@@ -22,6 +22,7 @@ export function Card(props: Props) {
 					<Text style={styles.cardText}>{props.client}</Text>
 					<Text style={styles.cardText}>{props.name}</Text>
 				</View>
+
 				<View style={styles.iconColumn}>
 					<Icon
 						name={"chevron-right"}
