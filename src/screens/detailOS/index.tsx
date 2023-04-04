@@ -41,6 +41,7 @@ export function DetailOS() {
 	}
 
 	function handleQRCode() {
+		navigation.navigate("leitorqrcode");
 		console.log("Abrindo Câmera");
 	}
 

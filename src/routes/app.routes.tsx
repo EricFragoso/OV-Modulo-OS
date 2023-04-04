@@ -5,6 +5,7 @@ import { DetailOS } from "../screens/detailOS";
 
 import { Home } from "../screens/home";
 import { ListOS } from "../screens/listOS";
+import LeitorQRCode from "../screens/leitorQRCode";
 
 const { Navigator, Screen } = createNativeStackNavigator();
 
@@ -29,6 +30,10 @@ export function AppRoutes() {
 			<Screen
 				name="detailativo"
 				component={DetailAtivo}
+			/>
+			<Screen
+				name="leitorqrcode"
+				component={LeitorQRCode}
 			/>
 		</Navigator>
 	);
