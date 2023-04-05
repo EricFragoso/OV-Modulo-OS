@@ -1,5 +1,4 @@
 import { Text, View, ScrollView, Image, ImageBackground } from "react-native";
-import { styles } from "./styles";
 
 import { Card } from "../../components/card";
 import React from "react";
@@ -43,21 +42,23 @@ export function ListOS() {
 	}
 
 	return (
-		<View style={styles.container}>
+		<View className="flex-1 bg-white items-center">
 			<ImageBackground
-				style={styles.background}
+				className="flex-1 w-full items-center"
 				source={require("../../assets/img/Overview-50-BG.png")}
 			>
-				<View style={styles.header}>
+				<View className="w-full h-32 flex-row justify-between items-center bg-[#459EE8] pt-14 px-8">
 					<Image
-						style={styles.imagem}
+						className={"w-11 h-11"}
 						source={require("../../assets/img/CG-Preto.png")}
 					/>
-					<Text style={styles.headerText}>Lista de OS</Text>
+					<Text className="flex-1 text-center font-OpenSansBold text-3xl">
+						Lista de OS
+					</Text>
 					<MenuHamburger />
 				</View>
 
-				<View style={styles.listContainer}>
+				<View className="flex-1 mx-7">
 					<ScrollView showsVerticalScrollIndicator={false}>
 						{ListaOS.map((listaOS) => (
 							<Card

@@ -45,9 +45,11 @@ export function CardInfo(props: Props) {
 	}
 
 	return (
-		<View style={styles.card}>
-			<View style={styles.headerCard}>
-				<Text style={styles.headerTextCard}>{props.headerText}</Text>
+		<View className="bg-[#2B3049] rounded-xl mb-7">
+			<View className="flex-row justify-between bg-[#2B3049] rounded-xl py-1 px-3 ">
+				<Text className="text-white text-base font-OpenSansBold">
+					{props.headerText}
+				</Text>
 				<TouchableOpacity onPress={handleOpenModal}>
 					<Icon
 						name="plus-circle"
@@ -63,7 +65,7 @@ export function CardInfo(props: Props) {
 					adicionarItem={handleAddAtivo}
 				/>
 			</View>
-			<View style={styles.bodyCard}>
+			<View className="bg-[#459EE8] rounded-b-xl px-5 py-4">
 				{bodyListText.map(
 					(bodyListText) => (
 						checkBodyList(),

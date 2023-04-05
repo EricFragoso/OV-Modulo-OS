@@ -13,26 +13,17 @@ export function Button(props: Props) {
 	return (
 		<View>
 			<TouchableOpacity
+				className="items-center justify-center px-7 py-[2px] bg-white border-[1.5px] border-[#2B3049] mt-2 h-10"
 				style={{
-					alignItems: "center",
-					justifyContent: "center",
-					paddingHorizontal: 28,
-					paddingVertical: 2,
-					backgroundColor: "#FFF",
-					borderWidth: 1.5,
-					borderColor: "#459EE8",
 					borderRadius: props.borderRadius || 10,
 					marginBottom: props.marginBottom || 10,
-					marginTop: 8,
-					height: 40,
 				}}
 				onPress={props.callFunc}
 			>
 				<Text
+					className="text-[#2B3049] font-OpenSansBold"
 					style={{
-						color: "#2B3049",
 						fontSize: props.fontSize || 20,
-						fontFamily: "OpenSans_700Bold",
 					}}
 				>
 					{props.text}

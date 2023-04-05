@@ -29,10 +29,10 @@ export function ModalMenu(props: Props) {
 			visible={props.modalVisible}
 		>
 			<TouchableWithoutFeedback onPress={props.fecharModal}>
-				<View style={styles.card}>
-					<View style={styles.bodyCard}>
+				<View className="flex-1 justify-start items-end mt-36 mr-10">
+					<View className="bg-[#459EE8] border-[1.5px] border-[#2B3049] rounded-xl px-5 py-4 shadow-2xl">
 						<TouchableOpacity onPress={handleLogoff}>
-							<Text style={styles.bodyText}>Encerrar Sessão</Text>
+							<Text className="font-OpenSansBold">Encerrar Sessão</Text>
 						</TouchableOpacity>
 					</View>
 				</View>

@@ -35,24 +35,28 @@ export function DetailAtivo() {
 	function handleSalvarDetalhamento() {}
 
 	return (
-		<View style={styles.container}>
+		<View className="flex-1 bg-white items-center">
 			<ImageBackground
-				style={styles.background}
+				className="flex-1 w-full items-center"
 				source={require("../../assets/img/Overview-50-BG.png")}
 			>
-				<View style={styles.header}>
+				<View className="w-full h-32 flex-row justify-between items-center bg-[#459EE8] pt-14 px-8">
 					<Image
-						style={styles.imagem}
+						className={"w-11 h-11"}
 						source={require("../../assets/img/CG-Preto.png")}
 					/>
-					<Text style={styles.headerText}>Detalhamento</Text>
+					<Text className="flex-1 text-center font-OpenSansBold text-3xl">
+						Detalhamento
+					</Text>
 					<MenuHamburger />
 				</View>
-				<View style={styles.headerAtivo}>
+				<View className="flex-row p-6">
 					<BackButton callFunc={handleCallPreviousPage}></BackButton>
-					<Text style={styles.headerAtivoText}>Ativo {idAtivo}</Text>
+					<Text className="flex-1 text-2xl font-OpenSansBold text-center">
+						Ativo {idAtivo}
+					</Text>
 				</View>
-				<View style={styles.listContainer}>
+				<View className="flex-1 px-7 w-full">
 					<ScrollView showsVerticalScrollIndicator={false}>
 						<CardInfo
 							headerText="Atendentes"
@@ -69,14 +73,16 @@ export function DetailAtivo() {
 							modalText="Insira a Peça"
 							listText={listPecas}
 						/>
-						<View style={styles.card}>
-							<View style={styles.headerCard}>
-								<Text style={styles.headerTextCard}>Detalhes</Text>
+						<View className="bg-[#2B3049] rounded-xl mb-7">
+							<View className="bg-[#2B3049] rounded-xl py-2 pl-3">
+								<Text className="text-white text-base font-OpenSansBold">
+									Detalhes
+								</Text>
 							</View>
-							<View style={styles.bodyCard}>
-								<Text style={styles.label}>Laudo</Text>
+							<View className="bg-[#459EE8] rounded-b-xl px-5 py-4">
+								<Text className="font-OpenSansMedium mb-1">Laudo</Text>
 								<TextInput
-									style={styles.inputField}
+									className="w-full h-[60px] rounded-md bg-white text-[#000] pl-2 text-xs font-OpenSansRegular"
 									multiline
 									placeholder="Descreva"
 									placeholderTextColor={"#999999"}

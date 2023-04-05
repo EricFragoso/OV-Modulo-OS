@@ -2,14 +2,12 @@ import { Text, View, ScrollView, Image, ImageBackground } from "react-native";
 import React, { useState } from "react";
 import { ModalInserir } from "../modalInserirItem";
 import { useNavigation, useRoute } from "@react-navigation/native";
-import QRCodeScanner from "react-native-qrcode-scanner";
 
 import { ImageCard } from "../../components/imageCard";
 import { BackButton } from "../../components/backButton";
 import { Button } from "../../components/button";
 import { ButtonFilled } from "../../components/buttonFilled";
 
-import { styles } from "./styles";
 import { MenuHamburger } from "../../components/menuHamburger";
 
 type RouteParams = {
@@ -21,9 +19,6 @@ export function DetailOS() {
 		{ id: 1, nameAtivo: "Ativo 1", value: "R$1000,00" },
 		{ id: 2, nameAtivo: "Ativo 2", value: "R$1000,00" },
 		{ id: 3, nameAtivo: "Ativo 3", value: "R$1000,00" },
-		{ id: 4, nameAtivo: "Ativo 4", value: "R$1000,00" },
-		{ id: 5, nameAtivo: "Ativo 5", value: "R$1000,00" },
-		{ id: 6, nameAtivo: "Ativo 6", value: "R$1000,00" },
 	];
 	const [modalVisible, setModalVisible] = useState(false);
 
@@ -61,52 +56,78 @@ export function DetailOS() {
 	}
 
 	return (
-		<View style={styles.container}>
+		<View className="flex-1 bg-white items-center">
 			<ImageBackground
-				style={styles.background}
+				className="flex-1 w-full items-center"
 				source={require("../../assets/img/Overview-50-BG.png")}
 			>
-				<View style={styles.header}>
+				<View className="w-full h-32 flex-row justify-between items-center bg-[#459EE8] pt-14 px-8">
 					<Image
-						style={styles.imagem}
+						className={"w-11 h-11"}
 						source={require("../../assets/img/CG-Preto.png")}
 					/>
-					<Text style={styles.headerText}>Detalhamento</Text>
+					<Text className="flex-1 text-center font-OpenSansBold text-3xl">
+						Detalhamento
+					</Text>
 					<MenuHamburger />
 				</View>
 
-				<View style={styles.headerOS}>
+				<View className="flex-row p-6">
 					<BackButton callFunc={handleCallPreviousPage}></BackButton>
-					<Text style={styles.headerOSText}> OS {numberOS}</Text>
+					<Text className="flex-1 text-2xl font-OpenSansBold text-center">
+						OS {numberOS}
+					</Text>
 				</View>
 
-				<View style={styles.listContainer}>
+				<View className="flex-1 mx-7">
 					<ScrollView showsVerticalScrollIndicator={false}>
-						<View style={styles.card}>
-							<View style={styles.headerCard}>
-								<Text style={styles.headerTextCard}>Informações</Text>
+						<View className="bg-[#2B3049] rounded-xl mb-7">
+							<View className="bg-[#2B3049] rounded-xl py-2 pl-3">
+								<Text className="text-[#FFF] text-base font-OpenSansBold ">
+									Informações
+								</Text>
 							</View>
-							<View style={styles.companyInfo}>
-								<Text style={styles.companyName}>Cliente</Text>
-								<Text style={styles.companyCnpj}>CNPJ: 00.000.000/0000-00</Text>
-								<View style={styles.row}>
-									<View style={styles.column}>
-										<Text style={styles.label}>Cidade:</Text>
-										<Text style={styles.info}>São Paulo</Text>
+							<View className="bg-[#459EE8] rounded-bl-xl rounded-br-xl px-5 py-6">
+								<Text className="text-[#2B3049] text-base font-OpenSansBold mb-4">
+									Cliente
+								</Text>
+								<Text className="text-[#2B3049] text-sm font-OpenSansRegular mb-5">
+									CNPJ: 00.000.000/0000-00
+								</Text>
+								<View className="flex-row justify-between mb-3">
+									<View className="flex-1 mr-2">
+										<Text className="text-[#2B3049] text-sm font-OpenSansBold mb-1">
+											Cidade:
+										</Text>
+										<Text className="text-[#2B3049] text-sm font-OpenSansRegular">
+											São Paulo
+										</Text>
 									</View>
-									<View style={styles.column}>
-										<Text style={styles.label}>Demandante:</Text>
-										<Text style={styles.info}>João Silva</Text>
+									<View className="flex-1 mr-2">
+										<Text className="text-[#2B3049] text-sm font-OpenSansBold mb-1">
+											Demandante:
+										</Text>
+										<Text className="text-[#2B3049] text-sm font-OpenSansRegular">
+											João Silva
+										</Text>
 									</View>
 								</View>
-								<View style={styles.row}>
-									<View style={styles.column}>
-										<Text style={styles.label}>Telefone</Text>
-										<Text style={styles.info}>(81)99999-9999</Text>
+								<View className="flex-row justify-between mb-3">
+									<View className="flex-1 mr-2">
+										<Text className="text-[#2B3049] text-sm font-OpenSansBold mb-1">
+											Telefone
+										</Text>
+										<Text className="text-[#2B3049] text-sm font-OpenSansRegular">
+											(81)99999-9999
+										</Text>
 									</View>
-									<View style={styles.column}>
-										<Text style={styles.label}>Data da Solicitação:</Text>
-										<Text style={styles.info}>01/01/2022</Text>
+									<View className="flex-1 mr-2">
+										<Text className="text-[#2B3049] text-sm font-OpenSansBold mb-1">
+											Data da Solicitação:
+										</Text>
+										<Text className="text-[#2B3049] text-sm font-OpenSansRegular">
+											01/01/2022
+										</Text>
 									</View>
 								</View>
 							</View>
@@ -120,7 +141,7 @@ export function DetailOS() {
 								callFunc={() => handleShowAtivo(listaAtivos.id)}
 							></ImageCard>
 						))}
-						<View style={styles.containerButton}>
+						<View className="mb-10">
 							<Button
 								text="Escanear Ativo"
 								fontSize={12}
