@@ -15,11 +15,11 @@ export function Card(props: Props) {
 			<TouchableHighlight
 				activeOpacity={0}
 				underlayColor={"#459EE8"}
-				className="w-full items-center justify-between flex-row bg-[#B5D8F6] rounded-xl py-5 pl-7 pr-3 mt-5 mb-5"
+				className="w-full items-center justify-between flex-row bg-[#B5D8F6] rounded-xl pl-7 mt-5 mb-5 max-h-48"
 				onPress={props.callFunc}
 			>
 				<>
-					<View className="flex-1">
+					<View className="flex-1 my-5">
 						<Text className="text-[#2B3049] text-xl font-OpenSansBold mb-2">
 							OS {props.numberOS}
 						</Text>
@@ -31,8 +31,9 @@ export function Card(props: Props) {
 						</Text>
 					</View>
 
-					<View>
+					<View className="bg-[#2B3049] w-16 h-full rounded-r-xl items-center justify-center">
 						<Icon
+							color="#B5D8F6"
 							name={"chevron-right"}
 							size={40}
 						/>
