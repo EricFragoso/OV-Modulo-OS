@@ -5,6 +5,7 @@ type Props = {
 	text: string;
 	fontSize?: number;
 	borderRadius?: number;
+	marginBottom?: number;
 	callFunc: () => void;
 };
 
@@ -12,13 +13,10 @@ export function ButtonFilled(props: Props) {
 	return (
 		<View>
 			<TouchableOpacity
+				className="items-center justify-center px-7 py-[2px] bg-[#2B3049] border-[1.5px] mt-2 h-10"
 				style={{
-					alignItems: "center",
-					justifyContent: "center",
-					paddingHorizontal: 28,
-					paddingVertical: 14,
-					backgroundColor: "#2B3049",
 					borderRadius: props.borderRadius || 10,
+					marginBottom: props.marginBottom || 10,
 				}}
 				onPress={props.callFunc}
 			>

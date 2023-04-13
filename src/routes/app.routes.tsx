@@ -6,6 +6,7 @@ import { DetailOS } from "../screens/detailOS";
 import { Home } from "../screens/home";
 import { ListOS } from "../screens/listOS";
 import LeitorQRCode from "../screens/leitorQRCode";
+import { CameraAtivo } from "../screens/cameraAtivo";
 
 const { Navigator, Screen } = createNativeStackNavigator();
 
@@ -34,6 +35,10 @@ export function AppRoutes() {
 			<Screen
 				name="leitorqrcode"
 				component={LeitorQRCode}
+			/>
+			<Screen
+				name="cameraativo"
+				component={CameraAtivo}
 			/>
 		</Navigator>
 	);

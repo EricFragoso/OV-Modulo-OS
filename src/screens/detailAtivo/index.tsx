@@ -10,6 +10,7 @@ import { CardInfo } from "../../components/cardInfo";
 
 import { styles } from "./styles";
 import { MenuHamburger } from "../../components/menuHamburger";
+import { ButtonFilled } from "../../components/buttonFilled";
 
 type RouteParams = {
 	idAtivo: number;
@@ -33,6 +34,9 @@ export function DetailAtivo() {
 	}
 
 	function handleSalvarDetalhamento() {}
+	function handleTirarFoto() {
+		navigation.navigate("cameraativo");
+	}
 
 	return (
 		<View className="flex-1 bg-white items-center">
@@ -115,10 +119,19 @@ export function DetailAtivo() {
 							</View>*/}
 							</View>
 						</View>
-						<Button
-							text="Salvar"
-							callFunc={handleSalvarDetalhamento}
-						/>
+						<View className="flex-row justify-between items-center mb-10">
+							<ButtonFilled
+								borderRadius={5}
+								text="Tirar Foto"
+								callFunc={handleTirarFoto}
+								fontSize={20}
+							/>
+							<Button
+								borderRadius={5}
+								text="Salvar"
+								callFunc={handleSalvarDetalhamento}
+							/>
+						</View>
 					</ScrollView>
 				</View>
 			</ImageBackground>
