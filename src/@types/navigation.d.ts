@@ -2,7 +2,7 @@ export declare global {
 	namespace ReactNavigation {
 		interface RootParamList {
 			home: undefined;
-			listos: undefined;
+			listos: [{}];
 			detailos: {
 				numberOS: number;
 			};

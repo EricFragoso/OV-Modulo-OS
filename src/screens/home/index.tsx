@@ -1,4 +1,5 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import axios from "axios";
 import {
 	Text,
 	View,
@@ -17,19 +18,30 @@ NativeWindStyleSheet.setOutput({ default: "native" });
 
 export function Home() {
 	const [userCode, setUserCode] = useState("");
+	const baseURL = "https://overview-os-api.onrender.com";
 
 	const navigation = useNavigation();
+
+	function getList(codigo) {
+		const urlListaOS = `${baseURL}/os/colaborador/${codigo}`;
+		axios.get(urlListaOS).then((response) => {
+			const listOS = response.data;
+
+			if (listOS.length === 0) {
+				console.log("falhou");
+				return Alert.alert("Atenção", "Código inválido");
+			} else {
+				return navigation.navigate("listos", { listOS });
+			}
+		});
+	}
 
 	function handleUserLogin(codigo: string) {
 		if (codigo == "") {
 			return Alert.alert("Atenção", "Código em branco");
-		} else if (codigo == "3421") {
-			navigation.navigate("listos");
 		} else {
-			return Alert.alert("Atenção", "Código inválido");
+			getList(codigo);
 		}
-
-		console.log(codigo);
 	}
 
 	return (
