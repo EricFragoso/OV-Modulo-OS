@@ -2,13 +2,17 @@ export declare global {
 	namespace ReactNavigation {
 		interface RootParamList {
 			home: undefined;
-			listos: [{}];
+			listos: {
+				lista: Array[];
+			};
 			detailos: {
-				numberOS: number;
+				numberOS: string;
 			};
 			detailativo: {
 				idAtivo: number;
 			};
+			leitorqrcode: undefined;
+			cameraativo: undefined;
 		}
 	}
 }

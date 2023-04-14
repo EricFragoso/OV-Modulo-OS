@@ -4,50 +4,23 @@ import { Card } from "../../components/card";
 import React, { useEffect } from "react";
 import { useNavigation, useRoute } from "@react-navigation/native";
 import { MenuHamburger } from "../../components/menuHamburger";
+import OS from "OSTypeCard";
 
 type RouteParams = {
-	listOS: Array<string>[];
+	lista: [];
 };
 
 export function ListOS() {
 	const route = useRoute();
 
 	const navigation = useNavigation();
-	const { listOS } = route.params as RouteParams;
-	const ListaOS = [
-		{ numberOS: 1694, client: "Oceano Azul S.A.", name: "Ruan Morais" },
-		{
-			numberOS: 2784,
-			client: "Soluções Inovadoras Ltda.",
-			name: "João Luiz",
-		},
-		{
-			numberOS: 3213,
-			client: "Nova Horizonte Tecnologia Ltda.",
-			name: "Vitor Ramalho",
-		},
-		{
-			numberOS: 4024,
-			client: "Fortaleza Empreendimentos Imobiliários Ltda.",
-			name: "Pedro César",
-		},
-		{
-			numberOS: 5780,
-			client: "Vortex Consultoria e Treinamentos Ltda.",
-			name: "Roberto Delgado",
-		},
-		{
-			numberOS: 6302,
-			client: "Montanha de Ouro Investimentos S.A.",
-			name: "Luiz Santino",
-		},
-	];
+	const { lista } = route.params as RouteParams;
 
 	useEffect(() => {
-		console.log(listOS);
+		console.log(lista);
 	});
 
-	function handleShowOSDetail(numberOS: number) {
+	function handleShowOSDetail(numberOS: string) {
 		return navigation.navigate("detailos", { numberOS });
 	}
 
@@ -70,14 +43,14 @@ export function ListOS() {
 
 				<View className="flex-1 mx-7">
 					<ScrollView showsVerticalScrollIndicator={false}>
-						{ListaOS.map((listaOS) => (
+						{lista.map((OS: OS) => (
 							<Card
-								key={listaOS.numberOS}
-								numberOS={listaOS.numberOS}
-								client={listaOS.client}
-								name={listaOS.name}
-								callFunc={() => handleShowOSDetail(listaOS.numberOS)}
-							></Card>
+								key={OS.id}
+								numberOS={OS.id}
+								client={OS.cliente}
+								name={OS.demandante}
+								callFunc={() => handleShowOSDetail(OS.id)}
+							/>
 						))}
 					</ScrollView>
 				</View>

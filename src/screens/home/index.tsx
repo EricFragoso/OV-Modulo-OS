@@ -22,16 +22,15 @@ export function Home() {
 
 	const navigation = useNavigation();
 
-	function getList(codigo) {
+	function getList(codigo: string) {
 		const urlListaOS = `${baseURL}/os/colaborador/${codigo}`;
 		axios.get(urlListaOS).then((response) => {
 			const listOS = response.data;
 
 			if (listOS.length === 0) {
-				console.log("falhou");
-				return Alert.alert("Atenção", "Código inválido");
+				return Alert.alert("Atenção", "Nenhuma OS cadastrada");
 			} else {
-				return navigation.navigate("listos", { listOS });
+				return navigation.navigate("listos", { lista: listOS });
 			}
 		});
 	}
