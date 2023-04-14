@@ -1,5 +1,5 @@
 import { Text, View, ScrollView, Image, ImageBackground } from "react-native";
-import React, { useState } from "react";
+import React, { useState, useContext, useEffect } from "react";
 import { ModalInserir } from "../modalInserirItem";
 import { useNavigation, useRoute } from "@react-navigation/native";
 
@@ -9,12 +9,16 @@ import { Button } from "../../components/button";
 import { ButtonFilled } from "../../components/buttonFilled";
 
 import { MenuHamburger } from "../../components/menuHamburger";
+import Context from "../../../Context";
+import OS from "OSTypeCard";
 
 type RouteParams = {
-	numberOS: number;
+	numberOS: string;
 };
 
 export function DetailOS() {
+	const { listaDeOS, setListaDeOS } = useContext(Context);
+	const [objectInfo, setObjectInfo] = useState({});
 	const ListaAtivos = [
 		{ id: 1, nameAtivo: "Ativo 1", value: "R$1000,00" },
 		{ id: 2, nameAtivo: "Ativo 2", value: "R$1000,00" },
@@ -25,6 +29,12 @@ export function DetailOS() {
 	const navigation = useNavigation();
 	const route = useRoute();
 	const { numberOS } = route.params as RouteParams;
+
+	useEffect(() => {
+		const findObject = listaDeOS.find((OS: OS) => OS.id === numberOS);
+		setObjectInfo(findObject);
+		console.log(objectInfo);
+	}, []);
 
 	function handleShowAtivo(idAtivo: number) {
 		console.log(idAtivo);
@@ -89,10 +99,10 @@ export function DetailOS() {
 							</View>
 							<View className="bg-[#459EE8] rounded-bl-xl rounded-br-xl px-5 py-6">
 								<Text className="text-[#2B3049] text-base font-OpenSansBold mb-4">
-									Cliente
+									{objectInfo.cliente}
 								</Text>
 								<Text className="text-[#2B3049] text-sm font-OpenSansRegular mb-5">
-									CNPJ: 00.000.000/0000-00
+									CNPJ: {objectInfo.cnpj}
 								</Text>
 								<View className="flex-row justify-between mb-3">
 									<View className="flex-1 mr-2">
@@ -100,7 +110,7 @@ export function DetailOS() {
 											Cidade:
 										</Text>
 										<Text className="text-[#2B3049] text-sm font-OpenSansRegular">
-											São Paulo
+											{objectInfo.cidade}
 										</Text>
 									</View>
 									<View className="flex-1 mr-2">
@@ -108,7 +118,7 @@ export function DetailOS() {
 											Demandante:
 										</Text>
 										<Text className="text-[#2B3049] text-sm font-OpenSansRegular">
-											João Silva
+											{objectInfo.demandante}
 										</Text>
 									</View>
 								</View>
@@ -118,7 +128,7 @@ export function DetailOS() {
 											Telefone
 										</Text>
 										<Text className="text-[#2B3049] text-sm font-OpenSansRegular">
-											(81)99999-9999
+											{objectInfo.telefone}
 										</Text>
 									</View>
 									<View className="flex-1 mr-2">
@@ -126,12 +136,13 @@ export function DetailOS() {
 											Data da Solicitação:
 										</Text>
 										<Text className="text-[#2B3049] text-sm font-OpenSansRegular">
-											01/01/2022
+											{objectInfo.data}
 										</Text>
 									</View>
 								</View>
 							</View>
 						</View>
+
 						{ListaAtivos.map((listaAtivos) => (
 							<ImageCard
 								key={listaAtivos.id}

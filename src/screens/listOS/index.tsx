@@ -1,10 +1,11 @@
 import { Text, View, ScrollView, Image, ImageBackground } from "react-native";
 
 import { Card } from "../../components/card";
-import React, { useEffect } from "react";
+import React, { useContext, useEffect } from "react";
 import { useNavigation, useRoute } from "@react-navigation/native";
 import { MenuHamburger } from "../../components/menuHamburger";
 import OS from "OSTypeCard";
+import Context from "../../../Context";
 
 type RouteParams = {
 	lista: [];
@@ -12,6 +13,7 @@ type RouteParams = {
 
 export function ListOS() {
 	const route = useRoute();
+	const { listaDeOS, setListaDeOS } = useContext(Context);
 
 	const navigation = useNavigation();
 	const { lista } = route.params as RouteParams;
@@ -43,7 +45,7 @@ export function ListOS() {
 
 				<View className="flex-1 mx-7">
 					<ScrollView showsVerticalScrollIndicator={false}>
-						{lista.map((OS: OS) => (
+						{listaDeOS.map((OS: OS) => (
 							<Card
 								key={OS.id}
 								numberOS={OS.id}

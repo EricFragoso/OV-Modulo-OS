@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import axios from "axios";
 import {
 	Text,
@@ -13,10 +13,12 @@ import { NativeWindStyleSheet } from "nativewind";
 import { useNavigation } from "@react-navigation/native";
 
 import { Button } from "../../components/button";
+import Context from "../../../Context";
 
 NativeWindStyleSheet.setOutput({ default: "native" });
 
 export function Home() {
+	const { listaDeOS, setListaDeOS } = useContext(Context);
 	const [userCode, setUserCode] = useState("");
 	const baseURL = "https://overview-os-api.onrender.com";
 
@@ -30,7 +32,8 @@ export function Home() {
 			if (listOS.length === 0) {
 				return Alert.alert("Atenção", "Nenhuma OS cadastrada");
 			} else {
-				return navigation.navigate("listos", { lista: listOS });
+				setListaDeOS(listOS);
+				return navigation.navigate("listos", { lista: listaDeOS });
 			}
 		});
 	}
@@ -74,7 +77,6 @@ export function Home() {
 							className={
 								"w-60 h-10 bg-[#FFF] rounded-md border-[1.5px] border-[#459EE8] pl-2 text-base font-OpenSansLight"
 							}
-							keyboardType="number-pad"
 							placeholder="Insira o código"
 							placeholderTextColor={"#999999"}
 							onChangeText={(inputText) => setUserCode(inputText)}
