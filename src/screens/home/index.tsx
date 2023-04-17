@@ -7,6 +7,8 @@ import {
 	Alert,
 	ImageBackground,
 	Image,
+	TouchableWithoutFeedback,
+	Keyboard,
 } from "react-native";
 import { NativeWindStyleSheet } from "nativewind";
 
@@ -23,6 +25,15 @@ export function Home() {
 	const baseURL = "https://overview-os-api.onrender.com";
 
 	const navigation = useNavigation();
+
+	const dismissKeyboard = () => {
+		Keyboard.dismiss();
+	};
+
+	useEffect(() => {
+		const kbDidHideListener = Keyboard.addListener("keyboardDidHide", () => {});
+		return kbDidHideListener.remove();
+	}, []);
 
 	function getList(codigo: string) {
 		const urlListaOS = `${baseURL}/os/colaborador/${codigo}`;
@@ -47,49 +58,51 @@ export function Home() {
 	}
 
 	return (
-		<View className="flex-1 w-full items-center">
-			<ImageBackground
-				className="flex-1 w-full items-center"
-				source={require("../../assets/img/HomeBG.png")}
-			>
-				<View
-					className={
-						"w-full h-30 bg-[#459EE8] items-center justify-end pb-5 pt-14 mb-20"
-					}
+		<TouchableWithoutFeedback onPress={dismissKeyboard}>
+			<View className="flex-1 w-full items-center">
+				<ImageBackground
+					className="flex-1 w-full items-center"
+					source={require("../../assets/img/HomeBG.png")}
 				>
-					<Text className={"font-OpenSansBold font-semibold text-3xl"}>
-						CG Climatizações
-					</Text>
-				</View>
-
-				<View className={"flex-1 items-center w-10/12 gap-5"}>
-					<View className={"items-center justify-center"}>
-						<Image
-							className={"w-36 h-36 mb-10"}
-							source={require("../../assets/img/CG-Transparente.png")}
-						/>
-					</View>
-					<View>
-						<Text className={"font-OpenSansSemiBold text-xl"}>
-							Código do usuário
+					<View
+						className={
+							"w-full h-30 bg-[#459EE8] items-center justify-end pb-5 pt-14 mb-20"
+						}
+					>
+						<Text className={"font-OpenSansBold font-semibold text-3xl"}>
+							CG Climatizações
 						</Text>
-						<TextInput
-							className={
-								"w-60 h-10 bg-[#FFF] rounded-md border-[1.5px] border-[#459EE8] pl-2 text-base font-OpenSansLight"
-							}
-							placeholder="Insira o código"
-							placeholderTextColor={"#999999"}
-							onChangeText={(inputText) => setUserCode(inputText)}
+					</View>
+
+					<View className={"flex-1 items-center w-10/12 gap-5"}>
+						<View className={"items-center justify-center"}>
+							<Image
+								className={"w-36 h-36 mb-10"}
+								source={require("../../assets/img/CG-Transparente.png")}
+							/>
+						</View>
+						<View>
+							<Text className={"font-OpenSansSemiBold text-xl"}>
+								Código do usuário
+							</Text>
+							<TextInput
+								className={
+									"w-60 h-10 bg-[#FFF] rounded-md border-[1.5px] border-[#459EE8] pl-2 text-base font-OpenSansLight"
+								}
+								placeholder="Insira o código"
+								placeholderTextColor={"#999999"}
+								onChangeText={(inputText) => setUserCode(inputText)}
+							/>
+						</View>
+						<Button
+							text="Enviar"
+							fontSize={24}
+							borderRadius={5}
+							callFunc={() => handleUserLogin(userCode)}
 						/>
 					</View>
-					<Button
-						text="Enviar"
-						fontSize={24}
-						borderRadius={5}
-						callFunc={() => handleUserLogin(userCode)}
-					/>
-				</View>
-			</ImageBackground>
-		</View>
+				</ImageBackground>
+			</View>
+		</TouchableWithoutFeedback>
 	);
 }
