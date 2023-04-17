@@ -6,6 +6,9 @@ import { useNavigation, useRoute } from "@react-navigation/native";
 import { MenuHamburger } from "../../components/menuHamburger";
 import OS from "OSTypeCard";
 import Context from "../../../Context";
+import { Button } from "../../components/button";
+import { ButtonFilled } from "../../components/buttonFilled";
+import { ModalInserir } from "../modalInserirItem";
 
 type RouteParams = {
 	lista: [];
@@ -13,8 +16,10 @@ type RouteParams = {
 
 export function ListOS() {
 	const route = useRoute();
+
 	const [refresh, setRefresh] = useState(false);
 	const { listaDeOS, setListaDeOS } = useContext(Context);
+	const [modalVisible, setModalVisible] = useState(false);
 
 	const navigation = useNavigation();
 	const { lista } = route.params as RouteParams;
@@ -29,6 +34,26 @@ export function ListOS() {
 
 	function handleShowOSDetail(numberOS: string) {
 		return navigation.navigate("detailos", { numberOS });
+	}
+
+	function handleQRCode() {
+		navigation.navigate("leitorqrcode");
+		console.log("Abrindo Câmera");
+	}
+
+	function handleOpenModal() {
+		setModalVisible(true);
+		console.log("Abrindo Modal");
+	}
+
+	function handleCloseModal() {
+		setModalVisible(false);
+	}
+
+	function handleAddAtivo() {
+		console.log("Adicionando Ativo");
+
+		setModalVisible(false);
 	}
 
 	return (
@@ -50,6 +75,28 @@ export function ListOS() {
 
 				<View className="flex-1 mx-7">
 					<ScrollView showsVerticalScrollIndicator={false}>
+						<View className="flex-row justify-between mt-5">
+							<Button
+								text="Escanear Ativo"
+								fontSize={12}
+								borderRadius={5}
+								marginBottom={8}
+								callFunc={handleQRCode}
+							></Button>
+							<ButtonFilled
+								text="Inserir Código Ativo"
+								fontSize={12}
+								borderRadius={5}
+								callFunc={handleOpenModal}
+							></ButtonFilled>
+							<ModalInserir
+								textItem="Insira o código"
+								buttonText="Buscar"
+								modalVisible={modalVisible}
+								fecharModal={handleCloseModal}
+								adicionarItem={handleAddAtivo}
+							/>
+						</View>
 						{listaDeOS.map((OS: OS) => (
 							<Card
 								key={OS.id}

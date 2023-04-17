@@ -19,11 +19,7 @@ type RouteParams = {
 export function DetailOS() {
 	const { listaDeOS, setListaDeOS } = useContext(Context);
 	const [objectInfo, setObjectInfo] = useState({});
-	const ListaAtivos = [
-		{ id: 1, nameAtivo: "Ativo 1", value: "R$1000,00" },
-		{ id: 2, nameAtivo: "Ativo 2", value: "R$1000,00" },
-		{ id: 3, nameAtivo: "Ativo 3", value: "R$1000,00" },
-	];
+	const ListaAtivos = [{ id: 1, nameAtivo: "Ativo 1", value: "R$1000,00" }];
 	const [modalVisible, setModalVisible] = useState(false);
 
 	const navigation = useNavigation();
@@ -90,91 +86,67 @@ export function DetailOS() {
 				</View>
 
 				<View className="flex-1 mx-7">
-					<ScrollView showsVerticalScrollIndicator={false}>
-						<View className="bg-[#2B3049] rounded-xl mb-7">
-							<View className="bg-[#2B3049] rounded-xl py-2 pl-3">
-								<Text className="text-[#FFF] text-base font-OpenSansBold ">
-									Informações
-								</Text>
-							</View>
-							<View className="bg-[#459EE8] rounded-bl-xl rounded-br-xl px-5 py-6">
-								<Text className="text-[#2B3049] text-base font-OpenSansBold mb-4">
-									{objectInfo.cliente}
-								</Text>
-								<Text className="text-[#2B3049] text-sm font-OpenSansRegular mb-5">
-									CNPJ: {objectInfo.cnpj}
-								</Text>
-								<View className="flex-row justify-between mb-3">
-									<View className="flex-1 mr-2">
-										<Text className="text-[#2B3049] text-sm font-OpenSansBold mb-1">
-											Cidade:
-										</Text>
-										<Text className="text-[#2B3049] text-sm font-OpenSansRegular">
-											{objectInfo.cidade}
-										</Text>
-									</View>
-									<View className="flex-1 mr-2">
-										<Text className="text-[#2B3049] text-sm font-OpenSansBold mb-1">
-											Demandante:
-										</Text>
-										<Text className="text-[#2B3049] text-sm font-OpenSansRegular">
-											{objectInfo.demandante}
-										</Text>
-									</View>
+					<View className="bg-[#2B3049] rounded-xl mb-7">
+						<View className="bg-[#2B3049] rounded-xl py-2 pl-3">
+							<Text className="text-[#FFF] text-base font-OpenSansBold ">
+								Informações
+							</Text>
+						</View>
+						<View className="bg-[#459EE8] rounded-bl-xl rounded-br-xl px-5 py-6">
+							<Text className="text-[#2B3049] text-base font-OpenSansBold mb-4">
+								{objectInfo.cliente}
+							</Text>
+							<Text className="text-[#2B3049] text-sm font-OpenSansRegular mb-5">
+								CNPJ: {objectInfo.cnpj}
+							</Text>
+							<View className="flex-row justify-between mb-3">
+								<View className="flex-1 mr-2">
+									<Text className="text-[#2B3049] text-sm font-OpenSansBold mb-1">
+										Cidade:
+									</Text>
+									<Text className="text-[#2B3049] text-sm font-OpenSansRegular">
+										{objectInfo.cidade}
+									</Text>
 								</View>
-								<View className="flex-row justify-between mb-3">
-									<View className="flex-1 mr-2">
-										<Text className="text-[#2B3049] text-sm font-OpenSansBold mb-1">
-											Telefone
-										</Text>
-										<Text className="text-[#2B3049] text-sm font-OpenSansRegular">
-											{objectInfo.telefone}
-										</Text>
-									</View>
-									<View className="flex-1 mr-2">
-										<Text className="text-[#2B3049] text-sm font-OpenSansBold mb-1">
-											Data da Solicitação:
-										</Text>
-										<Text className="text-[#2B3049] text-sm font-OpenSansRegular">
-											{objectInfo.data}
-										</Text>
-									</View>
+								<View className="flex-1 mr-2">
+									<Text className="text-[#2B3049] text-sm font-OpenSansBold mb-1">
+										Demandante:
+									</Text>
+									<Text className="text-[#2B3049] text-sm font-OpenSansRegular">
+										{objectInfo.demandante}
+									</Text>
+								</View>
+							</View>
+							<View className="flex-row justify-between mb-3">
+								<View className="flex-1 mr-2">
+									<Text className="text-[#2B3049] text-sm font-OpenSansBold mb-1">
+										Telefone
+									</Text>
+									<Text className="text-[#2B3049] text-sm font-OpenSansRegular">
+										{objectInfo.telefone}
+									</Text>
+								</View>
+								<View className="flex-1 mr-2">
+									<Text className="text-[#2B3049] text-sm font-OpenSansBold mb-1">
+										Data da Solicitação:
+									</Text>
+									<Text className="text-[#2B3049] text-sm font-OpenSansRegular">
+										{objectInfo.data}
+									</Text>
 								</View>
 							</View>
 						</View>
+					</View>
 
-						{ListaAtivos.map((listaAtivos) => (
-							<ImageCard
-								key={listaAtivos.id}
-								id={listaAtivos.id}
-								nameAtivo={listaAtivos.nameAtivo}
-								value={listaAtivos.value}
-								callFunc={() => handleShowAtivo(listaAtivos.id)}
-							></ImageCard>
-						))}
-						<View className="mb-10">
-							<Button
-								text="Escanear Ativo"
-								fontSize={12}
-								borderRadius={5}
-								marginBottom={8}
-								callFunc={handleQRCode}
-							></Button>
-							<ButtonFilled
-								text="Inserir Código Ativo"
-								fontSize={12}
-								borderRadius={5}
-								callFunc={handleOpenModal}
-							></ButtonFilled>
-							<ModalInserir
-								textItem="Insira o código"
-								buttonText="Buscar"
-								modalVisible={modalVisible}
-								fecharModal={handleCloseModal}
-								adicionarItem={handleAddAtivo}
-							/>
-						</View>
-					</ScrollView>
+					{ListaAtivos.map((listaAtivos) => (
+						<ImageCard
+							key={listaAtivos.id}
+							id={listaAtivos.id}
+							nameAtivo={listaAtivos.nameAtivo}
+							value={listaAtivos.value}
+							callFunc={() => handleShowAtivo(listaAtivos.id)}
+						></ImageCard>
+					))}
 				</View>
 			</ImageBackground>
 		</View>
