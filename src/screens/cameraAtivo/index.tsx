@@ -88,7 +88,11 @@ export function CameraAtivo() {
 					transparent={false}
 					visible={open}
 				>
-					<View>
+					<View className="mt-32">
+						<BackButton callFunc={handleCallPreviousPage} />
+						<TouchableOpacity onPress={handleCallPreviousPage}>
+							<Text className="font-OpenSansBold text-xl">Voltar</Text>
+						</TouchableOpacity>
 						<Image
 							className="w-100, h-[300] rounded-5"
 							source={{ uri: photoTaken }}
