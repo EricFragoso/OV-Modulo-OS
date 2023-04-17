@@ -1,7 +1,7 @@
 import { Text, View, ScrollView, Image, ImageBackground } from "react-native";
 
 import { Card } from "../../components/card";
-import React, { useContext, useEffect } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { useNavigation, useRoute } from "@react-navigation/native";
 import { MenuHamburger } from "../../components/menuHamburger";
 import OS from "OSTypeCard";
@@ -13,10 +13,15 @@ type RouteParams = {
 
 export function ListOS() {
 	const route = useRoute();
+	const [refresh, setRefresh] = useState(false);
 	const { listaDeOS, setListaDeOS } = useContext(Context);
 
 	const navigation = useNavigation();
 	const { lista } = route.params as RouteParams;
+
+	const handleRefresh = () => {
+		setRefresh(!refresh);
+	};
 
 	useEffect(() => {
 		console.log(lista);
@@ -40,7 +45,7 @@ export function ListOS() {
 					<Text className="flex-1 text-center font-OpenSansBold text-3xl">
 						Lista de OS
 					</Text>
-					<MenuHamburger />
+					<MenuHamburger onRefresh={handleRefresh} />
 				</View>
 
 				<View className="flex-1 mx-7">
