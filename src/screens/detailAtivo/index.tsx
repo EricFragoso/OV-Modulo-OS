@@ -55,7 +55,7 @@ export function DetailAtivo() {
 				setListaDeAtivos(listAtivo);
 
 				const findObject = listaDeAtivos.find(
-					(ativo: Ativo) => ativo.cliente === "64.332.252/0001-09"
+					(ativo: Ativo) => ativo.id === "cad0c4e3-3029-4414-8aae-91876797396c"
 				);
 				console.log(findObject);
 
