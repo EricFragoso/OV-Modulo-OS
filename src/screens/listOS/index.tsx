@@ -9,6 +9,7 @@ import Context from "../../../Context";
 import { Button } from "../../components/button";
 import { ButtonFilled } from "../../components/buttonFilled";
 import { ModalInserir } from "../modalInserirItem";
+import { ModalBuscar } from "../modalBuscarItem";
 
 type RouteParams = {
 	lista: [];
@@ -89,7 +90,7 @@ export function ListOS() {
 								borderRadius={5}
 								callFunc={handleOpenModal}
 							></ButtonFilled>
-							<ModalInserir
+							<ModalBuscar
 								textItem="Insira o código"
 								buttonText="Buscar"
 								modalVisible={modalVisible}
@@ -100,10 +101,10 @@ export function ListOS() {
 						{listaDeOS.map((OS: OS) => (
 							<Card
 								key={OS.id}
-								numberOS={OS.id}
+								numberOS={OS.numero}
 								client={OS.cliente}
 								name={OS.demandante}
-								callFunc={() => handleShowOSDetail(OS.id)}
+								callFunc={() => handleShowOSDetail(OS.numero)}
 							/>
 						))}
 					</ScrollView>

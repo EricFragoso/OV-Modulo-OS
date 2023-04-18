@@ -25,9 +25,30 @@ export default function LeitorQRCode() {
 		navigation.goBack();
 	}
 
+	function extractOSNumber(str: string) {
+		const parts = str.split(",");
+		const osPart = parts.find((part) => part.includes("OS:"));
+		console.log(osPart);
+
+		if (osPart) {
+			const match = osPart.match(/OS:\s*(\d+)/);
+			const numberOS = match?.[1];
+
+			if (numberOS) {
+				console.log(numberOS);
+
+				navigation.navigate("detailos", { numberOS });
+			}
+		} else {
+			alert("QR Code Inválido");
+		}
+
+		return undefined;
+	}
+
 	const handleBarCodeScanned = ({ data }) => {
 		setScanned(true);
-		alert(`Os dados ${data} foram salvos`);
+		extractOSNumber(data);
 	};
 
 	if (hasPermission === null) {

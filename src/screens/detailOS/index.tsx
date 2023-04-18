@@ -20,14 +20,13 @@ export function DetailOS() {
 	const { listaDeOS, setListaDeOS } = useContext(Context);
 	const [objectInfo, setObjectInfo] = useState({});
 	const ListaAtivos = [{ id: 1, nameAtivo: "Ativo 1", value: "R$1000,00" }];
-	const [modalVisible, setModalVisible] = useState(false);
 
 	const navigation = useNavigation();
 	const route = useRoute();
 	const { numberOS } = route.params as RouteParams;
 
 	useEffect(() => {
-		const findObject = listaDeOS.find((OS: OS) => OS.id === numberOS);
+		const findObject = listaDeOS.find((OS: OS) => OS.numero === numberOS);
 		setObjectInfo(findObject);
 		console.log(objectInfo);
 	}, []);
@@ -39,26 +38,6 @@ export function DetailOS() {
 
 	function handleCallPreviousPage() {
 		navigation.goBack();
-	}
-
-	function handleQRCode() {
-		navigation.navigate("leitorqrcode");
-		console.log("Abrindo Câmera");
-	}
-
-	function handleOpenModal() {
-		setModalVisible(true);
-		console.log("Abrindo Modal");
-	}
-
-	function handleAddAtivo() {
-		console.log("Adicionando Ativo");
-
-		setModalVisible(false);
-	}
-
-	function handleCloseModal() {
-		setModalVisible(false);
 	}
 
 	return (
