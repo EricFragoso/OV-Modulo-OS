@@ -1,5 +1,6 @@
 declare module "ativoType" {
 	class Ativo {
+		id: string;
 		qr: string;
 		cliente: string;
 		status?: string;

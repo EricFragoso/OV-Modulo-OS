@@ -43,7 +43,7 @@ export function ModalInserir(props: Props) {
 					</View>
 					<TextInput
 						onChangeText={setItem}
-						className="mt-2 mb-2 w-60 h-10 rounded-md bg-white border-[1.5px] border-[#459EE8] text-white pl-2 text-base"
+						className="mt-2 mb-2 w-60 h-10 rounded-md bg-white border-[1.5px] border-[#459EE8] text-black pl-2 text-base"
 					/>
 					<ButtonFilled
 						text={props.buttonText}
