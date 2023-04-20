@@ -31,7 +31,7 @@ export default function LeitorQRCode() {
 		console.log(osPart);
 
 		if (osPart) {
-			const match = osPart.match(/OS:\s*(\d+)/);
+			const match = osPart.match(/osNumero =\s*(\d+)/);
 			const numberOS = match?.[1];
 
 			if (numberOS) {

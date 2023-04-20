@@ -9,6 +9,7 @@ type Props = {
 	listText?: Array<string>;
 	modalText: string;
 	callFunc?: () => void;
+	onAddItem?: (item: string) => void;
 };
 
 export function CardInfo(props: Props) {
@@ -27,8 +28,11 @@ export function CardInfo(props: Props) {
 			bodyListText.pop();
 		}
 		console.log("Adicionando Ativo");
-		bodyListText.push(item);
+		//bodyListText.push(item);
 		setModalVisible(false);
+		if (props.onAddItem) {
+			props.onAddItem(item); // Chamando onAddItem
+		}
 	}
 
 	function handleCloseModal() {
