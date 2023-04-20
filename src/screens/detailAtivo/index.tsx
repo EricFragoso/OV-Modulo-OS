@@ -9,6 +9,7 @@ import {
 	Alert,
 } from "react-native";
 import { TextInput } from "react-native-gesture-handler";
+import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 
 import { BackButton } from "../../components/backButton";
 import { Button } from "../../components/button";
@@ -89,6 +90,7 @@ export function DetailAtivo() {
 					</Text>
 					<MenuHamburger />
 				</View>
+
 				<View className="flex-row p-6">
 					<BackButton callFunc={handleCallPreviousPage}></BackButton>
 					<Text className="flex-1 text-2xl font-OpenSansBold text-center">
@@ -97,37 +99,41 @@ export function DetailAtivo() {
 				</View>
 				<View className="flex-1 px-7 w-full">
 					<ScrollView showsVerticalScrollIndicator={false}>
-						<CardInfo
-							headerText="Atendentes"
-							modalText="Insira o atendente"
-							listText={listAtendentes}
-						/>
-						<CardInfo
-							headerText="Serviços Executados"
-							modalText="Insira o Serviço"
-							listText={listServicos}
-						/>
-						<CardInfo
-							headerText="Peças Repostas"
-							modalText="Insira a Peça"
-							listText={listPecas}
-						/>
-						<View className="bg-[#2B3049] rounded-xl mb-7">
-							<View className="bg-[#2B3049] rounded-xl py-2 pl-3">
-								<Text className="text-white text-base font-OpenSansBold">
-									Detalhes
-								</Text>
-							</View>
-							<View className="bg-[#459EE8] rounded-b-xl px-5 py-4">
-								<Text className="font-OpenSansMedium mb-1">Laudo</Text>
-								<TextInput
-									className="w-full h-[60px] rounded-md bg-white text-[#000] pl-2 text-xs font-OpenSansRegular"
-									multiline
-									placeholder="Descreva"
-									placeholderTextColor={"#999999"}
-									onChangeText={(inputText) => setUserCode(inputText)}
-								/>
-								{/*	<View>
+						<KeyboardAwareScrollView
+							enableOnAndroid
+							extraScrollHeight={230}
+						>
+							<CardInfo
+								headerText="Atendentes"
+								modalText="Insira o atendente"
+								listText={listAtendentes}
+							/>
+							<CardInfo
+								headerText="Serviços Executados"
+								modalText="Insira o Serviço"
+								listText={listServicos}
+							/>
+							<CardInfo
+								headerText="Peças Repostas"
+								modalText="Insira a Peça"
+								listText={listPecas}
+							/>
+							<View className="bg-[#2B3049] rounded-xl mb-7">
+								<View className="bg-[#2B3049] rounded-xl py-2 pl-3">
+									<Text className="text-white text-base font-OpenSansBold">
+										Detalhes
+									</Text>
+								</View>
+								<View className="bg-[#459EE8] rounded-b-xl px-5 py-4">
+									<Text className="font-OpenSansMedium mb-1">Laudo</Text>
+									<TextInput
+										className="w-full h-[60px] rounded-md bg-white text-[#000] pl-2 text-xs font-OpenSansRegular"
+										multiline
+										placeholder="Descreva"
+										placeholderTextColor={"#999999"}
+										onChangeText={(inputText) => setUserCode(inputText)}
+									/>
+									{/*	<View>
 								<Text>Estado de conservação do aparelho</Text>
 								<RadioButton
 									value="30 Dias"
@@ -152,21 +158,22 @@ export function DetailAtivo() {
 							<View>
 								<Text>Fotos</Text>
 							</View>*/}
+								</View>
 							</View>
-						</View>
-						<View className="flex-row justify-center items-center mb-10">
-							{/*<ButtonFilled
+							<View className="flex-row justify-center items-center mb-10">
+								{/*<ButtonFilled
 								borderRadius={5}
 								text="Tirar Foto"
 								callFunc={handleTirarFoto}
 								fontSize={20}
 							/>*/}
-							<Button
-								borderRadius={5}
-								text="Salvar"
-								callFunc={handleSalvarDetalhamento}
-							/>
-						</View>
+								<Button
+									borderRadius={5}
+									text="Salvar"
+									callFunc={handleSalvarDetalhamento}
+								/>
+							</View>
+						</KeyboardAwareScrollView>
 					</ScrollView>
 				</View>
 			</ImageBackground>
