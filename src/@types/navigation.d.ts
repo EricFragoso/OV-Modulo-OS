@@ -9,7 +9,7 @@ export declare global {
 				numberOS: string;
 			};
 			detailativo: {
-				idAtivo: number;
+				idAtivo: string;
 			};
 			leitorqrcode: undefined;
 			cameraativo: undefined;

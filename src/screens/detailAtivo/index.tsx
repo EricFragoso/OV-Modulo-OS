@@ -61,12 +61,14 @@ export function DetailAtivo() {
 			} else {
 				setListaDeAtivos(listAtivo);
 
-				const findObject = listaDeAtivos.find(
-					(ativo: Ativo) => ativo.id === "cad0c4e3-3029-4414-8aae-91876797396c"
-				);
+				const findObject = listaDeAtivos.find((ativo) => {
+					const match = ativo.qr.match(/ID: (\d+)/);
+					return match !== null ? match[1] : null;
+				});
+
 				console.log(findObject);
 
-				setObjectInfo(findObject);
+				setObjectInfo(findObject.id);
 			}
 		});
 	}
@@ -119,6 +121,8 @@ export function DetailAtivo() {
 	}
 
 	useEffect(() => {
+		getListAtivo();
+
 		async function getLocalData() {
 			try {
 				const atendentesData = await AsyncStorage.getItem("atendentes");

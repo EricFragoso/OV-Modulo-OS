@@ -27,17 +27,18 @@ export default function LeitorQRCode() {
 
 	function extractOSNumber(str: string) {
 		const parts = str.split(",");
-		const osPart = parts.find((part) => part.includes("OS:"));
+		const osPart = parts.find((part) => part.includes("ID:"));
+		console.log("PARTE AQUI!!");
 		console.log(osPart);
 
 		if (osPart) {
-			const match = osPart.match(/osNumero =\s*(\d+)/);
-			const numberOS = match?.[1];
+			const match = osPart.match(/ID:\s*(\d+)/);
+			const idAtivo = match?.[1];
+			console.log(idAtivo);
 
-			if (numberOS) {
-				console.log(numberOS);
-
-				navigation.navigate("detailos", { numberOS });
+			if (idAtivo) {
+				console.log(idAtivo);
+				navigation.navigate("detailativo", { idAtivo });
 			}
 		} else {
 			alert("QR Code Inválido");
@@ -47,6 +48,10 @@ export default function LeitorQRCode() {
 	}
 
 	const handleBarCodeScanned = ({ data }) => {
+		console.log("QRCODE AQUI!!");
+
+		console.log(data);
+
 		setScanned(true);
 		extractOSNumber(data);
 	};

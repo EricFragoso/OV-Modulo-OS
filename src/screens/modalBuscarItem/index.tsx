@@ -27,17 +27,7 @@ export function ModalBuscar(props: Props) {
 
 	const addCloseModal = () => {
 		props.adicionarItem(item);
-		if (
-			item == "546798445as" ||
-			item == "29" ||
-			item == "33" ||
-			item == "35" ||
-			item == "5467984458"
-		) {
-			navigation.navigate("detailos", { numberOS: item });
-		} else {
-			Alert.alert("Atenção", "Nenhuma OS cadastrada");
-		}
+		navigation.navigate("detailos", { numberOS: item });
 		setItem("");
 		props.fecharModal();
 	};

@@ -1,7 +1,15 @@
-import { Text, View, ScrollView, Image, ImageBackground } from "react-native";
+import {
+	Text,
+	View,
+	ScrollView,
+	Image,
+	Alert,
+	ImageBackground,
+} from "react-native";
 import React, { useState, useContext, useEffect } from "react";
 import { ModalInserir } from "../modalInserirItem";
 import { useNavigation, useRoute } from "@react-navigation/native";
+import axios from "axios";
 
 import { ImageCard } from "../../components/imageCard";
 import { BackButton } from "../../components/backButton";
@@ -17,7 +25,10 @@ type RouteParams = {
 };
 
 export function DetailOS() {
+	const baseURL = "https://overview-os-api.onrender.com";
+
 	const { listaDeOS, setListaDeOS } = useContext(Context);
+	const [listaDeAtivos, setListaDeAtivos] = useState([]);
 	const [objectInfo, setObjectInfo] = useState({});
 	const ListaAtivos = [{ id: 1, nameAtivo: "Ativo 1", value: "R$1000,00" }];
 
@@ -26,12 +37,37 @@ export function DetailOS() {
 	const { numberOS } = route.params as RouteParams;
 
 	useEffect(() => {
+		getListAtivo();
 		const findObject = listaDeOS.find((OS: OS) => OS.numero === numberOS);
 		setObjectInfo(findObject);
 		console.log(objectInfo);
 	}, []);
 
-	function handleShowAtivo(idAtivo: number) {
+	function getListAtivo() {
+		const urlListaAtivo = `${baseURL}/ativo`;
+		axios.get(urlListaAtivo).then((response) => {
+			const listAtivo = response.data;
+
+			console.log("------LISTA DE ATIVOS------");
+
+			if (!listAtivo) {
+				return Alert.alert("Atenção", "Nenhum ativo cadastrado");
+			} else {
+				setListaDeAtivos(listAtivo);
+
+				const findObjectAtivo = listaDeAtivos.find((ativo) => {
+					const match = ativo.qr.match(/ID: (\d+)/);
+					return match !== null ? match[1] : null;
+				});
+				console.log("------LISTA OBJETO------");
+				console.log(findObjectAtivo);
+
+				setObjectInfo(findObjectAtivo);
+			}
+		});
+	}
+
+	function handleShowAtivo(idAtivo: string) {
 		console.log(idAtivo);
 		navigation.navigate("detailativo", { idAtivo });
 	}
