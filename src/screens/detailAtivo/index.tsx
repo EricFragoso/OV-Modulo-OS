@@ -154,13 +154,13 @@ export function DetailAtivo() {
 							</View>*/}
 							</View>
 						</View>
-						<View className="flex-row justify-between items-center mb-10">
-							<ButtonFilled
+						<View className="flex-row justify-center items-center mb-10">
+							{/*<ButtonFilled
 								borderRadius={5}
 								text="Tirar Foto"
 								callFunc={handleTirarFoto}
 								fontSize={20}
-							/>
+							/>*/}
 							<Button
 								borderRadius={5}
 								text="Salvar"

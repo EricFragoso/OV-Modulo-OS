@@ -51,7 +51,7 @@ export function ListOS() {
 		setModalVisible(false);
 	}
 
-	function handleAddAtivo() {
+	function handleBuscarAtivo() {
 		console.log("Adicionando Ativo");
 
 		setModalVisible(false);
@@ -85,7 +85,7 @@ export function ListOS() {
 								callFunc={handleQRCode}
 							></Button>
 							<ButtonFilled
-								text="Inserir Código Ativo"
+								text="Inserir Código da OS"
 								fontSize={12}
 								borderRadius={5}
 								callFunc={handleOpenModal}
@@ -95,7 +95,7 @@ export function ListOS() {
 								buttonText="Buscar"
 								modalVisible={modalVisible}
 								fecharModal={handleCloseModal}
-								adicionarItem={handleAddAtivo}
+								adicionarItem={handleBuscarAtivo}
 							/>
 						</View>
 						{listaDeOS.map((OS: OS) => (

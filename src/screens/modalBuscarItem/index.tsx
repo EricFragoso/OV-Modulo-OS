@@ -1,5 +1,12 @@
 import React, { useState } from "react";
-import { Modal, View, Text, TextInput, TouchableOpacity } from "react-native";
+import {
+	Modal,
+	View,
+	Text,
+	TextInput,
+	TouchableOpacity,
+	Alert,
+} from "react-native";
 import { styles } from "./styles";
 import Icon from "react-native-vector-icons/Feather";
 import { Button } from "../../components/button";
@@ -20,7 +27,17 @@ export function ModalBuscar(props: Props) {
 
 	const addCloseModal = () => {
 		props.adicionarItem(item);
-		navigation.navigate("detailos", { numberOS: item });
+		if (
+			item == "546798445as" ||
+			item == "29" ||
+			item == "33" ||
+			item == "35" ||
+			item == "5467984458"
+		) {
+			navigation.navigate("detailos", { numberOS: item });
+		} else {
+			Alert.alert("Atenção", "Nenhuma OS cadastrada");
+		}
 		setItem("");
 		props.fecharModal();
 	};
