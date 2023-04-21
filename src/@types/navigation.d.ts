@@ -6,7 +6,7 @@ export declare global {
 				lista: Array[];
 			};
 			detailos: {
-				numberOS: string;
+				ID: string;
 			};
 			detailativo: {
 				idAtivo: string;

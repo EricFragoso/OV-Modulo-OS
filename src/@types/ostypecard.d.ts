@@ -2,6 +2,7 @@ declare module "OSTypeCard" {
 	class OS {
 		id: string;
 		numero: string;
+		ativoNumero: string;
 		cliente: string;
 		infoCliente?: string;
 		demandante?: string;

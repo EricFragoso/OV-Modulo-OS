@@ -28,15 +28,10 @@ export default function LeitorQRCode() {
 	function extractIDNumber(str: string) {
 		const parts = str.split(",");
 		const idPart = parts.find((part) => part.includes("ID:"));
-		const osPart = parts.find((part) => part.includes("ID:"));
-		console.log("PARTE AQUI!!");
-		console.log(osPart);
 
 		if (idPart) {
 			const match = idPart.match(/ID =\s*(\d+)/);
 			const ID = match?.[0];
-
-			console.log(match);
 			if (ID) {
 				navigation.navigate("detailos", { ID });
 			}
@@ -48,10 +43,6 @@ export default function LeitorQRCode() {
 	}
 
 	const handleBarCodeScanned = ({ data }) => {
-		console.log("QRCODE AQUI!!");
-
-		console.log(data);
-
 		setScanned(true);
 		extractIDNumber(data);
 	};

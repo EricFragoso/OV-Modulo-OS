@@ -3,11 +3,11 @@ declare module "ativoType" {
 		id: string;
 		qr: string;
 		cliente: string;
-		status?: string;
 		BTU?: string;
 		anoFabricacao?: timestamp;
 		produto?: string;
 		contrato?: string;
+		created_at?: timestamp;
 	}
 	export = Ativo;
 }
