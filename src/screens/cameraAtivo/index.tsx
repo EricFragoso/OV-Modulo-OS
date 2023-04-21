@@ -37,7 +37,7 @@ export function CameraAtivo() {
 			const data = await camRef.current.takePictureAsync();
 			setPhotoTaken(data.uri);
 			setOpen(true);
-			console.log(data);
+			console.log(`o resultado da QR é: ${data}`);
 		}
 	}
 
