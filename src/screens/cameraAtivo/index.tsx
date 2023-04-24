@@ -37,11 +37,14 @@ export function CameraAtivo() {
 			const data = await camRef.current.takePictureAsync();
 			setPhotoTaken(data.uri);
 			setOpen(true);
-			console.log(data);
+			console.log(`o resultado da QR é: ${data}`);
 		}
 	}
 
 	function handleCallPreviousPage() {
+		navigation.goBack();
+	}
+	function handleCallPreviousPageCam() {
 		navigation.goBack();
 	}
 
@@ -70,7 +73,7 @@ export function CameraAtivo() {
 				</View>
 				<View className="px-5">
 					<Camera
-						className="h-4/6 mb-5"
+						className="my-10 w-full h-[60%] border-[#459EE8] border-4"
 						type={type}
 						ref={camRef}
 					></Camera>
@@ -84,13 +87,20 @@ export function CameraAtivo() {
 
 			{photoTaken && (
 				<Modal
+					className="w-8"
 					animationType="slide"
 					transparent={false}
 					visible={open}
 				>
+					<View className="mt-32 flex-row">
+						<BackButton callFunc={handleCallPreviousPageCam} />
+						<TouchableOpacity onPress={handleCallPreviousPageCam}>
+							<Text className="font-OpenSansBold text-xl">Voltar</Text>
+						</TouchableOpacity>
+					</View>
 					<View>
 						<Image
-							className="w-100, h-[300] rounded-5"
+							className="w-[90%] h-[65%] ml-5"
 							source={{ uri: photoTaken }}
 						/>
 					</View>

@@ -3,7 +3,7 @@ import { View, Text, TouchableOpacity, TouchableHighlight } from "react-native";
 import Icon from "react-native-vector-icons/Feather";
 
 type Props = {
-	numberOS: number;
+	numberOS: string;
 	client: string;
 	name: string;
 	callFunc: () => void;

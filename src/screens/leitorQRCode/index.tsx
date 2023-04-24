@@ -25,9 +25,26 @@ export default function LeitorQRCode() {
 		navigation.goBack();
 	}
 
+	function extractIDNumber(str: string) {
+		const parts = str.split(",");
+		const idPart = parts.find((part) => part.includes("ID:"));
+
+		if (idPart) {
+			const match = idPart.match(/ID =\s*(\d+)/);
+			const ID = match?.[0];
+			if (ID) {
+				navigation.navigate("detailos", { ID });
+			}
+		} else {
+			alert("QR Code Inválido");
+		}
+
+		return undefined;
+	}
+
 	const handleBarCodeScanned = ({ data }) => {
 		setScanned(true);
-		alert(`Os dados ${data} foram salvos`);
+		extractIDNumber(data);
 	};
 
 	if (hasPermission === null) {
@@ -38,28 +55,33 @@ export default function LeitorQRCode() {
 	}
 
 	return (
-		<View style={styles.container}>
+		<View className="flex-1 w-full bg-white items-center">
 			<ImageBackground
-				style={styles.background}
+				className="flex-1 w-full items-center justify-center"
 				source={require("../../assets/img/Overview-50-BG.png")}
 			>
-				<View style={styles.header}>
+				<View className="w-full h-32 flex-row justify-between items-center bg-[#459EE8] pt-[52px] px-8">
 					<Image
-						style={styles.imagem}
+						className="h-11 w-11"
 						source={require("../../assets/img/CG-Preto.png")}
 					/>
-					<Text style={styles.headerText}>Escanear Ativo</Text>
+					<Text className="flex-1 text-center font-OpenSansBold text-[28px]">
+						Escanear Ativo
+					</Text>
 					<MenuHamburger />
 				</View>
 
-				<View style={styles.content}>
-					<View style={styles.headerQR}>
+				<View className="flex-1 w-[80%]">
+					<View className="flex-row my-6 px-7 items-center">
 						<BackButton callFunc={handleCallPreviousPage}></BackButton>
-						<Text style={styles.headerQRText}> Leitor de QR Code</Text>
+						<Text className="flex-1 text-2xl font-OpenSansBold text-center">
+							{" "}
+							Leitor de QR Code
+						</Text>
 					</View>
 
 					<BarCodeScanner
-						style={styles.camera}
+						className="my-10 w-full h-[45%] border-[#459EE8] border-4"
 						onBarCodeScanned={scanned ? undefined : handleBarCodeScanned}
 					/>
 					{scanned && (

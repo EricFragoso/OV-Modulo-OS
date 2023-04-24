@@ -1,9 +1,17 @@
 import React, { useState } from "react";
-import { Modal, View, Text, TextInput, TouchableOpacity } from "react-native";
+import {
+	Modal,
+	View,
+	Text,
+	TextInput,
+	TouchableOpacity,
+	Alert,
+} from "react-native";
 import { styles } from "./styles";
 import Icon from "react-native-vector-icons/Feather";
 import { Button } from "../../components/button";
 import { ButtonFilled } from "../../components/buttonFilled";
+import { useNavigation } from "@react-navigation/native";
 
 type Props = {
 	modalVisible: boolean;
@@ -13,11 +21,13 @@ type Props = {
 	adicionarItem: (item: string) => void;
 };
 
-export function ModalInserir(props: Props) {
+export function ModalBuscar(props: Props) {
 	const [item, setItem] = useState("");
+	const navigation = useNavigation();
 
 	const addCloseModal = () => {
 		props.adicionarItem(item);
+		navigation.navigate("detailos", { numberOS: item });
 		setItem("");
 		props.fecharModal();
 	};
@@ -42,8 +52,9 @@ export function ModalInserir(props: Props) {
 						</TouchableOpacity>
 					</View>
 					<TextInput
+						keyboardType="numeric"
 						onChangeText={setItem}
-						className="mt-2 mb-2 w-60 h-10 rounded-md bg-white border-[1.5px] border-[#459EE8] text-black pl-2 text-base"
+						className="mt-2 mb-2 w-60 h-10 rounded-md bg-white border-[1.5px] border-[#459EE8] text-black pl-2 text-base items-center"
 					/>
 					<ButtonFilled
 						text={props.buttonText}

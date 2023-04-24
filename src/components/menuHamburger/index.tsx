@@ -3,8 +3,13 @@ import { TouchableOpacity, View } from "react-native";
 import Icon from "react-native-vector-icons/Feather";
 import { ModalMenu } from "../../screens/modalMenu";
 
-export function MenuHamburger() {
+export function MenuHamburger({ onRefresh = null }) {
 	const [modalVisible, setModalVisible] = useState(false);
+	const handleRefresh = () => {
+		if (onRefresh) {
+			onRefresh();
+		}
+	};
 
 	function handleOpenModal() {
 		console.log("setando modal");
@@ -28,6 +33,7 @@ export function MenuHamburger() {
 			<ModalMenu
 				modalVisible={modalVisible}
 				fecharModal={handleCloseModal}
+				onRefresh={handleRefresh}
 			/>
 		</View>
 	);

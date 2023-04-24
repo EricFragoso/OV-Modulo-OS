@@ -1,44 +1,60 @@
 import { Text, View, ScrollView, Image, ImageBackground } from "react-native";
 
 import { Card } from "../../components/card";
-import React from "react";
-import { useNavigation } from "@react-navigation/native";
+import React, { useContext, useEffect, useState } from "react";
+import { useNavigation, useRoute } from "@react-navigation/native";
 import { MenuHamburger } from "../../components/menuHamburger";
+import OS from "OSTypeCard";
+import Context from "../../../Context";
+import { Button } from "../../components/button";
+import { ButtonFilled } from "../../components/buttonFilled";
+import { ModalInserir } from "../modalInserirItem";
+import { ModalBuscar } from "../modalBuscarItem";
+
+type RouteParams = {
+	lista: [];
+};
 
 export function ListOS() {
-	const ListaOS = [
-		{ numberOS: 1694, client: "Oceano Azul S.A.", name: "Ruan Morais" },
-		{
-			numberOS: 2784,
-			client: "Soluções Inovadoras Ltda.",
-			name: "João Luiz",
-		},
-		{
-			numberOS: 3213,
-			client: "Nova Horizonte Tecnologia Ltda.",
-			name: "Vitor Ramalho",
-		},
-		{
-			numberOS: 4024,
-			client: "Fortaleza Empreendimentos Imobiliários Ltda.",
-			name: "Pedro César",
-		},
-		{
-			numberOS: 5780,
-			client: "Vortex Consultoria e Treinamentos Ltda.",
-			name: "Roberto Delgado",
-		},
-		{
-			numberOS: 6302,
-			client: "Montanha de Ouro Investimentos S.A.",
-			name: "Luiz Santino",
-		},
-	];
+	const route = useRoute();
+
+	const [refresh, setRefresh] = useState(false);
+	const { listaDeOS, setListaDeOS } = useContext(Context);
+	const [modalVisible, setModalVisible] = useState(false);
 
 	const navigation = useNavigation();
+	const { lista } = route.params as RouteParams;
 
-	function handleShowOSDetail(numberOS: number) {
+	const handleRefresh = () => {
+		setRefresh(!refresh);
+	};
+
+	useEffect(() => {
+		console.log(lista);
+	});
+
+	function handleShowOSDetail(numberOS: string) {
 		return navigation.navigate("detailos", { numberOS });
+	}
+
+	function handleQRCode() {
+		navigation.navigate("leitorqrcode");
+		console.log("Abrindo Câmera");
+	}
+
+	function handleOpenModal() {
+		setModalVisible(true);
+		console.log("Abrindo Modal");
+	}
+
+	function handleCloseModal() {
+		setModalVisible(false);
+	}
+
+	function handleBuscarAtivo() {
+		console.log("Adicionando Ativo");
+
+		setModalVisible(false);
 	}
 
 	return (
@@ -55,19 +71,41 @@ export function ListOS() {
 					<Text className="flex-1 text-center font-OpenSansBold text-3xl">
 						Lista de OS
 					</Text>
-					<MenuHamburger />
+					<MenuHamburger onRefresh={handleRefresh} />
 				</View>
 
 				<View className="flex-1 mx-7">
 					<ScrollView showsVerticalScrollIndicator={false}>
-						{ListaOS.map((listaOS) => (
+						<View className="flex-row justify-between mt-5">
+							<Button
+								text="Escanear Ativo"
+								fontSize={12}
+								borderRadius={5}
+								marginBottom={8}
+								callFunc={handleQRCode}
+							></Button>
+							<ButtonFilled
+								text="Inserir Código da OS"
+								fontSize={12}
+								borderRadius={5}
+								callFunc={handleOpenModal}
+							></ButtonFilled>
+							<ModalBuscar
+								textItem="Insira o código"
+								buttonText="Buscar"
+								modalVisible={modalVisible}
+								fecharModal={handleCloseModal}
+								adicionarItem={handleBuscarAtivo}
+							/>
+						</View>
+						{listaDeOS.map((OS: OS) => (
 							<Card
-								key={listaOS.numberOS}
-								numberOS={listaOS.numberOS}
-								client={listaOS.client}
-								name={listaOS.name}
-								callFunc={() => handleShowOSDetail(listaOS.numberOS)}
-							></Card>
+								key={OS.id}
+								numberOS={OS.numero}
+								client={OS.cliente}
+								name={OS.demandante}
+								callFunc={() => handleShowOSDetail(OS.numero)}
+							/>
 						))}
 					</ScrollView>
 				</View>
