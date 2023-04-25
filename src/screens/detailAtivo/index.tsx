@@ -123,11 +123,11 @@ export function DetailAtivo() {
 
 	function montarSolucao(reposicao, servicos, atendentes, laudo, geoloc) {
 		let solucaoString = "Atendentes:\n";
-		atendentes.map((atendente) => (solucaoString += atendente));
+		atendentes.map((atendente) => (solucaoString += ", " + atendente));
 		solucaoString += "\n Serviços Realizados:\n ";
-		servicos.map((servico) => (solucaoString += servico));
+		servicos.map((servico) => (solucaoString += ", " + servico));
 		solucaoString += "\n Peças repostas:\n ";
-		reposicao.map((peca) => (solucaoString += peca));
+		reposicao.map((peca) => (solucaoString += ", " + peca));
 		solucaoString += `\n Laudo:\n ${laudo}`;
 		solucaoString += `\n Serviço realizado na localização:\n ${geoloc}`;
 
@@ -249,7 +249,7 @@ export function DetailAtivo() {
 									placeholderTextColor={"#999999"}
 									value={laudo}
 									onChangeText={setLaudo}
-									//onChangeText={(inputText) => setUserCode(inputText)}
+								//onChangeText={(inputText) => setUserCode(inputText)}
 								/>
 								{/*	<View>
 								<Text>Estado de conservação do aparelho</Text>
