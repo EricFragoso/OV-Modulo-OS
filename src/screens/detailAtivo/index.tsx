@@ -22,7 +22,8 @@ import axios from "axios";
 import Ativo from "ativoType";
 
 type RouteParams = {
-	idAtivo: number;
+	ID: string;
+	idAtivo: string;
 };
 
 export function DetailAtivo() {
@@ -32,15 +33,18 @@ export function DetailAtivo() {
 	const [checked, setChecked] = React.useState("30 Dias");
 	const [listaDeAtivos, setListaDeAtivos] = useState([]);
 	const [objectInfo, setObjectInfo] = useState({});
+	const [inicializacao, setInicializacao] = useState(0);
+	const [finalizacao, setFinalizacao] = useState(0);
 
 	const [atendentes, setAtendentes] = useState([]);
 	const [servicos, setServicos] = useState([]);
 	const [pecas, setPecas] = useState([]);
 	const [laudo, setLaudo] = useState("");
+	const [geoloc, setGeoloc] = useState("");
 
 	const navigation = useNavigation();
 	const route = useRoute();
-	const { idAtivo } = route.params as RouteParams;
+	const { ID, idAtivo } = route.params as RouteParams;
 
 	const listAtendentes = ["Vazio"];
 	const listServicos = ["Vazio"];
@@ -82,6 +86,8 @@ export function DetailAtivo() {
 	}
 
 	async function handleSalvarDetalhamento() {
+		setFinalizacao(Date.now());
+		setGeoloc("Ali");
 		try {
 			const dataAgora = new Date("2023-12-31");
 			const response = await axios.post(`${baseURL}/historico`, {
@@ -96,12 +102,38 @@ export function DetailAtivo() {
 			});
 			console.log(response.data);
 			Alert.alert("Sucesso", "Detalhamento salvo com sucesso!");
-			return response.data;
 		} catch (error) {
 			console.log(error.response.data);
 			Alert.alert("Erro", "Ocorreu um erro ao salvar o detalhamento.");
 		}
+		try {
+			const solucao = await axios.put(`${baseURL}/os`, {
+				inicio: new Date(inicializacao),
+				finalizacao: new Date(finalizacao),
+				numero: ID,
+				solucao: montarSolucao(pecas, servicos, atendentes, laudo, geoloc),
+				status: "FINALIZADO",
+			});
+			return solucao.data;
+		} catch (error) {
+			console.log(error.response.data);
+			Alert.alert("Erro", "Ocorreu um erro ao salvar a solução.");
+		}
 	}
+
+	function montarSolucao(reposicao, servicos, atendentes, laudo, geoloc) {
+		let solucaoString = "Atendentes:\n";
+		atendentes.map((atendente) => (solucaoString += atendente));
+		solucaoString += "\n Serviços Realizados:\n ";
+		servicos.map((servico) => (solucaoString += servico));
+		solucaoString += "\n Peças repostas:\n ";
+		reposicao.map((peca) => (solucaoString += peca));
+		solucaoString += `\n Laudo:\n ${laudo}`;
+		solucaoString += `\n Serviço realizado na localização:\n ${geoloc}`;
+
+		return solucaoString;
+	}
+
 	function handleTirarFoto() {
 		navigation.navigate("cameraativo");
 	}
@@ -123,6 +155,7 @@ export function DetailAtivo() {
 	}
 
 	useEffect(() => {
+		setInicializacao(Date.now());
 		getListAtivo();
 
 		async function getLocalData() {

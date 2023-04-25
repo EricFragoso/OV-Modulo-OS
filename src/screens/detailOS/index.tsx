@@ -61,8 +61,8 @@ export function DetailOS() {
 		});
 	}
 
-	function handleShowAtivo(idAtivo: string) {
-		navigation.navigate("detailativo", { idAtivo });
+	function handleShowAtivo(ID: string, idAtivo: string) {
+		navigation.navigate("detailativo", { ID, idAtivo });
 	}
 
 	function handleCallPreviousPage() {
@@ -154,7 +154,7 @@ export function DetailOS() {
 								id={idInfo}
 								nameAtivo={nameInfo}
 								value={btuInfo}
-								callFunc={() => handleShowAtivo(idInfo)}
+								callFunc={() => handleShowAtivo(ID, idInfo)}
 							></ImageCard>
 						</>
 					)}

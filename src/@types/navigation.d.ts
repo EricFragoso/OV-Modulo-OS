@@ -10,6 +10,7 @@ export declare global {
 				AtivoNumero: string;
 			};
 			detailativo: {
+				ID?: string;
 				idAtivo: string;
 			};
 			leitorqrcode: undefined;
