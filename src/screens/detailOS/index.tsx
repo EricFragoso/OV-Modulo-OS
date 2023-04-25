@@ -32,6 +32,7 @@ export function DetailOS() {
 	const { listaDeOS } = useContext(Context);
 	const [listaDeAtivos, setListaDeAtivos] = useState<Ativo>();
 	const [objectInfo, setObjectInfo] = useState<OS>();
+	const [btuInfo, setBtuInfo] = useState('');
 
 	const navigation = useNavigation();
 	const route = useRoute();
@@ -39,8 +40,10 @@ export function DetailOS() {
 
 	useEffect(() => {
 		const findObject = listaDeOS.find((OS: OS) => OS.numero === ID);
-		setObjectInfo(findObject);
 		getListAtivo();
+		setObjectInfo(findObject);
+
+
 	}, []);
 
 	async function getListAtivo() {
@@ -51,6 +54,8 @@ export function DetailOS() {
 				return Alert.alert("Atenção", "Nenhum ativo cadastrado");
 			} else {
 				setListaDeAtivos(listAtivo.ativo[0]);
+				setBtuInfo(listAtivo.ativo[0].BTU);
+				console.log(listAtivo.ativo[0].BTU);
 			}
 		});
 
@@ -145,11 +150,11 @@ export function DetailOS() {
 								</View>
 							</View>
 							<ImageCard
-								key={listaDeAtivos.id}
-								id={listaDeAtivos.numeroAtivo}
-								nameAtivo={listaDeAtivos.produto}
-								value={listaDeAtivos.BTU}
-								callFunc={() => handleShowAtivo(listaDeAtivos.numeroAtivo)}
+								key={btuInfo}
+								id={btuInfo}
+								nameAtivo={btuInfo}
+								value={btuInfo}
+								callFunc={() => handleShowAtivo(btuInfo)}
 							></ImageCard>
 						</>
 					)}
