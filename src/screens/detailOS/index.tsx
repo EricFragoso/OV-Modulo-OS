@@ -19,30 +19,18 @@ import { ButtonFilled } from "../../components/buttonFilled";
 import { MenuHamburger } from "../../components/menuHamburger";
 import Context from "../../../Context";
 import OS from "OSTypeCard";
+import Ativo from "ativoType";
 
 type RouteParams = {
 	ID: string;
-};
-
-type ativoInfo = {
-	id: string;
-	numeroAtivo: string;
-	qr: string;
-	cliente: string;
-	BTU: string;
-	anoFabricacao: string;
-	produto: string;
-	contrato: string;
-	created_at: string;
 };
 
 export function DetailOS() {
 	const baseURL = "https://overview-os-api.onrender.com";
 
 	const { listaDeOS } = useContext(Context);
-	const [listaDeAtivos, setListaDeAtivos] = useState([]);
+	const [listaDeAtivos, setListaDeAtivos] = useState<Ativo>();
 	const [objectInfo, setObjectInfo] = useState<OS>();
-	const ListaAtivos = [{ id: 1, nameAtivo: "Ativo 1", value: "R$1000,00" }];
 
 	const navigation = useNavigation();
 	const route = useRoute();
@@ -51,30 +39,26 @@ export function DetailOS() {
 	useEffect(() => {
 		const findObject = listaDeOS.find((OS: OS) => OS.numero === ID);
 		setObjectInfo(findObject);
-		console.log("info");
-		console.log(objectInfo);
-
 		getListAtivo();
 	}, []);
 
 	async function getListAtivo() {
 		console.log("Entrou no get");
-		const urlListaAtivo = `${baseURL}/ativo`;
+		const urlListaAtivo = `${baseURL}/ativo/numero/${objectInfo.ativoNumero}`;
 		await axios.get(urlListaAtivo).then((response) => {
 			const listAtivo = response.data;
+			console.log("listAtivo");
+			console.log(listAtivo);
+			//console.log(objectInfo.ativoNumero);
 
 			if (!listAtivo) {
 				return Alert.alert("Atenção", "Nenhum ativo cadastrado");
 			} else {
 				setListaDeAtivos(listAtivo);
-
-				const findObjectAtivo = listaDeAtivos.map((ativo) => {
-					const match = ativo.numeroAtivo;
-					return match !== null ? match[1] : null;
-				});
-				console.log(findObjectAtivo);
 			}
 		});
+		console.log(listaDeAtivos);
+
 		console.log("Saiu do get");
 	}
 
@@ -111,67 +95,70 @@ export function DetailOS() {
 				</View>
 
 				<View className="flex-1 mx-7">
-					{/*<View className="bg-[#2B3049] rounded-xl mb-7">
-						<View className="bg-[#2B3049] rounded-xl py-2 pl-3">
-							<Text className="text-[#FFF] text-base font-OpenSansBold ">
-								Informações
-							</Text>
-						</View>
-						<View className="bg-[#459EE8] rounded-bl-xl rounded-br-xl px-5 py-6">
-							<Text className="text-[#2B3049] text-base font-OpenSansBold mb-4">
-								{objectInfo.cliente}
-							</Text>
-							<Text className="text-[#2B3049] text-sm font-OpenSansRegular mb-5">
-								CNPJ: {objectInfo.cnpj}
-							</Text>
-							<View className="flex-row justify-between mb-3">
-								<View className="flex-1 mr-2">
-									<Text className="text-[#2B3049] text-sm font-OpenSansBold mb-1">
-										Cidade:
-									</Text>
-									<Text className="text-[#2B3049] text-sm font-OpenSansRegular">
-										{objectInfo.cidade}
+					{!objectInfo && !listaDeAtivos ? (
+						<Text>Loading</Text>
+					) : (
+						<>
+							<View className="bg-[#2B3049] rounded-xl mb-7">
+								<View className="bg-[#2B3049] rounded-xl py-2 pl-3">
+									<Text className="text-[#FFF] text-base font-OpenSansBold ">
+										Informações
 									</Text>
 								</View>
-								<View className="flex-1 mr-2">
-									<Text className="text-[#2B3049] text-sm font-OpenSansBold mb-1">
-										Demandante:
+								<View className="bg-[#459EE8] rounded-bl-xl rounded-br-xl px-5 py-6">
+									<Text className="text-[#2B3049] text-base font-OpenSansBold mb-4">
+										{objectInfo.cliente}
 									</Text>
-									<Text className="text-[#2B3049] text-sm font-OpenSansRegular">
-										{objectInfo.demandante}
+									<Text className="text-[#2B3049] text-sm font-OpenSansRegular mb-5">
+										CNPJ: {objectInfo.cnpj}
 									</Text>
+									<View className="flex-row justify-between mb-3">
+										<View className="flex-1 mr-2">
+											<Text className="text-[#2B3049] text-sm font-OpenSansBold mb-1">
+												Cidade:
+											</Text>
+											<Text className="text-[#2B3049] text-sm font-OpenSansRegular">
+												{objectInfo.cidade}
+											</Text>
+										</View>
+										<View className="flex-1 mr-2">
+											<Text className="text-[#2B3049] text-sm font-OpenSansBold mb-1">
+												Demandante:
+											</Text>
+											<Text className="text-[#2B3049] text-sm font-OpenSansRegular">
+												{objectInfo.demandante}
+											</Text>
+										</View>
+									</View>
+									<View className="flex-row justify-between mb-3">
+										<View className="flex-1 mr-2">
+											<Text className="text-[#2B3049] text-sm font-OpenSansBold mb-1">
+												Telefone
+											</Text>
+											<Text className="text-[#2B3049] text-sm font-OpenSansRegular">
+												{objectInfo.telefone}
+											</Text>
+										</View>
+										<View className="flex-1 mr-2">
+											<Text className="text-[#2B3049] text-sm font-OpenSansBold mb-1">
+												Data da Solicitação:
+											</Text>
+											<Text className="text-[#2B3049] text-sm font-OpenSansRegular">
+												{objectInfo.data}
+											</Text>
+										</View>
+									</View>
 								</View>
 							</View>
-							<View className="flex-row justify-between mb-3">
-								<View className="flex-1 mr-2">
-									<Text className="text-[#2B3049] text-sm font-OpenSansBold mb-1">
-										Telefone
-									</Text>
-									<Text className="text-[#2B3049] text-sm font-OpenSansRegular">
-										{objectInfo.telefone}
-									</Text>
-								</View>
-								<View className="flex-1 mr-2">
-									<Text className="text-[#2B3049] text-sm font-OpenSansBold mb-1">
-										Data da Solicitação:
-									</Text>
-									<Text className="text-[#2B3049] text-sm font-OpenSansRegular">
-										{objectInfo.data}
-									</Text>
-								</View>
-							</View>
-						</View>
-	</View>*/}
-
-					{ListaAtivos.map((listaAtivos) => (
-						<ImageCard
-							key={listaAtivos.id}
-							id={objectInfo.ativoNumero}
-							nameAtivo={listaAtivos.nameAtivo}
-							value={listaAtivos.value}
-							callFunc={() => handleShowAtivo(objectInfo.ativoNumero)}
-						></ImageCard>
-					))}
+							<ImageCard
+								key={"listaDeAtivos.id"}
+								id={"listaDeAtivos.numeroAtivo"}
+								nameAtivo={"Split Arno"}
+								value={"listaDeAtivos.BTU"}
+								callFunc={() => handleShowAtivo("listaDeAtivos.numeroAtivo")}
+							></ImageCard>
+						</>
+					)}
 				</View>
 			</ImageBackground>
 		</View>

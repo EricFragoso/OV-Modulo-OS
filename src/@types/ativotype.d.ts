@@ -1,13 +1,14 @@
 declare module "ativoType" {
 	class Ativo {
 		id: string;
+		numeroAtivo: string;
 		qr: string;
 		cliente: string;
-		BTU?: string;
-		anoFabricacao?: timestamp;
-		produto?: string;
-		contrato?: string;
-		created_at?: timestamp;
+		BTU: string;
+		anoFabricacao: string;
+		produto: string;
+		contrato: string;
+		created_at: string;
 	}
 	export = Ativo;
 }
