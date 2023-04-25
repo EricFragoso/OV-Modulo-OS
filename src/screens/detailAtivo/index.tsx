@@ -11,6 +11,7 @@ import {
 import { TextInput } from "react-native-gesture-handler";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import { requestForegroundPermissionsAsync, getCurrentPositionAsync, LocationObject } from "expo-location";
 
 import { BackButton } from "../../components/backButton";
 import { Button } from "../../components/button";
@@ -50,9 +51,22 @@ export function DetailAtivo() {
 	const listServicos = ["Vazio"];
 	const listPecas = ["Vazio"];
 
+	useEffect(() => {
+		requestLocationPermissions();
+	}, [])
+
 	function handleCallPreviousPage() {
 		navigation.goBack();
 		console.log("Página anterior");
+	}
+
+	async function requestLocationPermissions() {
+		const { granted } = await requestForegroundPermissionsAsync();
+
+		if (granted) {
+			const currentPsition = await getCurrentPositionAsync();
+			setGeoloc(`Altitude:${currentPsition.coords.altitude}, Latitude:${currentPsition.coords.latitude}, Longitude:${currentPsition.coords.longitude}`)
+		}
 	}
 
 	async function getListAtivo() {
