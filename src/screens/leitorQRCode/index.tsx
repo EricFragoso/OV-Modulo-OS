@@ -30,10 +30,12 @@ export default function LeitorQRCode() {
 		const idPart = parts.find((part) => part.includes("ID:"));
 
 		if (idPart) {
-			const match = idPart.match(/ID =\s*(\d+)/);
+			const match = idPart.match(/ID:\s*(\d+)/);
 			const ID = match?.[0];
 			if (ID) {
-				navigation.navigate("detailos", { ID });
+				navigation.navigate("detailativo", { idAtivo: ID });
+			} else {
+				alert("QR Code Inválido");
 			}
 		} else {
 			alert("QR Code Inválido");
@@ -43,8 +45,9 @@ export default function LeitorQRCode() {
 	}
 
 	const handleBarCodeScanned = ({ data }) => {
-		setScanned(true);
 		extractIDNumber(data);
+
+		setScanned(true);
 	};
 
 	if (hasPermission === null) {
