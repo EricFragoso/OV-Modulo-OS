@@ -29,12 +29,10 @@ export function ListOS() {
 		setRefresh(!refresh);
 	};
 
-	useEffect(() => {
-		console.log(lista);
-	});
+	useEffect(() => {});
 
 	function handleShowOSDetail(numberOS: string) {
-		return navigation.navigate("detailos", { numberOS });
+		return navigation.navigate("detailos", { ID: numberOS });
 	}
 
 	function handleQRCode() {

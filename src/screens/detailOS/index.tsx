@@ -21,54 +21,64 @@ import Context from "../../../Context";
 import OS from "OSTypeCard";
 
 type RouteParams = {
-	numberOS: string;
+	ID: string;
+};
+
+type ativoInfo = {
+	id: string;
+	numeroAtivo: string;
+	qr: string;
+	cliente: string;
+	BTU: string;
+	anoFabricacao: string;
+	produto: string;
+	contrato: string;
+	created_at: string;
 };
 
 export function DetailOS() {
 	const baseURL = "https://overview-os-api.onrender.com";
 
-	const { listaDeOS, setListaDeOS } = useContext(Context);
+	const { listaDeOS } = useContext(Context);
 	const [listaDeAtivos, setListaDeAtivos] = useState([]);
-	const [objectInfo, setObjectInfo] = useState({});
+	const [objectInfo, setObjectInfo] = useState<OS>();
 	const ListaAtivos = [{ id: 1, nameAtivo: "Ativo 1", value: "R$1000,00" }];
 
 	const navigation = useNavigation();
 	const route = useRoute();
-	const { numberOS } = route.params as RouteParams;
+	const { ID } = route.params as RouteParams;
 
 	useEffect(() => {
-		getListAtivo();
-		const findObject = listaDeOS.find((OS: OS) => OS.numero === numberOS);
+		const findObject = listaDeOS.find((OS: OS) => OS.numero === ID);
 		setObjectInfo(findObject);
+		console.log("info");
 		console.log(objectInfo);
+
+		getListAtivo();
 	}, []);
 
-	function getListAtivo() {
+	async function getListAtivo() {
+		console.log("Entrou no get");
 		const urlListaAtivo = `${baseURL}/ativo`;
-		axios.get(urlListaAtivo).then((response) => {
+		await axios.get(urlListaAtivo).then((response) => {
 			const listAtivo = response.data;
-
-			console.log("------LISTA DE ATIVOS------");
 
 			if (!listAtivo) {
 				return Alert.alert("Atenção", "Nenhum ativo cadastrado");
 			} else {
 				setListaDeAtivos(listAtivo);
 
-				const findObjectAtivo = listaDeAtivos.find((ativo) => {
-					const match = ativo.qr.match(/ID: (\d+)/);
+				const findObjectAtivo = listaDeAtivos.map((ativo) => {
+					const match = ativo.numeroAtivo;
 					return match !== null ? match[1] : null;
 				});
-				console.log("------LISTA OBJETO------");
 				console.log(findObjectAtivo);
-
-				setObjectInfo(findObjectAtivo);
 			}
 		});
+		console.log("Saiu do get");
 	}
 
 	function handleShowAtivo(idAtivo: string) {
-		console.log(idAtivo);
 		navigation.navigate("detailativo", { idAtivo });
 	}
 
@@ -96,12 +106,12 @@ export function DetailOS() {
 				<View className="flex-row p-6">
 					<BackButton callFunc={handleCallPreviousPage}></BackButton>
 					<Text className="flex-1 text-2xl font-OpenSansBold text-center">
-						OS {numberOS}
+						OS {ID}
 					</Text>
 				</View>
 
 				<View className="flex-1 mx-7">
-					<View className="bg-[#2B3049] rounded-xl mb-7">
+					{/*<View className="bg-[#2B3049] rounded-xl mb-7">
 						<View className="bg-[#2B3049] rounded-xl py-2 pl-3">
 							<Text className="text-[#FFF] text-base font-OpenSansBold ">
 								Informações
@@ -151,15 +161,15 @@ export function DetailOS() {
 								</View>
 							</View>
 						</View>
-					</View>
+	</View>*/}
 
 					{ListaAtivos.map((listaAtivos) => (
 						<ImageCard
 							key={listaAtivos.id}
-							id={listaAtivos.id}
+							id={objectInfo.ativoNumero}
 							nameAtivo={listaAtivos.nameAtivo}
 							value={listaAtivos.value}
-							callFunc={() => handleShowAtivo(listaAtivos.id)}
+							callFunc={() => handleShowAtivo(objectInfo.ativoNumero)}
 						></ImageCard>
 					))}
 				</View>

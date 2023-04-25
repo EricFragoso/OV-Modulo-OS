@@ -1,24 +1,26 @@
 declare module "OSTypeCard" {
 	class OS {
-		id: string;
-		numero: string;
 		ativoNumero: string;
+		cidade: string;
 		cliente: string;
-		infoCliente?: string;
-		demandante?: string;
 		cnpj: string;
-		telefone?: string;
-		data?: timestampstring;
-		hora?: timestampstring;
-		ocorrencia?: string;
-		prioridade?: string;
-		cidade?: string;
-		motivo?: string;
-		tipoAtendimento?: string;
 		colaborador: string;
-		inicio?: timestampstring;
-		finalizacao?: timestampstring;
-		solucao?: string;
+		created_at: string;
+		data: string;
+		demandante: string;
+		finalizacao: string;
+		hora: string;
+		id: string;
+		infoCliente: string;
+		inicio: string;
+		motivo: string;
+		numero: string;
+		ocorrencia: string;
+		prioridade: string;
+		solucao: string;
+		status: string;
+		telefone: string;
+		tipoAtendimento: string;
 	}
 	export = OS;
 }
