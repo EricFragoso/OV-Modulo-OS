@@ -31,7 +31,7 @@ export function Home() {
 	};
 
 	useEffect(() => {
-		const kbDidHideListener = Keyboard.addListener("keyboardDidHide", () => {});
+		const kbDidHideListener = Keyboard.addListener("keyboardDidHide", () => { });
 		return kbDidHideListener.remove();
 	}, []);
 

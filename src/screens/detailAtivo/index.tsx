@@ -51,26 +51,17 @@ export function DetailAtivo() {
 		console.log("Página anterior");
 	}
 
-	function getListAtivo() {
-		const urlListaAtivo = `${baseURL}/ativo`;
-		axios.get(urlListaAtivo).then((response) => {
+	async function getListAtivo() {
+		const urlListaAtivo = `${baseURL}/ativo/numero/${idAtivo}`;
+		await axios.get(urlListaAtivo).then((response) => {
 			const listAtivo = response.data;
-
 			if (!listAtivo) {
 				return Alert.alert("Atenção", "Nenhum ativo cadastrado");
 			} else {
-				setListaDeAtivos(listAtivo);
-
-				const findObject = listaDeAtivos.find((ativo) => {
-					const match = ativo.qr.match(/ID: (\d+)/);
-					return match !== null ? match[1] : null;
-				});
-
-				console.log(findObject);
-
-				setObjectInfo(findObject.id);
+				setListaDeAtivos(listAtivo.ativo[0]);
 			}
 		});
+
 	}
 
 	function handleAddAtendente(atendente) {
@@ -214,7 +205,7 @@ export function DetailAtivo() {
 									placeholderTextColor={"#999999"}
 									value={laudo}
 									onChangeText={setLaudo}
-									//onChangeText={(inputText) => setUserCode(inputText)}
+								//onChangeText={(inputText) => setUserCode(inputText)}
 								/>
 								{/*	<View>
 								<Text>Estado de conservação do aparelho</Text>

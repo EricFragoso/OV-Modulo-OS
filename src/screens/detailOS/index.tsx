@@ -23,6 +23,7 @@ import Ativo from "ativoType";
 
 type RouteParams = {
 	ID: string;
+	AtivoNumero: string;
 };
 
 export function DetailOS() {
@@ -34,7 +35,7 @@ export function DetailOS() {
 
 	const navigation = useNavigation();
 	const route = useRoute();
-	const { ID } = route.params as RouteParams;
+	const { ID, AtivoNumero } = route.params as RouteParams;
 
 	useEffect(() => {
 		const findObject = listaDeOS.find((OS: OS) => OS.numero === ID);
@@ -43,23 +44,16 @@ export function DetailOS() {
 	}, []);
 
 	async function getListAtivo() {
-		console.log("Entrou no get");
-		const urlListaAtivo = `${baseURL}/ativo/numero/${objectInfo.ativoNumero}`;
+		const urlListaAtivo = `${baseURL}/ativo/numero/${AtivoNumero}`;
 		await axios.get(urlListaAtivo).then((response) => {
 			const listAtivo = response.data;
-			console.log("listAtivo");
-			console.log(listAtivo);
-			//console.log(objectInfo.ativoNumero);
-
 			if (!listAtivo) {
 				return Alert.alert("Atenção", "Nenhum ativo cadastrado");
 			} else {
-				setListaDeAtivos(listAtivo);
+				setListaDeAtivos(listAtivo.ativo[0]);
 			}
 		});
-		console.log(listaDeAtivos);
 
-		console.log("Saiu do get");
 	}
 
 	function handleShowAtivo(idAtivo: string) {
@@ -151,11 +145,11 @@ export function DetailOS() {
 								</View>
 							</View>
 							<ImageCard
-								key={"listaDeAtivos.id"}
-								id={"listaDeAtivos.numeroAtivo"}
-								nameAtivo={"Split Arno"}
-								value={"listaDeAtivos.BTU"}
-								callFunc={() => handleShowAtivo("listaDeAtivos.numeroAtivo")}
+								key={listaDeAtivos.id}
+								id={listaDeAtivos.numeroAtivo}
+								nameAtivo={listaDeAtivos.produto}
+								value={listaDeAtivos.BTU}
+								callFunc={() => handleShowAtivo(listaDeAtivos.numeroAtivo)}
 							></ImageCard>
 						</>
 					)}

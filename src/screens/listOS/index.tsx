@@ -29,10 +29,10 @@ export function ListOS() {
 		setRefresh(!refresh);
 	};
 
-	useEffect(() => {});
+	useEffect(() => { });
 
-	function handleShowOSDetail(numberOS: string) {
-		return navigation.navigate("detailos", { ID: numberOS });
+	function handleShowOSDetail(numberOS: string, ativoNumero: string) {
+		return navigation.navigate("detailos", { ID: numberOS, AtivoNumero: ativoNumero });
 	}
 
 	function handleQRCode() {
@@ -102,7 +102,7 @@ export function ListOS() {
 								numberOS={OS.numero}
 								client={OS.cliente}
 								name={OS.demandante}
-								callFunc={() => handleShowOSDetail(OS.numero)}
+								callFunc={() => handleShowOSDetail(OS.numero, OS.ativoNumero)}
 							/>
 						))}
 					</ScrollView>
