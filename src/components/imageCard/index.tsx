@@ -2,7 +2,7 @@ import React from "react";
 import { View, Text, TouchableOpacity, TouchableHighlight } from "react-native";
 
 type Props = {
-	id: number;
+	id: string;
 	nameAtivo: string;
 	value: string;
 	callFunc: () => void;
