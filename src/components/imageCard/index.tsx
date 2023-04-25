@@ -20,7 +20,7 @@ export function ImageCard(props: Props) {
 					<View className="bg-[#6AB1ED] w-[84px] h-[84px] rounded-xl mt-[-4px]"></View>
 					<View className="justify-around mb-3">
 						<Text className="text-[#2B3049] mt-3 mb-3 text-xl font-OpenSansBold">
-							{props.nameAtivo}
+							Produto: {props.nameAtivo}
 						</Text>
 						<Text className="text-[#2B3049] text-base font-OpenSansMedium">
 							ID {props.id}

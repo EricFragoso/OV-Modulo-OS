@@ -32,7 +32,9 @@ export function DetailOS() {
 	const { listaDeOS } = useContext(Context);
 	const [listaDeAtivos, setListaDeAtivos] = useState<Ativo>();
 	const [objectInfo, setObjectInfo] = useState<OS>();
-	const [btuInfo, setBtuInfo] = useState('');
+	const [btuInfo, setBtuInfo] = useState("");
+	const [idInfo, setIdInfo] = useState("");
+	const [nameInfo, setNameInfo] = useState("");
 
 	const navigation = useNavigation();
 	const route = useRoute();
@@ -42,8 +44,6 @@ export function DetailOS() {
 		const findObject = listaDeOS.find((OS: OS) => OS.numero === ID);
 		getListAtivo();
 		setObjectInfo(findObject);
-
-
 	}, []);
 
 	async function getListAtivo() {
@@ -55,10 +55,10 @@ export function DetailOS() {
 			} else {
 				setListaDeAtivos(listAtivo.ativo[0]);
 				setBtuInfo(listAtivo.ativo[0].BTU);
-				console.log(listAtivo.ativo[0].BTU);
+				setIdInfo(listAtivo.ativo[0].numeroAtivo);
+				setNameInfo(listAtivo.ativo[0].produto);
 			}
 		});
-
 	}
 
 	function handleShowAtivo(idAtivo: string) {
@@ -150,11 +150,11 @@ export function DetailOS() {
 								</View>
 							</View>
 							<ImageCard
-								key={btuInfo}
-								id={btuInfo}
-								nameAtivo={btuInfo}
+								key={idInfo}
+								id={idInfo}
+								nameAtivo={nameInfo}
 								value={btuInfo}
-								callFunc={() => handleShowAtivo(btuInfo)}
+								callFunc={() => handleShowAtivo(idInfo)}
 							></ImageCard>
 						</>
 					)}

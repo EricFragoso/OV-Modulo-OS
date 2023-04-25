@@ -61,7 +61,6 @@ export function DetailAtivo() {
 				setListaDeAtivos(listAtivo.ativo[0]);
 			}
 		});
-
 	}
 
 	function handleAddAtendente(atendente) {
@@ -84,10 +83,22 @@ export function DetailAtivo() {
 
 	async function handleSalvarDetalhamento() {
 		try {
-			await AsyncStorage.setItem("laudo", laudo);
+			const dataAgora = new Date("2023-12-31");
+			const response = await axios.post(`${baseURL}/historico`, {
+				atendentes: atendentes.toString(),
+				ativo: idAtivo,
+				estado_conservacao: "",
+				geoloc: "",
+				laudo: laudo,
+				proximo_atendimento: dataAgora,
+				reposicao: pecas.join(),
+				servicos: servicos.join(),
+			});
+			console.log(response.data);
 			Alert.alert("Sucesso", "Detalhamento salvo com sucesso!");
+			return response.data;
 		} catch (error) {
-			console.log(error);
+			console.log(error.response.data);
 			Alert.alert("Erro", "Ocorreu um erro ao salvar o detalhamento.");
 		}
 	}
@@ -164,7 +175,7 @@ export function DetailAtivo() {
 				<View className="flex-row p-6">
 					<BackButton callFunc={handleCallPreviousPage}></BackButton>
 					<Text className="flex-1 text-2xl font-OpenSansBold text-center">
-						Ativo 1
+						Ativo {idAtivo}
 					</Text>
 				</View>
 				<View className="flex-1 px-7 w-full">
@@ -205,7 +216,7 @@ export function DetailAtivo() {
 									placeholderTextColor={"#999999"}
 									value={laudo}
 									onChangeText={setLaudo}
-								//onChangeText={(inputText) => setUserCode(inputText)}
+									//onChangeText={(inputText) => setUserCode(inputText)}
 								/>
 								{/*	<View>
 								<Text>Estado de conservação do aparelho</Text>
