@@ -11,7 +11,11 @@ import {
 import { TextInput } from "react-native-gesture-handler";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import { requestForegroundPermissionsAsync, getCurrentPositionAsync, LocationObject } from "expo-location";
+import {
+	requestForegroundPermissionsAsync,
+	getCurrentPositionAsync,
+	LocationObject,
+} from "expo-location";
 
 import { BackButton } from "../../components/backButton";
 import { Button } from "../../components/button";
@@ -53,10 +57,10 @@ export function DetailAtivo() {
 
 	useEffect(() => {
 		requestLocationPermissions();
-	}, [])
+	}, []);
 
 	function handleCallPreviousPage() {
-		navigation.goBack();
+		navigation.navigate("detailos", { ID });
 		console.log("Página anterior");
 	}
 
@@ -65,7 +69,9 @@ export function DetailAtivo() {
 
 		if (granted) {
 			const currentPsition = await getCurrentPositionAsync();
-			setGeoloc(`Altitude:${currentPsition.coords.altitude}, Latitude:${currentPsition.coords.latitude}, Longitude:${currentPsition.coords.longitude}`)
+			setGeoloc(
+				`Altitude:${currentPsition.coords.altitude}, Latitude:${currentPsition.coords.latitude}, Longitude:${currentPsition.coords.longitude}`
+			);
 		}
 	}
 
@@ -263,7 +269,7 @@ export function DetailAtivo() {
 									placeholderTextColor={"#999999"}
 									value={laudo}
 									onChangeText={setLaudo}
-								//onChangeText={(inputText) => setUserCode(inputText)}
+									//onChangeText={(inputText) => setUserCode(inputText)}
 								/>
 								{/*	<View>
 								<Text>Estado de conservação do aparelho</Text>

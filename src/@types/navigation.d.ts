@@ -7,7 +7,7 @@ export declare global {
 			};
 			detailos: {
 				ID: string;
-				AtivoNumero: string;
+				AtivoNumero?: string;
 			};
 			detailativo: {
 				ID?: string;
