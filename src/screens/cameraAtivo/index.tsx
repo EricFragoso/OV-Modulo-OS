@@ -8,15 +8,24 @@ import {
 	ImageBackground,
 	TouchableOpacity,
 } from "react-native";
-import { useNavigation } from "@react-navigation/native";
+import { useNavigation, useRoute } from "@react-navigation/native";
 import { Button } from "../../components/button";
 import { MenuHamburger } from "../../components/menuHamburger";
 import { BackButton } from "../../components/backButton";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+
+type RouteParams = {
+	ID: string;
+	idAtivo: string;
+};
 
 export function CameraAtivo() {
+	const route = useRoute();
+	const { ID, idAtivo } = route.params as RouteParams;
 	const [type, setType] = useState(CameraType.back);
 	const [permission, requestPermission] = useState(null);
 	const [photoTaken, setPhotoTaken] = useState(null);
+	const [photoData, setPhotoData] = useState(null);
 	const [open, setOpen] = useState(false);
 	const camRef = useRef(null);
 	const navigation = useNavigation();
@@ -35,17 +44,27 @@ export function CameraAtivo() {
 	async function handleTakePhoto() {
 		if (camRef) {
 			const data = await camRef.current.takePictureAsync();
+			setPhotoData(data);
 			setPhotoTaken(data.uri);
 			setOpen(true);
-			console.log(`o resultado da QR é: ${data}`);
 		}
+	}
+
+	async function handleSavePhoto() {
+		setOpen(false);
+		try {
+			await AsyncStorage.setItem(`Photo ${idAtivo}`, photoData.uri);
+		} catch (error) {
+			console.log("error");
+		}
+		navigation.navigate("detailativo", { idAtivo });
 	}
 
 	function handleCallPreviousPage() {
 		navigation.goBack();
 	}
 	function handleCallPreviousPageCam() {
-		navigation.goBack();
+		setOpen(false);
 	}
 
 	return (
@@ -95,13 +114,21 @@ export function CameraAtivo() {
 					<View className="mt-32 flex-row">
 						<BackButton callFunc={handleCallPreviousPageCam} />
 						<TouchableOpacity onPress={handleCallPreviousPageCam}>
-							<Text className="font-OpenSansBold text-xl">Voltar</Text>
+							<Text className="font-OpenSansBold text-xl mb-10">
+								Tirar outra foto
+							</Text>
 						</TouchableOpacity>
 					</View>
 					<View>
 						<Image
 							className="w-[90%] h-[65%] ml-5"
 							source={{ uri: photoTaken }}
+						/>
+					</View>
+					<View className="mx-10">
+						<Button
+							text="Salvar Foto"
+							callFunc={handleSavePhoto}
 						/>
 					</View>
 				</Modal>

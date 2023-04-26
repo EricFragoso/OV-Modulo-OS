@@ -11,6 +11,7 @@ import {
 import { TextInput } from "react-native-gesture-handler";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import Gallery from "react-native-image-gallery";
 import {
 	requestForegroundPermissionsAsync,
 	getCurrentPositionAsync,
@@ -46,6 +47,7 @@ export function DetailAtivo() {
 	const [pecas, setPecas] = useState([]);
 	const [laudo, setLaudo] = useState("");
 	const [geoloc, setGeoloc] = useState("");
+	const [photos, setPhotos] = useState([]);
 
 	const navigation = useNavigation();
 	const route = useRoute();
@@ -155,12 +157,13 @@ export function DetailAtivo() {
 	}
 
 	function handleTirarFoto() {
-		navigation.navigate("cameraativo");
+		navigation.navigate("cameraativo", { idAtivo });
 	}
 	function handleLimparDados() {
 		setAtendentes([]);
 		setServicos([]);
 		setPecas([]);
+		setPhotos([]);
 		setLaudo("");
 		clearData();
 	}
@@ -204,8 +207,18 @@ export function DetailAtivo() {
 				console.log(error);
 			}
 		}
-
 		getLocalData();
+
+		async function loadPhotos() {
+			const photoUris = await AsyncStorage.getAllKeys();
+			const photoData = await AsyncStorage.multiGet(photoUris);
+			const photoList = photoData.map((photo) => ({
+				source: { uri: photo[1] },
+				dimensions: { width: 112, height: 112 },
+			}));
+			setPhotos(photoList);
+		}
+		loadPhotos();
 	}, []);
 
 	return (
@@ -292,10 +305,26 @@ export function DetailAtivo() {
 							</View> 
 							<View>
 								<Text>Data da próxima manutenção</Text>
-							</View>
-							<View>
-								<Text>Fotos</Text>
 							</View>*/}
+								<View className="mt-5">
+									{photos[0] && (
+										<>
+											<Text>Fotos</Text>
+
+											<Gallery
+												className={""}
+												images={photos}
+											/>
+										</>
+									)}
+
+									<ButtonFilled
+										borderRadius={5}
+										text="Tirar foto"
+										fontSize={15}
+										callFunc={handleTirarFoto}
+									/>
+								</View>
 							</View>
 						</View>
 						<View className="flex-row justify-between items-center mb-10">
