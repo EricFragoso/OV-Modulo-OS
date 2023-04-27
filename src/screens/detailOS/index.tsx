@@ -11,6 +11,8 @@ import { ModalInserir } from "../modalInserirItem";
 import { useNavigation, useRoute } from "@react-navigation/native";
 import axios from "axios";
 
+import { getList } from "../../middleware/searchOS";
+
 import { ImageCard } from "../../components/imageCard";
 import { BackButton } from "../../components/backButton";
 import { Button } from "../../components/button";
@@ -35,6 +37,7 @@ export function DetailOS() {
 	const [btuInfo, setBtuInfo] = useState("");
 	const [idInfo, setIdInfo] = useState("");
 	const [nameInfo, setNameInfo] = useState("");
+
 
 	const navigation = useNavigation();
 	const route = useRoute();
@@ -144,6 +147,16 @@ export function DetailOS() {
 											</Text>
 											<Text className="text-[#2B3049] text-sm font-OpenSansRegular">
 												{objectInfo.data}
+											</Text>
+										</View>
+									</View>
+									<View className="flex-row justify-between mb-3">
+										<View className="flex-1 mr-2">
+											<Text className="text-[#2B3049] text-sm font-OpenSansBold mb-1">
+												Status
+											</Text>
+											<Text className="text-[#2B3049] text-sm font-OpenSansRegular">
+												{objectInfo.status}
 											</Text>
 										</View>
 									</View>
