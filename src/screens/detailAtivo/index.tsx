@@ -107,7 +107,7 @@ export function DetailAtivo() {
 
 	async function handleSalvarDetalhamento() {
 		setFinalizacao(Date.now());
-		setGeoloc("Ali");
+
 		try {
 			const dataAgora = new Date("2023-12-31");
 			const response = await axios.post(`${baseURL}/historico`, {
@@ -139,6 +139,7 @@ export function DetailAtivo() {
 			console.log(error.response.data);
 			Alert.alert("Erro", "Ocorreu um erro ao salvar a solução.");
 		}
+		handleLimparDados()
 	}
 
 	function montarSolucao(reposicao, servicos, atendentes, laudo, geoloc) {
@@ -225,12 +226,19 @@ export function DetailAtivo() {
 					<MenuHamburger />
 				</View>
 
-				<View className="flex-row p-6">
-					<BackButton callFunc={handleCallPreviousPage}></BackButton>
-					<Text className="flex-1 text-2xl font-OpenSansBold text-center">
-						Ativo {idAtivo}
-					</Text>
+				<View className="flex-row w-full justify-between items-center pl-6 py-3">
+					<BackButton callFunc={handleCallPreviousPage} />
+					<View className="h-14 justify-between w-full items-end pr-16">
+
+						<Text className="flex-1 text-2xl font-OpenSansBold ">
+							Ativo {idAtivo}
+						</Text>
+						<Text className="flex-1 text-sm font-OpenSansBold">
+							OS {ID}
+						</Text>
+					</View>
 				</View>
+
 				<View className="flex-1 px-7 w-full">
 					<KeyboardAwareScrollView
 						enableOnAndroid
@@ -269,7 +277,7 @@ export function DetailAtivo() {
 									placeholderTextColor={"#999999"}
 									value={laudo}
 									onChangeText={setLaudo}
-									//onChangeText={(inputText) => setUserCode(inputText)}
+								//onChangeText={(inputText) => setUserCode(inputText)}
 								/>
 								{/*	<View>
 								<Text>Estado de conservação do aparelho</Text>
@@ -303,11 +311,12 @@ export function DetailAtivo() {
 								borderRadius={5}
 								text="Limpar Dados"
 								callFunc={handleLimparDados}
-								fontSize={20}
+								fontSize={16}
 							/>
 							<Button
+								fontSize={16}
 								borderRadius={5}
-								text="Salvar"
+								text="Finalizar"
 								callFunc={handleSalvarDetalhamento}
 							/>
 						</View>
