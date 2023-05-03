@@ -60,7 +60,7 @@ export function DetailAtivo() {
 	}, []);
 
 	function handleCallPreviousPage() {
-		navigation.navigate("detailos", { ID });
+		navigation.goBack();
 		console.log("Página anterior");
 	}
 
