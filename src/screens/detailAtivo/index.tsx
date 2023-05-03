@@ -1,31 +1,24 @@
 import React, { useEffect, useState } from "react";
 import { useNavigation, useRoute } from "@react-navigation/native";
-import {
-	View,
-	Text,
-	ScrollView,
-	Image,
-	ImageBackground,
-	Alert,
-} from "react-native";
+import { View, Text, Image, ImageBackground, Alert } from "react-native";
 import { TextInput } from "react-native-gesture-handler";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import Gallery from "react-native-image-gallery";
 import {
 	requestForegroundPermissionsAsync,
 	getCurrentPositionAsync,
-	LocationObject,
 } from "expo-location";
 
 import { BackButton } from "../../components/backButton";
 import { Button } from "../../components/button";
 import { CardInfo } from "../../components/cardInfo";
+import * as Photos from "../../services/photos";
+import { Photo } from "../../@types/photo";
 
 import { MenuHamburger } from "../../components/menuHamburger";
 import { ButtonFilled } from "../../components/buttonFilled";
 import axios from "axios";
-import Ativo from "ativoType";
+import { PhotoItem } from "../../components/photoItem";
 
 type RouteParams = {
 	ID: string;
@@ -41,23 +34,58 @@ export function DetailAtivo() {
 	const [objectInfo, setObjectInfo] = useState({});
 	const [inicializacao, setInicializacao] = useState(0);
 	const [finalizacao, setFinalizacao] = useState(0);
-
 	const [atendentes, setAtendentes] = useState([]);
 	const [servicos, setServicos] = useState([]);
 	const [pecas, setPecas] = useState([]);
 	const [laudo, setLaudo] = useState("");
 	const [geoloc, setGeoloc] = useState("");
-	const [photos, setPhotos] = useState([]);
+	const [photos, setPhotos] = useState<Photo[]>([]);
+	const [loading, setLoading] = useState(false);
 
 	const navigation = useNavigation();
 	const route = useRoute();
 	const { ID, idAtivo } = route.params as RouteParams;
 
-	const listAtendentes = ["Vazio"];
-	const listServicos = ["Vazio"];
-	const listPecas = ["Vazio"];
-
 	useEffect(() => {
+		setInicializacao(Date.now());
+		getListAtivo();
+
+		const getPhotos = async () => {
+			setLoading(true);
+			setPhotos(await Photos.getAllPhotos());
+			console.log(photos[0].url);
+			setLoading(false);
+		};
+		getPhotos();
+
+		async function getLocalData() {
+			try {
+				const atendentesData = await AsyncStorage.getItem("atendentes");
+				const servicosData = await AsyncStorage.getItem("servicos");
+				const pecasData = await AsyncStorage.getItem("pecas");
+				const laudoData = await AsyncStorage.getItem("laudo");
+
+				if (atendentesData !== null) {
+					setAtendentes(JSON.parse(atendentesData));
+				}
+
+				if (servicosData !== null) {
+					setServicos(JSON.parse(servicosData));
+				}
+
+				if (pecasData !== null) {
+					setPecas(JSON.parse(pecasData));
+				}
+
+				if (laudoData !== null) {
+					setLaudo(laudoData);
+				}
+			} catch (error) {
+				console.log(error);
+			}
+		}
+		getLocalData();
+
 		requestLocationPermissions();
 	}, []);
 
@@ -177,50 +205,6 @@ export function DetailAtivo() {
 		}
 	}
 
-	useEffect(() => {
-		setInicializacao(Date.now());
-		getListAtivo();
-
-		async function getLocalData() {
-			try {
-				const atendentesData = await AsyncStorage.getItem("atendentes");
-				const servicosData = await AsyncStorage.getItem("servicos");
-				const pecasData = await AsyncStorage.getItem("pecas");
-				const laudoData = await AsyncStorage.getItem("laudo");
-
-				if (atendentesData !== null) {
-					setAtendentes(JSON.parse(atendentesData));
-				}
-
-				if (servicosData !== null) {
-					setServicos(JSON.parse(servicosData));
-				}
-
-				if (pecasData !== null) {
-					setPecas(JSON.parse(pecasData));
-				}
-
-				if (laudoData !== null) {
-					setLaudo(laudoData);
-				}
-			} catch (error) {
-				console.log(error);
-			}
-		}
-		getLocalData();
-
-		async function loadPhotos() {
-			const photoUris = await AsyncStorage.getAllKeys();
-			const photoData = await AsyncStorage.multiGet(photoUris);
-			const photoList = photoData.map((photo) => ({
-				source: { uri: photo[1] },
-				dimensions: { width: 112, height: 112 },
-			}));
-			setPhotos(photoList);
-		}
-		loadPhotos();
-	}, []);
-
 	return (
 		<View className="flex-1 bg-white items-center">
 			<ImageBackground
@@ -307,17 +291,23 @@ export function DetailAtivo() {
 								<Text>Data da próxima manutenção</Text>
 							</View>*/}
 								<View className="mt-5">
-									{photos[0] && (
+									{!loading && photos.length > 0 && (
 										<>
 											<Text>Fotos</Text>
-
-											<Gallery
-												className={""}
-												images={photos}
-											/>
+											<View className={"flex flex-row mt-0"}>
+												{photos.map((item, index) => (
+													<Image
+														key={index}
+														className={"w-20 h-20"}
+														source={{
+															uri: item.url,
+														}}
+														alt={item.name}
+													/>
+												))}
+											</View>
 										</>
 									)}
-
 									<ButtonFilled
 										borderRadius={5}
 										text="Tirar foto"

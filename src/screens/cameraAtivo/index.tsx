@@ -1,5 +1,5 @@
 import { Camera, CameraType } from "expo-camera";
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect, useRef, FormEvent } from "react";
 import {
 	Text,
 	View,
@@ -13,6 +13,8 @@ import { Button } from "../../components/button";
 import { MenuHamburger } from "../../components/menuHamburger";
 import { BackButton } from "../../components/backButton";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import * as Photos from "../../services/photos";
+import { Photo } from "../../@types/photo";
 
 type RouteParams = {
 	ID: string;
@@ -22,6 +24,7 @@ type RouteParams = {
 export function CameraAtivo() {
 	const route = useRoute();
 	const { ID, idAtivo } = route.params as RouteParams;
+	const [uploading, setUploading] = useState(false);
 	const [type, setType] = useState(CameraType.back);
 	const [permission, requestPermission] = useState(null);
 	const [photoTaken, setPhotoTaken] = useState(null);
@@ -52,11 +55,16 @@ export function CameraAtivo() {
 
 	async function handleSavePhoto() {
 		setOpen(false);
-		try {
-			await AsyncStorage.setItem(`Photo ${idAtivo}`, photoData.uri);
-		} catch (error) {
-			console.log("error");
-		}
+
+		//e.preventDefault();
+		//const formData = new FormData(e.currentTarget);
+		//const file = formData.get("camRef") as File;
+		//if (file && file.size > 0) {
+		//	setUploading(true);
+		//	let result = await Photos.insert(file)
+		//	setUploading(false);
+		//}
+
 		navigation.navigate("detailativo", { idAtivo });
 	}
 
