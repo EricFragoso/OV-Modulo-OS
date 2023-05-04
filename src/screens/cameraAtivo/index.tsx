@@ -16,6 +16,9 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import * as Photos from "../../services/photos";
 import { Photo } from "../../@types/photo";
 
+import * as FileSystem from 'expo-file-system'
+import FirebaseStorage, { getStorage, ref, uploadBytesResumable, getDownloadURL, uploadString, updateMetadata } from "firebase/storage";
+
 type RouteParams = {
 	ID: string;
 	idAtivo: string;
@@ -34,6 +37,7 @@ export function CameraAtivo() {
 	const navigation = useNavigation();
 
 	useEffect(() => {
+
 		(async () => {
 			const { status } = await Camera.requestCameraPermissionsAsync();
 			requestPermission(status === "granted");
@@ -54,16 +58,74 @@ export function CameraAtivo() {
 	}
 
 	async function handleSavePhoto() {
+		const storage = getStorage();
+		const metadata = { contentType: 'image/jpeg' }
+		const fileName = photoTaken.substring(photoTaken.lastIndexOf("/") + 1)
+		const base64 = await FileSystem.readAsStringAsync(photoTaken, { encoding: 'base64' });
+		const base64url = `data:image/jpeg;base64,${base64}`
+		const storageRef = ref(storage, 'images/' + fileName)
+
+		console.log(base64url);
+
+
+		updateMetadata(storageRef, metadata)
+		uploadString(storageRef, base64url)
+		//const uploadTask = uploadBytesResumable(storageRef, photoTaken, metadata);
+		console.log(photoTaken);
+
+		console.log(fileName);
+
+		//uploadTask.on('state_changed',
+		//	(snapshot) => {
+		//		// Get task progress, including the number of bytes uploaded and the total number of bytes to be uploaded
+		//		const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+		//		console.log('Upload is ' + progress + '% done');
+		//		switch (snapshot.state) {
+		//			case 'paused':
+		//				console.log('Upload is paused');
+		//				break;
+		//			case 'running':
+		//				console.log('Upload is running');
+		//				break;
+		//		}
+		//	},
+		//	(error) => {
+		//		// A full list of error codes is available at
+		//		// https://firebase.google.com/docs/storage/web/handle-errors
+		//		switch (error.code) {
+		//			case 'storage/unauthorized':
+		//				// User doesn't have permission to access the object
+		//				break;
+		//			case 'storage/canceled':
+		//				// User canceled the upload
+		//				break;
+		//
+		//			// ...
+		//
+		//			case 'storage/unknown':
+		//				// Unknown error occurred, inspect error.serverResponse
+		//				break;
+		//		}
+		//	},
+		//	() => {
+		//		// Upload completed successfully, now we can get the download URL
+		//		getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
+		//			console.log('File available at', downloadURL);
+		//		});
+		//	}
+		//);
+
 		setOpen(false);
 
-		//e.preventDefault();
-		//const formData = new FormData(e.currentTarget);
+
+
+
 		//const file = formData.get("camRef") as File;
 		//if (file && file.size > 0) {
 		//	setUploading(true);
 		//	let result = await Photos.insert(file)
 		//	setUploading(false);
-		//}
+		//} '
 
 		navigation.navigate("detailativo", { idAtivo });
 	}
