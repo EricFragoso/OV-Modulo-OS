@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
-import { useNavigation, useRoute } from "@react-navigation/native";
-import { View, Text, Image, ImageBackground, Alert } from "react-native";
+import { useFocusEffect, useNavigation, useRoute } from "@react-navigation/native";
+import { View, Text, Image, ImageBackground, Alert, TouchableHighlight } from "react-native";
 import { TextInput } from "react-native-gesture-handler";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 import AsyncStorage from "@react-native-async-storage/async-storage";
@@ -8,7 +8,7 @@ import {
 	requestForegroundPermissionsAsync,
 	getCurrentPositionAsync,
 } from "expo-location";
-
+import { FirebaseApp } from "firebase/app";
 import { BackButton } from "../../components/backButton";
 import { Button } from "../../components/button";
 import { CardInfo } from "../../components/cardInfo";
@@ -41,6 +41,7 @@ export function DetailAtivo() {
 	const [geoloc, setGeoloc] = useState("");
 	const [photos, setPhotos] = useState<Photo[]>([]);
 	const [loading, setLoading] = useState(false);
+	const [loadEffect, setLoadEffect] = useState(false);
 
 	const navigation = useNavigation();
 	const route = useRoute();
@@ -49,11 +50,13 @@ export function DetailAtivo() {
 	useEffect(() => {
 		setInicializacao(Date.now());
 		getListAtivo();
+	
+		navigation.addListener('focus', () => setLoadEffect(!loadEffect));
 
 		const getPhotos = async () => {
 			setLoading(true);
-			setPhotos(await Photos.getAllPhotos());
-			console.log(photos[0].url);
+			const listaFotoFB = await Photos.getAllPhotos(idAtivo)
+			setPhotos(listaFotoFB);
 			setLoading(false);
 		};
 		getPhotos();
@@ -87,7 +90,7 @@ export function DetailAtivo() {
 		getLocalData();
 
 		requestLocationPermissions();
-	}, []);
+	}, [loadEffect, navigation]);
 
 	function handleCallPreviousPage() {
 		navigation.navigate("detailos", { ID });
@@ -294,16 +297,21 @@ export function DetailAtivo() {
 									{!loading && photos.length > 0 && (
 										<>
 											<Text>Fotos</Text>
-											<View className={"flex flex-row mt-0"}>
+											<View className={"flex flex-1 flex-row flex-wrap w-80 h-auto mb-4"}>
 												{photos.map((item, index) => (
+												<>
+													<TouchableHighlight>
 													<Image
 														key={index}
-														className={"w-20 h-20"}
+														className={"w-20 h-20 mr-5 mt-5"}
 														source={{
 															uri: item.url,
 														}}
+														
 														alt={item.name}
-													/>
+														/>
+													</TouchableHighlight>
+												</>
 												))}
 											</View>
 										</>

@@ -1,5 +1,7 @@
-import { initializeApp } from "firebase/app";
-import { getStorage } from "firebase/storage";
+import { FirebaseStorage } from '@firebase/storage-types';
+import firebase from 'firebase/compat/app'
+import 'firebase/compat/storage'
+import { getStorage } from 'firebase/storage';
 
 const firebaseConfig = {
 	apiKey: "AIzaSyCqqwI7kCsvmooQ6E3YO79VErqP21LRhZE",
@@ -14,7 +16,11 @@ const firebaseConfig = {
 
 	appId: "1:831704138373:web:efabacf17f4e525cae5fec",
 };
+const firebaseApp = firebase.initializeApp(firebaseConfig)
+let storage
 
-const firebaseApp = initializeApp(firebaseConfig);
+if (firebaseApp){
+	storage = getStorage(firebaseApp)	
+}
+export {storage, firebase}
 
-export const storage = getStorage(firebaseApp);
