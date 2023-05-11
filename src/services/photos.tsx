@@ -1,17 +1,17 @@
 import { Photo } from "../@types/photo";
 import { storage } from "../libs/firebase";
 import { ref, listAll, getDownloadURL } from "firebase/storage";
+import { Alert } from "react-native";
 
 export const getAllPhotos = async (idAtivo) => {
-
 	let list: Photo[] = [];
 
-	const itemPath = `images/${idAtivo}`
-	
+	const itemPath = `images/${idAtivo}`;
+
 	const imagesFolder = await ref(storage, itemPath);
-	
+
 	console.log("teste " + imagesFolder);
-	
+
 	const photoList = await listAll(imagesFolder);
 
 	for (let i in photoList.items) {

@@ -1,6 +1,19 @@
 import React, { useEffect, useState } from "react";
-import { useFocusEffect, useNavigation, useRoute } from "@react-navigation/native";
-import { View, Text, Image, ImageBackground, Alert, TouchableHighlight } from "react-native";
+import {
+	useFocusEffect,
+	useNavigation,
+	useRoute,
+} from "@react-navigation/native";
+import {
+	View,
+	Text,
+	Image,
+	ImageBackground,
+	Alert,
+	Modal,
+	TouchableHighlight,
+	TouchableOpacity,
+} from "react-native";
 import { TextInput } from "react-native-gesture-handler";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 import AsyncStorage from "@react-native-async-storage/async-storage";
@@ -32,6 +45,9 @@ export function DetailAtivo() {
 	const [checked, setChecked] = React.useState("30 Dias");
 	const [listaDeAtivos, setListaDeAtivos] = useState([]);
 	const [objectInfo, setObjectInfo] = useState({});
+	const [photoOpen, setPhotoOpen] = useState(false);
+	const [photoUrl, setPhotoUrl] = useState("");
+	const [photoName, setPhotoName] = useState("");
 	const [inicializacao, setInicializacao] = useState(0);
 	const [finalizacao, setFinalizacao] = useState(0);
 	const [atendentes, setAtendentes] = useState([]);
@@ -50,12 +66,12 @@ export function DetailAtivo() {
 	useEffect(() => {
 		setInicializacao(Date.now());
 		getListAtivo();
-	
-		navigation.addListener('focus', () => setLoadEffect(!loadEffect));
+
+		navigation.addListener("focus", () => setLoadEffect(!loadEffect));
 
 		const getPhotos = async () => {
 			setLoading(true);
-			const listaFotoFB = await Photos.getAllPhotos(idAtivo)
+			const listaFotoFB = await Photos.getAllPhotos(idAtivo);
 			setPhotos(listaFotoFB);
 			setLoading(false);
 		};
@@ -91,6 +107,38 @@ export function DetailAtivo() {
 
 		requestLocationPermissions();
 	}, [loadEffect, navigation]);
+
+	function handleOpenPhoto(item) {
+		console.log(item.url);
+		console.log(item.name);
+
+		setPhotoOpen(true);
+		setPhotoUrl(item.url);
+		setPhotoName(item.name);
+	}
+
+	function handleCallPreviousPageCam() {
+		setPhotoOpen(false);
+		setLoadEffect(false);
+	}
+
+	async function handleFavorito(photoUrl) {
+		try {
+			const response = await axios.post(`${baseURL}/images`, {
+				ativo: idAtivo,
+				favorita: true,
+				os: ID,
+				path: photoUrl,
+			});
+			console.log(response.data);
+			Alert.alert("Foto favoritada");
+		} catch (e) {
+			console.log("erro");
+
+			console.log(e.response.data);
+			Alert.alert("Erro ao favoritar foto");
+		}
+	}
 
 	function handleCallPreviousPage() {
 		navigation.navigate("detailos", { ID });
@@ -297,21 +345,24 @@ export function DetailAtivo() {
 									{!loading && photos.length > 0 && (
 										<>
 											<Text>Fotos</Text>
-											<View className={"flex flex-1 flex-row flex-wrap w-80 h-auto mb-4"}>
+											<View
+												className={
+													"flex flex-1 flex-row flex-wrap w-80 h-auto mb-4"
+												}
+											>
 												{photos.map((item, index) => (
-												<>
-													<TouchableHighlight>
-													<Image
+													<TouchableOpacity
 														key={index}
-														className={"w-20 h-20 mr-5 mt-5"}
-														source={{
-															uri: item.url,
-														}}
-														
-														alt={item.name}
+														onPress={() => handleOpenPhoto(item)}
+													>
+														<Image
+															className={"w-20 h-20 mr-5 mt-5 rounded-md"}
+															source={{
+																uri: item.url,
+															}}
+															alt={item.name}
 														/>
-													</TouchableHighlight>
-												</>
+													</TouchableOpacity>
 												))}
 											</View>
 										</>
@@ -341,6 +392,33 @@ export function DetailAtivo() {
 					</KeyboardAwareScrollView>
 				</View>
 			</ImageBackground>
+			{photoOpen && (
+				<Modal
+					className="w-8"
+					animationType="slide"
+					transparent={false}
+					visible={photoOpen}
+				>
+					<View className="mt-32 flex-row">
+						<BackButton callFunc={handleCallPreviousPageCam} />
+						<TouchableOpacity onPress={handleCallPreviousPageCam}>
+							<Text className="font-OpenSansBold text-xl mb-10">Voltar</Text>
+						</TouchableOpacity>
+					</View>
+					<View>
+						<Image
+							className="w-[90%] h-[65%] ml-5"
+							source={{ uri: photoUrl }}
+						/>
+					</View>
+					<View className="mx-10">
+						<Button
+							text="Favoritar"
+							callFunc={() => handleFavorito(photoUrl)}
+						/>
+					</View>
+				</Modal>
+			)}
 		</View>
 	);
 }

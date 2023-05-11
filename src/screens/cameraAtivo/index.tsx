@@ -18,8 +18,16 @@ import * as Photos from "../../services/photos";
 import { Photo } from "../../@types/photo";
 import { firebase } from "../../libs/firebase";
 
-import * as FileSystem from 'expo-file-system'
-import FirebaseStorage, { getStorage, ref, uploadBytesResumable, getDownloadURL, uploadString, updateMetadata, uploadBytes } from "firebase/storage";
+import * as FileSystem from "expo-file-system";
+import FirebaseStorage, {
+	getStorage,
+	ref,
+	uploadBytesResumable,
+	getDownloadURL,
+	uploadString,
+	updateMetadata,
+	uploadBytes,
+} from "firebase/storage";
 
 type RouteParams = {
 	ID: string;
@@ -39,7 +47,6 @@ export function CameraAtivo() {
 	const navigation = useNavigation();
 
 	useEffect(() => {
-
 		(async () => {
 			const { status } = await Camera.requestCameraPermissionsAsync();
 			requestPermission(status === "granted");
@@ -60,19 +67,22 @@ export function CameraAtivo() {
 	}
 
 	async function handleSavePhoto() {
-		const response = await fetch(photoTaken)
-		const blob = await response.blob()
-		const filename = photoTaken.substring(photoTaken.lastIndexOf('/') + 1)
-		var ref = firebase.storage().ref(`images/${idAtivo}`).child(filename).put(blob)
-		
+		const response = await fetch(photoTaken);
+		const blob = await response.blob();
+		const filename = photoTaken.substring(photoTaken.lastIndexOf("/") + 1);
+		var ref = firebase
+			.storage()
+			.ref(`images/${idAtivo}`)
+			.child(filename)
+			.put(blob);
+
 		try {
-			await ref
+			await ref;
 		} catch (err) {
 			console.log(err);
-			
 		}
-		Alert.alert('Foto salva com sucesso!')
-		setPhotoTaken(null)
+		Alert.alert("Foto salva com sucesso!");
+		setPhotoTaken(null);
 
 		setOpen(false);
 
