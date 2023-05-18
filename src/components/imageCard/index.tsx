@@ -1,5 +1,13 @@
-import React from "react";
-import { View, Text, TouchableOpacity, TouchableHighlight } from "react-native";
+import React, { useEffect, useState } from "react";
+import {
+	View,
+	Text,
+	TouchableOpacity,
+	TouchableHighlight,
+	Alert,
+	Image,
+} from "react-native";
+import axios from "axios";
 
 type Props = {
 	id: string;
@@ -9,6 +17,25 @@ type Props = {
 };
 
 export function ImageCard(props: Props) {
+	const baseURL = "https://overview-os-api.onrender.com";
+	const [photoUrl, setPhotoUrl] = useState("");
+
+	useEffect(() => {
+		getImage(props.id);
+	}, []);
+
+	async function getImage(idAtivo) {
+		const urlFavorito = `${baseURL}/images/favorite/${idAtivo}`;
+		await axios.get(urlFavorito).then((response) => {
+			const favoritePhoto = response.data;
+			if (!favoritePhoto) {
+				return Alert.alert("Atenção", "Nenhuma foto favoritada");
+			} else {
+				setPhotoUrl(favoritePhoto.image[0].path);
+			}
+		});
+	}
+
 	return (
 		<View>
 			<TouchableHighlight
@@ -17,7 +44,10 @@ export function ImageCard(props: Props) {
 				onPress={props.callFunc}
 			>
 				<>
-					<View className="bg-[#6AB1ED] w-[84px] h-[84px] rounded-xl mt-[-4px]"></View>
+					<Image
+						className="bg-[#6AB1ED] w-[84px] h-[84px] rounded-xl mt-[-4px] border-2 border-[#6AB1ED]"
+						source={{ uri: photoUrl }}
+					/>
 					<View className="justify-around mb-3">
 						<Text className="text-[#2B3049] mt-3 mb-3 text-xl font-OpenSansBold">
 							Produto: {props.nameAtivo}
