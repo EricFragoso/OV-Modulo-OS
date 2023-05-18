@@ -1,5 +1,5 @@
 import { Camera, CameraType } from "expo-camera";
-import React, { useState, useEffect, useRef, FormEvent } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import {
 	Text,
 	View,
@@ -13,21 +13,8 @@ import { useNavigation, useRoute } from "@react-navigation/native";
 import { Button } from "../../components/button";
 import { MenuHamburger } from "../../components/menuHamburger";
 import { BackButton } from "../../components/backButton";
-import AsyncStorage from "@react-native-async-storage/async-storage";
-import * as Photos from "../../services/photos";
-import { Photo } from "../../@types/photo";
 import { firebase } from "../../libs/firebase";
-
-import * as FileSystem from "expo-file-system";
-import FirebaseStorage, {
-	getStorage,
-	ref,
-	uploadBytesResumable,
-	getDownloadURL,
-	uploadString,
-	updateMetadata,
-	uploadBytes,
-} from "firebase/storage";
+import axios from "axios";
 
 type RouteParams = {
 	ID: string;
@@ -35,6 +22,8 @@ type RouteParams = {
 };
 
 export function CameraAtivo() {
+	const baseURL = "https://overview-os-api.onrender.com";
+
 	const route = useRoute();
 	const { ID, idAtivo } = route.params as RouteParams;
 	const [uploading, setUploading] = useState(false);
@@ -42,11 +31,14 @@ export function CameraAtivo() {
 	const [permission, requestPermission] = useState(null);
 	const [photoTaken, setPhotoTaken] = useState(null);
 	const [photoData, setPhotoData] = useState(null);
+	const [photoUrl, setPhotoUrl] = useState("");
 	const [open, setOpen] = useState(false);
 	const camRef = useRef(null);
 	const navigation = useNavigation();
 
 	useEffect(() => {
+		console.log(ID);
+
 		(async () => {
 			const { status } = await Camera.requestCameraPermissionsAsync();
 			requestPermission(status === "granted");
@@ -74,7 +66,27 @@ export function CameraAtivo() {
 			.storage()
 			.ref(`images/${idAtivo}`)
 			.child(filename)
-			.put(blob);
+			.put(blob)
+			.then(function (snapshot) {
+				snapshot.ref.getDownloadURL().then(async function (downloadURL) {
+					console.log("Url = ", downloadURL);
+					//setPhotoUrl(downloadURL);
+					try {
+						const response = await axios.post(`${baseURL}/images`, {
+							ativo: idAtivo,
+							favorita: false,
+							os: ID,
+							path: downloadURL,
+						});
+						console.log(response.data);
+					} catch (error) {
+						console.log(error.response.data);
+					}
+				});
+			})
+			.catch(function (e) {
+				console.log("Erro ao fazer upload => " + e);
+			});
 
 		try {
 			await ref;

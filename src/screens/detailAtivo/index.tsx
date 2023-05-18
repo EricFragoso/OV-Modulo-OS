@@ -236,7 +236,7 @@ export function DetailAtivo() {
 	}
 
 	function handleTirarFoto() {
-		navigation.navigate("cameraativo", { idAtivo });
+		navigation.navigate("cameraativo", { ID, idAtivo });
 	}
 	function handleLimparDados() {
 		setAtendentes([]);
@@ -274,7 +274,7 @@ export function DetailAtivo() {
 				</View>
 
 				<View className="flex-row p-6">
-					<BackButton callFunc={handleCallPreviousPage}></BackButton>
+					<BackButton callFunc={handleCallPreviousPage} />
 					<Text className="flex-1 text-2xl font-OpenSansBold text-center">
 						Ativo {idAtivo}
 					</Text>
