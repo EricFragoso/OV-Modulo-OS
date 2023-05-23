@@ -52,13 +52,8 @@ export function Home() {
 		const urlListaOS = `${baseURL}/os/colaborador/${codigo}`;
 		axios.get(urlListaOS).then((response) => {
 			const listOS = response.data;
-
-			if (listOS.length === 0) {
-				return Alert.alert("Atenção", "Nenhuma OS cadastrada");
-			} else {
-				setListaDeOS(listOS);
-				return navigation.navigate("listos", { lista: listaDeOS });
-			}
+			setListaDeOS(listOS);
+			return navigation.navigate("menuos", { lista: listaDeOS });
 		});
 	}
 

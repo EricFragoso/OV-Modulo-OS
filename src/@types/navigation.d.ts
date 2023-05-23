@@ -2,6 +2,9 @@ export declare global {
 	namespace ReactNavigation {
 		interface RootParamList {
 			home: undefined;
+			menuos: {
+				lista: Array[];
+			};
 			listos: {
 				lista: Array[];
 			};

@@ -11,8 +11,6 @@ import { ModalInserir } from "../modalInserirItem";
 import { useNavigation, useRoute } from "@react-navigation/native";
 import axios from "axios";
 
-import { getList } from "../../middleware/searchOS";
-
 import { ImageCard } from "../../components/imageCard";
 import { BackButton } from "../../components/backButton";
 import { Button } from "../../components/button";
@@ -37,7 +35,6 @@ export function DetailOS() {
 	const [btuInfo, setBtuInfo] = useState("");
 	const [idInfo, setIdInfo] = useState("");
 	const [nameInfo, setNameInfo] = useState("");
-
 
 	const navigation = useNavigation();
 	const route = useRoute();
