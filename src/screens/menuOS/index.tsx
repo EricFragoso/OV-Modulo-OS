@@ -32,6 +32,10 @@ export function MenuOS() {
 		}
 	}
 
+	function handleCallCriarOS() {
+		navigation.navigate("criaros");
+	}
+
 	return (
 		<View className="flex-1 bg-white items-center">
 			<ImageBackground
@@ -57,7 +61,7 @@ export function MenuOS() {
 					<Button
 						fontSize={24}
 						text="Criar OS"
-						callFunc={() => {}}
+						callFunc={handleCallCriarOS}
 					/>
 				</View>
 			</ImageBackground>

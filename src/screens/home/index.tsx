@@ -50,11 +50,11 @@ export function Home() {
 
 	function getList(codigo: string) {
 		const urlListaOS = `${baseURL}/os/colaborador/${codigo}`;
-		axios.get(urlListaOS).then((response) => {
-			const listOS = response.data;
-			setListaDeOS(listOS);
-			return navigation.navigate("menuos", { lista: listaDeOS });
-		});
+		//axios.get(urlListaOS).then((response) => {
+		//const listOS = response.data;
+		//setListaDeOS(listOS);
+		return navigation.navigate("menuos", { lista: listaDeOS });
+		//});
 	}
 
 	function handleUserLogin(codigo: string) {

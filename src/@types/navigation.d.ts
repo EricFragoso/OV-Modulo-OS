@@ -5,6 +5,7 @@ export declare global {
 			menuos: {
 				lista: Array[];
 			};
+			criaros: undefined;
 			listos: {
 				lista: Array[];
 			};
