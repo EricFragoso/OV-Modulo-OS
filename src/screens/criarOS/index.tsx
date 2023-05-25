@@ -25,8 +25,9 @@ type RouteParams = {
 };
 
 type FormData = {
+	id: string;
 	numeroAtivo: string;
-	CNPJ: string;
+	cnpj: string;
 	ocorrencia?: string;
 	prioridade?: string;
 	motivo?: string;
@@ -35,15 +36,20 @@ type FormData = {
 	inicio?: string;
 	finalizacao?: string;
 	solucao?: string;
+	created_at: string;
 };
 
 export function CriarOS() {
 	const baseURL = "https://overview-os-api.onrender.com";
 
 	const route = useRoute();
-	const { control, handleSubmit } = useForm<FormData>();
 	const navigation = useNavigation();
+
+	const { control, handleSubmit } = useForm<FormData>();
+
 	const [prioridade, setPrioridade] = useState("");
+	const [inicializacao, setInicializacao] = useState(0);
+	const [finalizacao, setFinalizacao] = useState(0);
 
 	const prioridadeData = [
 		{ key: "1", value: "Alta" },
@@ -57,12 +63,63 @@ export function CriarOS() {
 
 	async function CriarOS(data: FormData) {
 		const urlCriarOS = `${baseURL}/preos`;
-		//await axios.post(urlCriarOS, {});
+		await setFinalizacao(Date.now());
+		console.log(inicializacao);
+		console.log(finalizacao);
+
 		data.prioridade = prioridade;
-		console.log(data);
+		data.tipoAtendimento = "PRESENCIAL";
+		const dataInicio = new Date(inicializacao).toLocaleString("en-US", {
+			day: "2-digit",
+			month: "2-digit",
+			year: "numeric",
+		});
+		const dataFinalizacao = new Date(finalizacao).toLocaleString("en-US", {
+			day: "2-digit",
+			month: "2-digit",
+			year: "numeric",
+		});
+
+		const horarioInicio = new Date(inicializacao);
+		const horarioFinalizacao = new Date(finalizacao);
+
+		const horaInicio = horarioInicio.getHours();
+		const minInicio = horarioInicio.getMinutes();
+		const segInicio = horarioInicio.getSeconds();
+
+		const horaFinalizacao = horarioFinalizacao.getHours();
+		const minFinalizacao = horarioFinalizacao.getMinutes();
+		const segFinalizacao = horarioFinalizacao.getSeconds();
+
+		const FullDataInicio = `${dataInicio}T${horaInicio}:${minInicio}:${segInicio}`;
+		const FullDataFinalizacao = `${dataFinalizacao}T${horaFinalizacao}:${minFinalizacao}:${segFinalizacao}`;
+
+		data.inicio = FullDataInicio;
+		data.finalizacao = FullDataFinalizacao;
+
+		console.log(data.inicio);
+		console.log(data.finalizacao);
+
+		await axios
+			.post(urlCriarOS, data)
+			.then((response) => {
+				console.log(data);
+				console.log("sucesso");
+
+				console.log(response.data);
+			})
+			.catch((e) => {
+				console.log(data);
+
+				console.log("erro");
+
+				console.log(e.response.data);
+			});
 	}
 
-	useEffect(() => {}, []);
+	useEffect(() => {
+		setInicializacao(Date.now());
+	}, []);
 
 	return (
 		<View className="flex-1 bg-white items-center">
@@ -108,7 +165,7 @@ export function CriarOS() {
 							/>
 							<Controller
 								control={control}
-								name="CNPJ"
+								name="cnpj"
 								render={({ field: { value, onChange } }) => (
 									<TextInput
 										className="w-full h-10 border-[#000] rounded-sm bg-white text-[#000] pl-2 text-xs font-OpenSansRegular mt-5"
@@ -178,19 +235,6 @@ export function CriarOS() {
 							/>
 							<Controller
 								control={control}
-								name="tipoAtendimento"
-								render={({ field: { value, onChange } }) => (
-									<TextInput
-										className="w-full h-10 border-[#000] rounded-sm bg-white text-[#000] pl-2 text-xs font-OpenSansRegular mt-5"
-										placeholder="Tipo de atendimento"
-										placeholderTextColor={"#999999"}
-										value={value}
-										onChangeText={onChange}
-									/>
-								)}
-							/>
-							<Controller
-								control={control}
 								name="colaborador"
 								render={({ field: { value, onChange } }) => (
 									<TextInput
@@ -202,34 +246,6 @@ export function CriarOS() {
 									/>
 								)}
 							/>
-							<View className="flex flex-row pr-2">
-								<Controller
-									control={control}
-									name="inicio"
-									render={({ field: { value, onChange } }) => (
-										<TextInput
-											className="w-1/2 h-10 mr-2 border-[#000] rounded-sm bg-white text-[#000] pl-2 text-xs font-OpenSansRegular mt-5"
-											placeholder="Inicio"
-											placeholderTextColor={"#999999"}
-											value={value}
-											onChangeText={onChange}
-										/>
-									)}
-								/>
-								<Controller
-									control={control}
-									name="finalizacao"
-									render={({ field: { value, onChange } }) => (
-										<TextInput
-											className="w-1/2 h-10 border-[#000] rounded-sm bg-white text-[#000] pl-2 text-xs font-OpenSansRegular mt-5"
-											placeholder="Finalização"
-											placeholderTextColor={"#999999"}
-											value={value}
-											onChangeText={onChange}
-										/>
-									)}
-								/>
-							</View>
 							<Controller
 								control={control}
 								name="solucao"
