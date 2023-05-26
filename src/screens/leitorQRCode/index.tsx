@@ -1,16 +1,25 @@
 import React, { useState, useEffect } from "react";
 import { Text, View, ImageBackground, Image } from "react-native";
 import { BarCodeScanner } from "expo-barcode-scanner";
-import { useNavigation } from "@react-navigation/native";
+import { useNavigation, useRoute } from "@react-navigation/native";
 import { styles } from "./style";
 import { MenuHamburger } from "../../components/menuHamburger";
 import { BackButton } from "../../components/backButton";
 import { ButtonFilled } from "../../components/buttonFilled";
 
+type RouteParams = {
+	flagCriar: string;
+};
+
 export default function LeitorQRCode() {
+	const navigation = useNavigation();
+	const route = useRoute();
+
 	const [hasPermission, setHasPermission] = useState(null);
 	const [scanned, setScanned] = useState(false);
-	const navigation = useNavigation();
+
+	const { flagCriar } = route.params as RouteParams;
+	console.log(flagCriar);
 
 	useEffect(() => {
 		const getBarCodeScannerPermissions = async () => {
@@ -33,7 +42,11 @@ export default function LeitorQRCode() {
 			const match = idPart.match(/ID:\s*(\d+)/);
 			const ID = match?.[0];
 			if (ID) {
-				navigation.navigate("detailativo", { idAtivo: ID });
+				if (flagCriar) {
+					navigation.navigate("criaros");
+				} else {
+					navigation.navigate("detailativo", { idAtivo: ID });
+				}
 			} else {
 				alert("QR Code Inválido");
 			}

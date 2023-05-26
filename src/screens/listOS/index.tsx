@@ -47,7 +47,7 @@ export function ListOS() {
 	}
 
 	function handleQRCode() {
-		navigation.navigate("leitorqrcode");
+		navigation.navigate("leitorqrcode", { flagCriar: false });
 		console.log("Abrindo Câmera");
 	}
 

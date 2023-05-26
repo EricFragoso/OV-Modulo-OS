@@ -17,7 +17,9 @@ export declare global {
 				ID?: string;
 				idAtivo: string;
 			};
-			leitorqrcode: undefined;
+			leitorqrcode: {
+				flagCriar?: any;
+			};
 			cameraativo: undefined;
 		}
 	}

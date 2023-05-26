@@ -45,6 +45,8 @@ export function CriarOS() {
 	const route = useRoute();
 	const navigation = useNavigation();
 
+	const flagCriar = true;
+
 	const { control, handleSubmit } = useForm<FormData>();
 
 	const [prioridade, setPrioridade] = useState("");
@@ -59,6 +61,10 @@ export function CriarOS() {
 
 	function handleGoBack() {
 		navigation.goBack();
+	}
+
+	function handleCallLeitorQR() {
+		navigation.navigate("leitorqrcode", { flagCriar: flagCriar });
 	}
 
 	async function CriarOS(data: FormData) {
@@ -118,6 +124,7 @@ export function CriarOS() {
 	}
 
 	useEffect(() => {
+		const flagCriar = true;
 		setInicializacao(Date.now());
 	}, []);
 
@@ -261,11 +268,18 @@ export function CriarOS() {
 								)}
 							/>
 						</View>
-						<Button
-							text="Criar"
-							borderRadius={6}
-							callFunc={handleSubmit(CriarOS)}
-						></Button>
+						<View className="mt-5">
+							<ButtonFilled
+								text="Escanear Ativo"
+								borderRadius={6}
+								callFunc={handleCallLeitorQR}
+							/>
+							<Button
+								text="Criar"
+								borderRadius={6}
+								callFunc={handleSubmit(CriarOS)}
+							></Button>
+						</View>
 					</KeyboardAwareScrollView>
 				</View>
 			</ImageBackground>
