@@ -21,7 +21,8 @@ import { SelectList } from "react-native-dropdown-select-list";
 import axios from "axios";
 
 type RouteParams = {
-	lista: [];
+	idLido?: string;
+	cnpjLido?: string;
 };
 
 type FormData = {
@@ -44,6 +45,11 @@ export function CriarOS() {
 
 	const route = useRoute();
 	const navigation = useNavigation();
+
+	let { idLido, cnpjLido } = (route.params as RouteParams) || {
+		idLido: null,
+		cnpjLido: null,
+	};
 
 	const flagCriar = true;
 
@@ -126,7 +132,8 @@ export function CriarOS() {
 	useEffect(() => {
 		const flagCriar = true;
 		setInicializacao(Date.now());
-	}, []);
+		console.log("CNPJ", cnpjLido);
+	}, [cnpjLido]);
 
 	return (
 		<View className="flex-1 bg-white items-center">
@@ -165,7 +172,7 @@ export function CriarOS() {
 										className="w-full h-10 border-[#000] rounded-sm bg-white text-[#000] pl-2 text-xs font-OpenSansRegular mt-5"
 										placeholder="Número do ativo"
 										placeholderTextColor={"#999999"}
-										value={value}
+										value={idLido ? idLido : value}
 										onChangeText={onChange}
 									/>
 								)}
@@ -178,7 +185,7 @@ export function CriarOS() {
 										className="w-full h-10 border-[#000] rounded-sm bg-white text-[#000] pl-2 text-xs font-OpenSansRegular mt-5"
 										placeholder="CNPJ"
 										placeholderTextColor={"#999999"}
-										value={value}
+										value={cnpjLido ? cnpjLido : value}
 										onChangeText={onChange}
 									/>
 								)}

@@ -5,7 +5,10 @@ export declare global {
 			menuos: {
 				lista: Array[];
 			};
-			criaros: undefined;
+			criaros: {
+				idLido?: string;
+				cnpjLido?: string;
+			};
 			listos: {
 				lista: Array[];
 			};
