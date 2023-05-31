@@ -20,6 +20,7 @@ import { MenuHamburger } from "../../components/menuHamburger";
 import Context from "../../../Context";
 import OS from "OSTypeCard";
 import Ativo from "ativoType";
+import LoadingModal from "../../components/loadingModal";
 
 type RouteParams = {
 	ID: string;
@@ -35,6 +36,7 @@ export function DetailOS() {
 	const [btuInfo, setBtuInfo] = useState("");
 	const [idInfo, setIdInfo] = useState("");
 	const [nameInfo, setNameInfo] = useState("");
+	const [loading, setLoading] = useState(true);
 
 	const navigation = useNavigation();
 	const route = useRoute();
@@ -57,6 +59,7 @@ export function DetailOS() {
 				setBtuInfo(listAtivo.ativo[0].BTU);
 				setIdInfo(listAtivo.ativo[0].numeroAtivo);
 				setNameInfo(listAtivo.ativo[0].produto);
+				setLoading(false);
 			}
 		});
 	}
@@ -71,6 +74,7 @@ export function DetailOS() {
 
 	return (
 		<View className="flex-1 bg-white items-center">
+			<LoadingModal visible={loading} />
 			<ImageBackground
 				className="flex-1 w-full items-center"
 				source={require("../../assets/img/Overview-50-BG.png")}

@@ -13,10 +13,11 @@ import {
 import { NativeWindStyleSheet } from "nativewind";
 
 import { useNavigation } from "@react-navigation/native";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
+import LoadingModal from "../../components/loadingModal";
 import { Button } from "../../components/button";
 import Context from "../../../Context";
-import AsyncStorage from "@react-native-async-storage/async-storage";
 
 NativeWindStyleSheet.setOutput({ default: "native" });
 
@@ -31,6 +32,8 @@ export function Home() {
 	const [laudo, setLaudo] = useState("");
 	const [geoloc, setGeoloc] = useState("");
 
+	const [loading, setLoading] = useState(false);
+
 	const navigation = useNavigation();
 
 	const dismissKeyboard = () => {
@@ -39,6 +42,7 @@ export function Home() {
 
 	useEffect(() => {
 		handleLimparDados();
+		setLoading(false);
 		try {
 			AsyncStorage.clear();
 		} catch (error) {
@@ -53,6 +57,7 @@ export function Home() {
 		axios.get(urlListaOS).then((response) => {
 			const listOS = response.data;
 			setListaDeOS(listOS);
+			setLoading(false);
 			return navigation.navigate("menuos", { lista: listaDeOS });
 		});
 	}
@@ -61,6 +66,7 @@ export function Home() {
 		if (codigo == "") {
 			return Alert.alert("Atenção", "Código em branco");
 		} else {
+			setLoading(true);
 			getList(codigo);
 		}
 	}
@@ -114,6 +120,7 @@ export function Home() {
 							borderRadius={5}
 							callFunc={() => handleUserLogin(userCode)}
 						/>
+						<LoadingModal visible={loading} />
 					</View>
 				</ImageBackground>
 			</View>

@@ -19,6 +19,7 @@ import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view
 import { TouchableOpacity } from "react-native";
 import { SelectList } from "react-native-dropdown-select-list";
 import axios from "axios";
+import LoadingModal from "../../components/loadingModal";
 
 type RouteParams = {
 	idLido?: string;
@@ -55,6 +56,7 @@ export function CriarOS() {
 
 	const { control, handleSubmit } = useForm<FormData>();
 
+	const [loading, setLoading] = useState(false);
 	const [prioridade, setPrioridade] = useState("");
 	const [inicializacao, setInicializacao] = useState(0);
 	const [finalizacao, setFinalizacao] = useState(0);
@@ -74,6 +76,7 @@ export function CriarOS() {
 	}
 
 	async function CriarOS(data: FormData) {
+		setLoading(true);
 		const urlCriarOS = `${baseURL}/preos`;
 		await setFinalizacao(Date.now());
 		console.log(inicializacao);
@@ -121,6 +124,7 @@ export function CriarOS() {
 				console.log(response.data);
 			})
 			.catch((e) => {
+				setLoading(false);
 				console.log(data);
 
 				console.log("erro");
@@ -286,6 +290,7 @@ export function CriarOS() {
 								borderRadius={6}
 								callFunc={handleSubmit(CriarOS)}
 							></Button>
+							<LoadingModal visible={loading} />
 						</View>
 					</KeyboardAwareScrollView>
 				</View>
