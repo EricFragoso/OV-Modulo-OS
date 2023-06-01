@@ -41,13 +41,6 @@ export function Home() {
 	};
 
 	useEffect(() => {
-		handleLimparDados();
-		setLoading(false);
-		try {
-			AsyncStorage.clear();
-		} catch (error) {
-			console.error(error);
-		}
 		const kbDidHideListener = Keyboard.addListener("keyboardDidHide", () => {});
 		return kbDidHideListener.remove();
 	}, []);
@@ -103,7 +96,7 @@ export function Home() {
 						</View>
 						<View>
 							<Text className={"font-OpenSansSemiBold text-xl"}>
-								Código do usuário
+								Código do usuário 70239214439
 							</Text>
 							<TextInput
 								className={

@@ -1,12 +1,18 @@
 import React, { useEffect, useState } from "react";
-import { useNavigation, useRoute } from "@react-navigation/native";
+import {
+	useFocusEffect,
+	useNavigation,
+	useRoute,
+} from "@react-navigation/native";
 import {
 	View,
 	Text,
-	ScrollView,
 	Image,
 	ImageBackground,
 	Alert,
+	Modal,
+	TouchableHighlight,
+	TouchableOpacity,
 } from "react-native";
 import { TextInput } from "react-native-gesture-handler";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
@@ -14,17 +20,18 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import {
 	requestForegroundPermissionsAsync,
 	getCurrentPositionAsync,
-	LocationObject,
 } from "expo-location";
-
+import { FirebaseApp } from "firebase/app";
 import { BackButton } from "../../components/backButton";
 import { Button } from "../../components/button";
 import { CardInfo } from "../../components/cardInfo";
+import * as Photos from "../../services/photos";
+import { Photo } from "../../@types/photo";
 
 import { MenuHamburger } from "../../components/menuHamburger";
 import { ButtonFilled } from "../../components/buttonFilled";
 import axios from "axios";
-import Ativo from "ativoType";
+import { PhotoItem } from "../../components/photoItem";
 
 type RouteParams = {
 	ID: string;
@@ -38,26 +45,100 @@ export function DetailAtivo() {
 	const [checked, setChecked] = React.useState("30 Dias");
 	const [listaDeAtivos, setListaDeAtivos] = useState([]);
 	const [objectInfo, setObjectInfo] = useState({});
+	const [photoOpen, setPhotoOpen] = useState(false);
+	const [photoUrl, setPhotoUrl] = useState("");
+	const [photoName, setPhotoName] = useState("");
 	const [inicializacao, setInicializacao] = useState(0);
 	const [finalizacao, setFinalizacao] = useState(0);
-
 	const [atendentes, setAtendentes] = useState([]);
 	const [servicos, setServicos] = useState([]);
 	const [pecas, setPecas] = useState([]);
 	const [laudo, setLaudo] = useState("");
 	const [geoloc, setGeoloc] = useState("");
+	const [photos, setPhotos] = useState<Photo[]>([]);
+	const [loading, setLoading] = useState(false);
+	const [loadEffect, setLoadEffect] = useState(false);
 
 	const navigation = useNavigation();
 	const route = useRoute();
 	const { ID, idAtivo } = route.params as RouteParams;
 
-	const listAtendentes = ["Vazio"];
-	const listServicos = ["Vazio"];
-	const listPecas = ["Vazio"];
-
 	useEffect(() => {
+		setInicializacao(Date.now());
+		getListAtivo();
+
+		navigation.addListener("focus", () => setLoadEffect(!loadEffect));
+
+		const getPhotos = async () => {
+			setLoading(true);
+			const listaFotoFB = await Photos.getAllPhotos(idAtivo);
+			setPhotos(listaFotoFB);
+			setLoading(false);
+		};
+		getPhotos();
+
+		async function getLocalData() {
+			try {
+				const atendentesData = await AsyncStorage.getItem("atendentes");
+				const servicosData = await AsyncStorage.getItem("servicos");
+				const pecasData = await AsyncStorage.getItem("pecas");
+				const laudoData = await AsyncStorage.getItem("laudo");
+
+				if (atendentesData !== null) {
+					setAtendentes(JSON.parse(atendentesData));
+				}
+
+				if (servicosData !== null) {
+					setServicos(JSON.parse(servicosData));
+				}
+
+				if (pecasData !== null) {
+					setPecas(JSON.parse(pecasData));
+				}
+
+				if (laudoData !== null) {
+					setLaudo(laudoData);
+				}
+			} catch (error) {
+				console.log(error);
+			}
+		}
+		getLocalData();
+
 		requestLocationPermissions();
-	}, []);
+	}, [loadEffect, navigation]);
+
+	function handleOpenPhoto(item) {
+		console.log(item.url);
+		console.log(item.name);
+
+		setPhotoOpen(true);
+		setPhotoUrl(item.url);
+		setPhotoName(item.name);
+	}
+
+	function handleCallPreviousPageCam() {
+		setPhotoOpen(false);
+		setLoadEffect(false);
+	}
+
+	async function handleFavorito(photoUrl) {
+		try {
+			const response = await axios.post(`${baseURL}/images`, {
+				ativo: idAtivo,
+				favorita: true,
+				os: ID,
+				path: photoUrl,
+			});
+			console.log(response.data);
+			Alert.alert("Foto favoritada");
+		} catch (e) {
+			console.log("erro");
+
+			console.log(e.response.data);
+			Alert.alert("Erro ao favoritar foto");
+		}
+	}
 
 	function handleCallPreviousPage() {
 		navigation.goBack();
@@ -156,12 +237,13 @@ export function DetailAtivo() {
 	}
 
 	function handleTirarFoto() {
-		navigation.navigate("cameraativo");
+		navigation.navigate("cameraativo", { ID, idAtivo });
 	}
 	function handleLimparDados() {
 		setAtendentes([]);
 		setServicos([]);
 		setPecas([]);
+		setPhotos([]);
 		setLaudo("");
 		clearData();
 	}
@@ -174,40 +256,6 @@ export function DetailAtivo() {
 			console.error(error);
 		}
 	}
-
-	useEffect(() => {
-		setInicializacao(Date.now());
-		getListAtivo();
-
-		async function getLocalData() {
-			try {
-				const atendentesData = await AsyncStorage.getItem("atendentes");
-				const servicosData = await AsyncStorage.getItem("servicos");
-				const pecasData = await AsyncStorage.getItem("pecas");
-				const laudoData = await AsyncStorage.getItem("laudo");
-
-				if (atendentesData !== null) {
-					setAtendentes(JSON.parse(atendentesData));
-				}
-
-				if (servicosData !== null) {
-					setServicos(JSON.parse(servicosData));
-				}
-
-				if (pecasData !== null) {
-					setPecas(JSON.parse(pecasData));
-				}
-
-				if (laudoData !== null) {
-					setLaudo(laudoData);
-				}
-			} catch (error) {
-				console.log(error);
-			}
-		}
-
-		getLocalData();
-	}, []);
 
 	return (
 		<View className="flex-1 bg-white items-center">
@@ -225,18 +273,11 @@ export function DetailAtivo() {
 					</Text>
 					<MenuHamburger />
 				</View>
-
-				<View className="flex-row w-full justify-between items-center pl-6 py-3">
+				<View className="flex-row p-6">
 					<BackButton callFunc={handleCallPreviousPage} />
-					<View className="h-14 justify-between w-full items-end pr-16">
-
-						<Text className="flex-1 text-2xl font-OpenSansBold ">
-							Ativo {idAtivo}
-						</Text>
-						<Text className="flex-1 text-sm font-OpenSansBold">
-							OS {ID}
-						</Text>
-					</View>
+					<Text className="flex-1 text-2xl font-OpenSansBold text-center">
+						Ativo {idAtivo}
+					</Text>
 				</View>
 
 				<View className="flex-1 px-7 w-full">
@@ -300,10 +341,40 @@ export function DetailAtivo() {
 							</View> 
 							<View>
 								<Text>Data da próxima manutenção</Text>
-							</View>
-							<View>
-								<Text>Fotos</Text>
 							</View>*/}
+								<View className="mt-5">
+									{!loading && photos.length > 0 && (
+										<>
+											<Text>Fotos</Text>
+											<View
+												className={
+													"flex flex-1 flex-row flex-wrap w-80 h-auto mb-4"
+												}
+											>
+												{photos.map((item, index) => (
+													<TouchableOpacity
+														key={index}
+														onPress={() => handleOpenPhoto(item)}
+													>
+														<Image
+															className={"w-20 h-20 mr-5 mt-5 rounded-md"}
+															source={{
+																uri: item.url,
+															}}
+															alt={item.name}
+														/>
+													</TouchableOpacity>
+												))}
+											</View>
+										</>
+									)}
+									<ButtonFilled
+										borderRadius={5}
+										text="Tirar foto"
+										fontSize={15}
+										callFunc={handleTirarFoto}
+									/>
+								</View>
 							</View>
 						</View>
 						<View className="flex-row justify-between items-center mb-10">
@@ -323,6 +394,33 @@ export function DetailAtivo() {
 					</KeyboardAwareScrollView>
 				</View>
 			</ImageBackground>
+			{photoOpen && (
+				<Modal
+					className="w-8"
+					animationType="slide"
+					transparent={false}
+					visible={photoOpen}
+				>
+					<View className="mt-32 flex-row">
+						<BackButton callFunc={handleCallPreviousPageCam} />
+						<TouchableOpacity onPress={handleCallPreviousPageCam}>
+							<Text className="font-OpenSansBold text-xl mb-10">Voltar</Text>
+						</TouchableOpacity>
+					</View>
+					<View>
+						<Image
+							className="w-[90%] h-[65%] ml-5"
+							source={{ uri: photoUrl }}
+						/>
+					</View>
+					<View className="mx-10">
+						<Button
+							text="Favoritar"
+							callFunc={() => handleFavorito(photoUrl)}
+						/>
+					</View>
+				</Modal>
+			)}
 		</View>
 	);
 }

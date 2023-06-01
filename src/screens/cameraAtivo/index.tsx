@@ -7,21 +7,38 @@ import {
 	Image,
 	ImageBackground,
 	TouchableOpacity,
+	Alert,
 } from "react-native";
-import { useNavigation } from "@react-navigation/native";
+import { useNavigation, useRoute } from "@react-navigation/native";
 import { Button } from "../../components/button";
 import { MenuHamburger } from "../../components/menuHamburger";
 import { BackButton } from "../../components/backButton";
+import { firebase } from "../../libs/firebase";
+import axios from "axios";
+
+type RouteParams = {
+	ID: string;
+	idAtivo: string;
+};
 
 export function CameraAtivo() {
+	const baseURL = "https://overview-os-api.onrender.com";
+
+	const route = useRoute();
+	const { ID, idAtivo } = route.params as RouteParams;
+	const [uploading, setUploading] = useState(false);
 	const [type, setType] = useState(CameraType.back);
 	const [permission, requestPermission] = useState(null);
 	const [photoTaken, setPhotoTaken] = useState(null);
+	const [photoData, setPhotoData] = useState(null);
+	const [photoUrl, setPhotoUrl] = useState("");
 	const [open, setOpen] = useState(false);
 	const camRef = useRef(null);
 	const navigation = useNavigation();
 
 	useEffect(() => {
+		console.log(ID);
+
 		(async () => {
 			const { status } = await Camera.requestCameraPermissionsAsync();
 			requestPermission(status === "granted");
@@ -35,17 +52,60 @@ export function CameraAtivo() {
 	async function handleTakePhoto() {
 		if (camRef) {
 			const data = await camRef.current.takePictureAsync();
+			setPhotoData(data);
 			setPhotoTaken(data.uri);
 			setOpen(true);
-			console.log(`o resultado da QR é: ${data}`);
 		}
+	}
+
+	async function handleSavePhoto() {
+		const response = await fetch(photoTaken);
+		const blob = await response.blob();
+		const filename = photoTaken.substring(photoTaken.lastIndexOf("/") + 1);
+		var ref = firebase
+			.storage()
+			.ref(`images/${idAtivo}`)
+			.child(filename)
+			.put(blob)
+			.then(function (snapshot) {
+				snapshot.ref.getDownloadURL().then(async function (downloadURL) {
+					console.log("Url = ", downloadURL);
+					//setPhotoUrl(downloadURL);
+					try {
+						const response = await axios.post(`${baseURL}/images`, {
+							ativo: idAtivo,
+							favorita: false,
+							os: ID,
+							path: downloadURL,
+						});
+						console.log(response.data);
+					} catch (error) {
+						console.log(error.response.data);
+					}
+				});
+			})
+			.catch(function (e) {
+				console.log("Erro ao fazer upload => " + e);
+			});
+
+		try {
+			await ref;
+		} catch (err) {
+			console.log(err);
+		}
+		Alert.alert("Foto salva com sucesso!");
+		setPhotoTaken(null);
+
+		setOpen(false);
+
+		navigation.navigate("detailativo", { idAtivo });
 	}
 
 	function handleCallPreviousPage() {
 		navigation.goBack();
 	}
 	function handleCallPreviousPageCam() {
-		navigation.goBack();
+		setOpen(false);
 	}
 
 	return (
@@ -95,13 +155,21 @@ export function CameraAtivo() {
 					<View className="mt-32 flex-row">
 						<BackButton callFunc={handleCallPreviousPageCam} />
 						<TouchableOpacity onPress={handleCallPreviousPageCam}>
-							<Text className="font-OpenSansBold text-xl">Voltar</Text>
+							<Text className="font-OpenSansBold text-xl mb-10">
+								Tirar outra foto
+							</Text>
 						</TouchableOpacity>
 					</View>
 					<View>
 						<Image
 							className="w-[90%] h-[65%] ml-5"
 							source={{ uri: photoTaken }}
+						/>
+					</View>
+					<View className="mx-10">
+						<Button
+							text="Salvar Foto"
+							callFunc={handleSavePhoto}
 						/>
 					</View>
 				</Modal>
