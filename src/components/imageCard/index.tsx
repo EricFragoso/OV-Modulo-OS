@@ -58,7 +58,7 @@ export function ImageCard(props: Props) {
 					</View>
 					<View className="mt-11">
 						<Text className="text-[#2B3049] text-base font-OpenSansMedium">
-							{props.value}
+							BTU: {props.value}
 						</Text>
 					</View>
 				</>
