@@ -1,16 +1,31 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { Text, View, ImageBackground, Image } from "react-native";
 import { BarCodeScanner } from "expo-barcode-scanner";
-import { useNavigation } from "@react-navigation/native";
+import { useNavigation, useRoute } from "@react-navigation/native";
 import { styles } from "./style";
 import { MenuHamburger } from "../../components/menuHamburger";
 import { BackButton } from "../../components/backButton";
 import { ButtonFilled } from "../../components/buttonFilled";
+import { ContextQR } from "../../../ContextQR";
+
+type RouteParams = {
+	flagCriar: string;
+};
 
 export default function LeitorQRCode() {
-	const [hasPermission, setHasPermission] = useState(null);
-	const [scanned, setScanned] = useState(false);
 	const navigation = useNavigation();
+	const route = useRoute();
+
+	const { idAtivoContext, setIDAtivoContext, cnpjContext, setCnpjContext } =
+		useContext(ContextQR);
+
+	const [hasPermission, setHasPermission] = useState(null);
+	const [idAtivoLido, setIdAtivoLido] = useState("");
+	const [cnpjLido, setCnpjLido] = useState("");
+	const [scanned, setScanned] = useState(false);
+
+	const { flagCriar } = route.params as RouteParams;
+	console.log(flagCriar);
 
 	useEffect(() => {
 		const getBarCodeScannerPermissions = async () => {
@@ -32,8 +47,18 @@ export default function LeitorQRCode() {
 		if (idPart) {
 			const match = idPart.match(/ID:\s*(\d+)/);
 			const ID = match?.[0];
+			const IDNumber = match?.[1];
 			if (ID) {
-				navigation.navigate("detailativo", { idAtivo: ID });
+				setIDAtivoContext(IDNumber);
+
+				if (flagCriar) {
+					navigation.navigate("criaros", {
+						idLido: idAtivoContext,
+						cnpjLido: cnpjContext,
+					});
+				} else {
+					navigation.navigate("detailativo", { idAtivo: ID });
+				}
 			} else {
 				alert("QR Code Inválido");
 			}
@@ -44,7 +69,19 @@ export default function LeitorQRCode() {
 		return undefined;
 	}
 
+	function extractCNPJ(str: string) {
+		const regexCnpj = /CNPJ\/CPF: (\d+)/;
+		const matchCnpj = str.match(regexCnpj);
+		const cnpj = matchCnpj ? matchCnpj[1] : null;
+
+		setCnpjContext(cnpj);
+		console.log(cnpjContext);
+	}
+
 	const handleBarCodeScanned = ({ data }) => {
+		console.log(data);
+
+		extractCNPJ(data);
 		extractIDNumber(data);
 
 		setScanned(true);

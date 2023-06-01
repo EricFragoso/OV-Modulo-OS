@@ -1,4 +1,11 @@
-import { Text, View, ScrollView, Image, ImageBackground } from "react-native";
+import {
+	Text,
+	View,
+	ScrollView,
+	Image,
+	ImageBackground,
+	TouchableOpacity,
+} from "react-native";
 
 import { Card } from "../../components/card";
 import React, { useContext, useEffect, useState } from "react";
@@ -10,6 +17,7 @@ import { Button } from "../../components/button";
 import { ButtonFilled } from "../../components/buttonFilled";
 import { ModalInserir } from "../modalInserirItem";
 import { ModalBuscar } from "../modalBuscarItem";
+import { BackButton } from "../../components/backButton";
 
 type RouteParams = {
 	lista: [];
@@ -29,14 +37,17 @@ export function ListOS() {
 		setRefresh(!refresh);
 	};
 
-	useEffect(() => { });
+	useEffect(() => {});
 
 	function handleShowOSDetail(numberOS: string, ativoNumero: string) {
-		return navigation.navigate("detailos", { ID: numberOS, AtivoNumero: ativoNumero });
+		return navigation.navigate("detailos", {
+			ID: numberOS,
+			AtivoNumero: ativoNumero,
+		});
 	}
 
 	function handleQRCode() {
-		navigation.navigate("leitorqrcode");
+		navigation.navigate("leitorqrcode", { flagCriar: false });
 		console.log("Abrindo Câmera");
 	}
 
@@ -53,6 +64,10 @@ export function ListOS() {
 		console.log("Adicionando Ativo");
 
 		setModalVisible(false);
+	}
+
+	function handleGoBack() {
+		navigation.goBack();
 	}
 
 	return (
@@ -72,22 +87,34 @@ export function ListOS() {
 					<MenuHamburger onRefresh={handleRefresh} />
 				</View>
 
-				<View className="flex-1 mx-7">
+				<View className="flex-1 w-full">
 					<ScrollView showsVerticalScrollIndicator={false}>
-						<View className="flex-row justify-between mt-5">
-							<Button
-								text="Escanear Ativo"
-								fontSize={12}
-								borderRadius={5}
-								marginBottom={8}
-								callFunc={handleQRCode}
-							></Button>
-							<ButtonFilled
-								text="Inserir Código da OS"
-								fontSize={12}
-								borderRadius={5}
-								callFunc={handleOpenModal}
-							></ButtonFilled>
+						<View className="w-full mt-5">
+							<TouchableOpacity
+								onPress={handleGoBack}
+								className="flex flex-row justify-start"
+							>
+								<BackButton callFunc={handleGoBack} />
+								<Text className="mt-[2px] font-OpenSansBold text-xl">
+									Voltar
+								</Text>
+							</TouchableOpacity>
+
+							<View className="flex-row justify-between mt-2 px-7">
+								<Button
+									text="Escanear Ativo"
+									fontSize={12}
+									borderRadius={5}
+									marginBottom={8}
+									callFunc={handleQRCode}
+								></Button>
+								<ButtonFilled
+									text="Inserir Código da OS"
+									fontSize={12}
+									borderRadius={5}
+									callFunc={handleOpenModal}
+								></ButtonFilled>
+							</View>
 							<ModalBuscar
 								textItem="Insira o código"
 								buttonText="Buscar"
@@ -97,13 +124,17 @@ export function ListOS() {
 							/>
 						</View>
 						{listaDeOS.map((OS: OS) => (
-							<Card
+							<View
 								key={OS.id}
-								numberOS={OS.numero}
-								client={OS.cliente}
-								name={OS.demandante}
-								callFunc={() => handleShowOSDetail(OS.numero, OS.ativoNumero)}
-							/>
+								className=" px-7"
+							>
+								<Card
+									numberOS={OS.numero}
+									client={OS.cliente}
+									name={OS.demandante}
+									callFunc={() => handleShowOSDetail(OS.numero, OS.ativoNumero)}
+								/>
+							</View>
 						))}
 					</ScrollView>
 				</View>

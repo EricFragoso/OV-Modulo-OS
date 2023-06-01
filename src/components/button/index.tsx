@@ -6,6 +6,8 @@ type Props = {
 	fontSize?: number;
 	borderRadius?: number;
 	marginBottom?: number;
+	textMarginTop?: number;
+	textMarginBottom?: number;
 	callFunc: () => void;
 };
 
@@ -24,6 +26,8 @@ export function Button(props: Props) {
 					className="text-[#2B3049] font-OpenSansBold"
 					style={{
 						fontSize: props.fontSize || 20,
+						marginTop: props.textMarginTop,
+						marginBottom: props.textMarginBottom,
 					}}
 				>
 					{props.text}

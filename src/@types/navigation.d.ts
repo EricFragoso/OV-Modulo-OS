@@ -2,6 +2,13 @@ export declare global {
 	namespace ReactNavigation {
 		interface RootParamList {
 			home: undefined;
+			menuos: {
+				lista: Array[];
+			};
+			criaros: {
+				idLido?: string;
+				cnpjLido?: string;
+			};
 			listos: {
 				lista: Array[];
 			};
@@ -13,7 +20,9 @@ export declare global {
 				ID?: string;
 				idAtivo: string;
 			};
-			leitorqrcode: undefined;
+			leitorqrcode: {
+				flagCriar?: any;
+			};
 			cameraativo: undefined;
 		}
 	}
