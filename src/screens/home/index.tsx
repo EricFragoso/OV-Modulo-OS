@@ -16,6 +16,7 @@ import { useNavigation } from "@react-navigation/native";
 
 import { Button } from "../../components/button";
 import Context from "../../../Context";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 NativeWindStyleSheet.setOutput({ default: "native" });
 
@@ -24,6 +25,12 @@ export function Home() {
 	const [userCode, setUserCode] = useState("");
 	const baseURL = "https://overview-os-api.onrender.com";
 
+	const [atendentes, setAtendentes] = useState([]);
+	const [servicos, setServicos] = useState([]);
+	const [pecas, setPecas] = useState([]);
+	const [laudo, setLaudo] = useState("");
+	const [geoloc, setGeoloc] = useState("");
+
 	const navigation = useNavigation();
 
 	const dismissKeyboard = () => {
@@ -31,6 +38,12 @@ export function Home() {
 	};
 
 	useEffect(() => {
+		handleLimparDados();
+		try {
+			AsyncStorage.clear();
+		} catch (error) {
+			console.error(error);
+		}
 		const kbDidHideListener = Keyboard.addListener("keyboardDidHide", () => {});
 		return kbDidHideListener.remove();
 	}, []);
@@ -55,6 +68,12 @@ export function Home() {
 		} else {
 			getList(codigo);
 		}
+	}
+	function handleLimparDados() {
+		setAtendentes([]);
+		setServicos([]);
+		setPecas([]);
+		setLaudo("");
 	}
 
 	return (

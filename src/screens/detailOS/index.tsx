@@ -11,6 +11,8 @@ import { ModalInserir } from "../modalInserirItem";
 import { useNavigation, useRoute } from "@react-navigation/native";
 import axios from "axios";
 
+import { getList } from "../../middleware/searchOS";
+
 import { ImageCard } from "../../components/imageCard";
 import { BackButton } from "../../components/backButton";
 import { Button } from "../../components/button";
@@ -23,6 +25,7 @@ import Ativo from "ativoType";
 
 type RouteParams = {
 	ID: string;
+	AtivoNumero: string;
 };
 
 export function DetailOS() {
@@ -31,39 +34,38 @@ export function DetailOS() {
 	const { listaDeOS } = useContext(Context);
 	const [listaDeAtivos, setListaDeAtivos] = useState<Ativo>();
 	const [objectInfo, setObjectInfo] = useState<OS>();
+	const [btuInfo, setBtuInfo] = useState("");
+	const [idInfo, setIdInfo] = useState("");
+	const [nameInfo, setNameInfo] = useState("");
+
 
 	const navigation = useNavigation();
 	const route = useRoute();
-	const { ID } = route.params as RouteParams;
+	const { ID, AtivoNumero } = route.params as RouteParams;
 
 	useEffect(() => {
 		const findObject = listaDeOS.find((OS: OS) => OS.numero === ID);
-		setObjectInfo(findObject);
 		getListAtivo();
+		setObjectInfo(findObject);
 	}, []);
 
 	async function getListAtivo() {
-		console.log("Entrou no get");
-		const urlListaAtivo = `${baseURL}/ativo/numero/${objectInfo.ativoNumero}`;
+		const urlListaAtivo = `${baseURL}/ativo/numero/${AtivoNumero}`;
 		await axios.get(urlListaAtivo).then((response) => {
 			const listAtivo = response.data;
-			console.log("listAtivo");
-			console.log(listAtivo);
-			//console.log(objectInfo.ativoNumero);
-
 			if (!listAtivo) {
 				return Alert.alert("Atenção", "Nenhum ativo cadastrado");
 			} else {
-				setListaDeAtivos(listAtivo);
+				setListaDeAtivos(listAtivo.ativo[0]);
+				setBtuInfo(listAtivo.ativo[0].BTU);
+				setIdInfo(listAtivo.ativo[0].numeroAtivo);
+				setNameInfo(listAtivo.ativo[0].produto);
 			}
 		});
-		console.log(listaDeAtivos);
-
-		console.log("Saiu do get");
 	}
 
-	function handleShowAtivo(idAtivo: string) {
-		navigation.navigate("detailativo", { idAtivo });
+	function handleShowAtivo(ID: string, idAtivo: string) {
+		navigation.navigate("detailativo", { ID, idAtivo });
 	}
 
 	function handleCallPreviousPage() {
@@ -148,14 +150,24 @@ export function DetailOS() {
 											</Text>
 										</View>
 									</View>
+									<View className="flex-row justify-between mb-3">
+										<View className="flex-1 mr-2">
+											<Text className="text-[#2B3049] text-sm font-OpenSansBold mb-1">
+												Status
+											</Text>
+											<Text className="text-[#2B3049] text-sm font-OpenSansRegular">
+												{objectInfo.status}
+											</Text>
+										</View>
+									</View>
 								</View>
 							</View>
 							<ImageCard
-								key={"listaDeAtivos.id"}
-								id={"listaDeAtivos.numeroAtivo"}
-								nameAtivo={"Split Arno"}
-								value={"listaDeAtivos.BTU"}
-								callFunc={() => handleShowAtivo("listaDeAtivos.numeroAtivo")}
+								key={idInfo}
+								id={idInfo}
+								nameAtivo={nameInfo}
+								value={btuInfo}
+								callFunc={() => handleShowAtivo(ID, idInfo)}
 							></ImageCard>
 						</>
 					)}
