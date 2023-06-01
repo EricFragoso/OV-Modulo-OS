@@ -13,10 +13,11 @@ import {
 import { NativeWindStyleSheet } from "nativewind";
 
 import { useNavigation } from "@react-navigation/native";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
+import LoadingModal from "../../components/loadingModal";
 import { Button } from "../../components/button";
 import Context from "../../../Context";
-import AsyncStorage from "@react-native-async-storage/async-storage";
 
 NativeWindStyleSheet.setOutput({ default: "native" });
 
@@ -30,6 +31,8 @@ export function Home() {
 	const [pecas, setPecas] = useState([]);
 	const [laudo, setLaudo] = useState("");
 	const [geoloc, setGeoloc] = useState("");
+
+	const [loading, setLoading] = useState(false);
 
 	const navigation = useNavigation();
 
@@ -46,13 +49,9 @@ export function Home() {
 		const urlListaOS = `${baseURL}/os/colaborador/${codigo}`;
 		axios.get(urlListaOS).then((response) => {
 			const listOS = response.data;
-
-			if (listOS.length === 0) {
-				return Alert.alert("Atenção", "Nenhuma OS cadastrada");
-			} else {
-				setListaDeOS(listOS);
-				return navigation.navigate("listos", { lista: listaDeOS });
-			}
+			setListaDeOS(listOS);
+			setLoading(false);
+			return navigation.navigate("menuos", { lista: listaDeOS });
 		});
 	}
 
@@ -60,6 +59,7 @@ export function Home() {
 		if (codigo == "") {
 			return Alert.alert("Atenção", "Código em branco");
 		} else {
+			setLoading(true);
 			getList(codigo);
 		}
 	}
@@ -113,6 +113,7 @@ export function Home() {
 							borderRadius={5}
 							callFunc={() => handleUserLogin(userCode)}
 						/>
+						<LoadingModal visible={loading} />
 					</View>
 				</ImageBackground>
 			</View>
