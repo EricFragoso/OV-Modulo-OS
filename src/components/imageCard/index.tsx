@@ -28,10 +28,12 @@ export function ImageCard(props: Props) {
 		const urlFavorito = `${baseURL}/images/favorite/${idAtivo}`;
 		await axios.get(urlFavorito).then((response) => {
 			const favoritePhoto = response.data;
+			console.log(response.data);
+
 			if (!favoritePhoto) {
 				return Alert.alert("Atenção", "Nenhuma foto favoritada");
 			} else {
-				setPhotoUrl(favoritePhoto.image[0].path);
+				setPhotoUrl(favoritePhoto.image[favoritePhoto.image.length - 1].path);
 			}
 		});
 	}

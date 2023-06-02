@@ -23,7 +23,7 @@ export declare global {
 			leitorqrcode: {
 				flagCriar?: any;
 			};
-			cameraativo: undefined;
+			cameraativo: {};
 		}
 	}
 }
