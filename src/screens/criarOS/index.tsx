@@ -21,6 +21,7 @@ import { SelectList } from "react-native-dropdown-select-list";
 import axios from "axios";
 import LoadingModal from "../../components/loadingModal";
 import { TextInputMask } from "react-native-masked-text";
+import { ContextQR } from "../../../ContextQR";
 
 type RouteParams = {
 	idLido?: string;
@@ -56,7 +57,8 @@ export function CriarOS() {
 
 	const flagCriar = true;
 
-	const { control, handleSubmit } = useForm<FormData>();
+	const { control, handleSubmit, setValue } = useForm<FormData>();
+	//const { idLido, cnpjLido } = useContext(ContextQR);
 
 	const [loading, setLoading] = useState(false);
 	const [submitted, setSubmitted] = useState(false);
@@ -142,12 +144,24 @@ export function CriarOS() {
 	}
 
 	useEffect(() => {
+		if (idLido) {
+			console.log("IDLIDO " + idLido);
+
+			setValue("numeroAtivo", idLido);
+		} else {
+			console.log("IDNAOLIDO " + idLido);
+		}
+		if (cnpjLido) {
+			console.log("CNPJLIDO " + cnpjLido);
+			setValue("cnpj", cnpjLido);
+		}
+
 		const flagCriar = true;
 		setInicializacao(Date.now());
 		console.log(submitted);
 
 		console.log("CNPJ", cnpjLido);
-	}, [cnpjLido]);
+	}, [cnpjLido, idLido, setValue]);
 
 	return (
 		<View className="flex-1 bg-white items-center">
@@ -190,7 +204,7 @@ export function CriarOS() {
 										}
 										placeholder="Número do ativo"
 										placeholderTextColor={"#999999"}
-										value={idLido ? idLido : value}
+										value={idLido !== null ? idLido : value}
 										onChangeText={onChange}
 									/>
 								)}
@@ -208,7 +222,7 @@ export function CriarOS() {
 										}
 										placeholder="CNPJ"
 										placeholderTextColor={"#999999"}
-										value={cnpjLido ? cnpjLido : value}
+										value={cnpjLido !== null ? cnpjLido : value}
 										onChangeText={onChange}
 									/>
 								)}
