@@ -16,12 +16,7 @@ export default function LeitorQRCode() {
 	const navigation = useNavigation();
 	const route = useRoute();
 
-	const { idAtivoContext, setIDAtivoContext, cnpjContext, setCnpjContext } =
-		useContext(ContextQR);
-
 	const [hasPermission, setHasPermission] = useState(null);
-	const [idAtivoLido, setIdAtivoLido] = useState("");
-	const [cnpjLido, setCnpjLido] = useState("");
 	const [scanned, setScanned] = useState(false);
 
 	const { flagCriar } = route.params as RouteParams;
@@ -40,7 +35,7 @@ export default function LeitorQRCode() {
 		navigation.goBack();
 	}
 
-	function extractIDNumber(str: string) {
+	function handleQRData(str: string) {
 		const parts = str.split(",");
 		const idPart = parts.find((part) => part.includes("ID:"));
 
@@ -49,12 +44,14 @@ export default function LeitorQRCode() {
 			const ID = match?.[0];
 			const IDNumber = match?.[1];
 			if (ID) {
-				setIDAtivoContext(IDNumber);
-
 				if (flagCriar) {
+					const regexCnpj = /CNPJ\/CPF: (\d+)/;
+					const matchCnpj = str.match(regexCnpj);
+					const cnpj = matchCnpj ? matchCnpj[1] : null;
+
 					navigation.navigate("criaros", {
-						idLido: idAtivoContext,
-						cnpjLido: cnpjContext,
+						idLido: IDNumber,
+						cnpjLido: cnpj,
 					});
 				} else {
 					navigation.navigate("detailativo", { idAtivo: ID });
@@ -69,20 +66,10 @@ export default function LeitorQRCode() {
 		return undefined;
 	}
 
-	function extractCNPJ(str: string) {
-		const regexCnpj = /CNPJ\/CPF: (\d+)/;
-		const matchCnpj = str.match(regexCnpj);
-		const cnpj = matchCnpj ? matchCnpj[1] : null;
-
-		setCnpjContext(cnpj);
-		console.log(cnpjContext);
-	}
-
 	const handleBarCodeScanned = ({ data }) => {
 		console.log(data);
 
-		extractCNPJ(data);
-		extractIDNumber(data);
+		handleQRData(data);
 
 		setScanned(true);
 	};

@@ -20,6 +20,8 @@ import { TouchableOpacity } from "react-native";
 import { SelectList } from "react-native-dropdown-select-list";
 import axios from "axios";
 import LoadingModal from "../../components/loadingModal";
+import { TextInputMask } from "react-native-masked-text";
+import { ContextQR } from "../../../ContextQR";
 
 type RouteParams = {
 	idLido?: string;
@@ -38,6 +40,7 @@ type FormData = {
 	inicio?: string;
 	finalizacao?: string;
 	solucao?: string;
+	sincronizada: boolean;
 	created_at: string;
 };
 
@@ -54,9 +57,11 @@ export function CriarOS() {
 
 	const flagCriar = true;
 
-	const { control, handleSubmit } = useForm<FormData>();
+	const { control, handleSubmit, setValue } = useForm<FormData>();
+	//const { idLido, cnpjLido } = useContext(ContextQR);
 
 	const [loading, setLoading] = useState(false);
+	const [submitted, setSubmitted] = useState(false);
 	const [prioridade, setPrioridade] = useState("");
 	const [inicializacao, setInicializacao] = useState(0);
 	const [finalizacao, setFinalizacao] = useState(0);
@@ -77,6 +82,7 @@ export function CriarOS() {
 
 	async function CriarOS(data: FormData) {
 		setLoading(true);
+		setSubmitted(true);
 		const urlCriarOS = `${baseURL}/preos`;
 		await setFinalizacao(Date.now());
 		console.log(inicializacao);
@@ -84,6 +90,7 @@ export function CriarOS() {
 
 		data.prioridade = prioridade;
 		data.tipoAtendimento = "PRESENCIAL";
+		data.sincronizada = false;
 		const dataInicio = new Date(inicializacao).toLocaleString("en-US", {
 			day: "2-digit",
 			month: "2-digit",
@@ -122,9 +129,12 @@ export function CriarOS() {
 				console.log("sucesso");
 
 				console.log(response.data);
+				setLoading(false);
+				Alert.alert("Sucesso", "Pre-OS Registrada");
 			})
 			.catch((e) => {
 				setLoading(false);
+				Alert.alert("Atenção", "Erro ao registrar a Pre-OS");
 				console.log(data);
 
 				console.log("erro");
@@ -134,10 +144,24 @@ export function CriarOS() {
 	}
 
 	useEffect(() => {
+		if (idLido) {
+			console.log("IDLIDO " + idLido);
+
+			setValue("numeroAtivo", idLido);
+		} else {
+			console.log("IDNAOLIDO " + idLido);
+		}
+		if (cnpjLido) {
+			console.log("CNPJLIDO " + cnpjLido);
+			setValue("cnpj", cnpjLido);
+		}
+
 		const flagCriar = true;
 		setInicializacao(Date.now());
+		console.log(submitted);
+
 		console.log("CNPJ", cnpjLido);
-	}, [cnpjLido]);
+	}, [cnpjLido, idLido, setValue]);
 
 	return (
 		<View className="flex-1 bg-white items-center">
@@ -173,10 +197,14 @@ export function CriarOS() {
 								name="numeroAtivo"
 								render={({ field: { value, onChange } }) => (
 									<TextInput
-										className="w-full h-10 border-[#000] rounded-sm bg-white text-[#000] pl-2 text-xs font-OpenSansRegular mt-5"
+										className={
+											submitted && !value
+												? "w-full h-10 border-[#d12b4f] border-[1.5px] rounded-sm bg-white text-[#000] pl-2 text-xs font-OpenSansRegular mt-5"
+												: "w-full h-10 border-[#459EE8] border-[1px] rounded-sm bg-white text-[#000] pl-2 text-xs font-OpenSansRegular mt-5"
+										}
 										placeholder="Número do ativo"
 										placeholderTextColor={"#999999"}
-										value={idLido ? idLido : value}
+										value={idLido !== null ? idLido : value}
 										onChangeText={onChange}
 									/>
 								)}
@@ -185,11 +213,16 @@ export function CriarOS() {
 								control={control}
 								name="cnpj"
 								render={({ field: { value, onChange } }) => (
-									<TextInput
-										className="w-full h-10 border-[#000] rounded-sm bg-white text-[#000] pl-2 text-xs font-OpenSansRegular mt-5"
+									<TextInputMask
+										type={"cnpj"}
+										className={
+											submitted && !value
+												? "w-full h-10 border-[#d12b4f] border-[1.5px] rounded-sm bg-white text-[#000] pl-2 text-xs font-OpenSansRegular mt-5"
+												: "w-full h-10 border-[#459EE8] border-[1px] rounded-sm bg-white text-[#000] pl-2 text-xs font-OpenSansRegular mt-5"
+										}
 										placeholder="CNPJ"
 										placeholderTextColor={"#999999"}
-										value={cnpjLido ? cnpjLido : value}
+										value={cnpjLido !== null ? cnpjLido : value}
 										onChangeText={onChange}
 									/>
 								)}
@@ -199,7 +232,9 @@ export function CriarOS() {
 								name="ocorrencia"
 								render={({ field: { value, onChange } }) => (
 									<TextInput
-										className="w-full h-10 border-[#000] rounded-sm bg-white text-[#000] pl-2 text-xs font-OpenSansRegular mt-5"
+										className={
+											"w-full h-10 border-[#459EE8] border-[1px] rounded-sm bg-white text-[#000] pl-2 text-xs font-OpenSansRegular mt-5"
+										}
 										placeholder="Ocorrência"
 										placeholderTextColor={"#999999"}
 										value={value}
@@ -216,7 +251,7 @@ export function CriarOS() {
 									borderRadius: 3,
 									marginTop: 20,
 									backgroundColor: "white",
-									borderColor: "white",
+									borderColor: "#459EE8",
 								}}
 								inputStyles={{
 									fontSize: 12,
@@ -227,7 +262,7 @@ export function CriarOS() {
 									borderRadius: 3,
 									marginTop: 20,
 									backgroundColor: "white",
-									borderColor: "white",
+									borderColor: "#459EE8",
 								}}
 								dropdownTextStyles={{
 									fontSize: 12,
@@ -243,7 +278,9 @@ export function CriarOS() {
 								name="motivo"
 								render={({ field: { value, onChange } }) => (
 									<TextInput
-										className="w-full h-10 border-[#000] rounded-sm bg-white text-[#000] pl-2 text-xs font-OpenSansRegular mt-5"
+										className={
+											"w-full h-10 border-[#459EE8] border-[1px] rounded-sm bg-white text-[#000] pl-2 text-xs font-OpenSansRegular mt-5"
+										}
 										placeholder="Motivo"
 										placeholderTextColor={"#999999"}
 										value={value}
@@ -256,7 +293,11 @@ export function CriarOS() {
 								name="colaborador"
 								render={({ field: { value, onChange } }) => (
 									<TextInput
-										className="w-full h-10 border-[#000] rounded-sm bg-white text-[#000] pl-2 text-xs font-OpenSansRegular mt-5"
+										className={
+											submitted && !value
+												? "w-full h-10 border-[#d12b4f] border-[1.5px] rounded-sm bg-white text-[#000] pl-2 text-xs font-OpenSansRegular mt-5"
+												: "w-full h-10 border-[#459EE8] border-[1px] rounded-sm bg-white text-[#000] pl-2 text-xs font-OpenSansRegular mt-5"
+										}
 										placeholder="Colaborador"
 										placeholderTextColor={"#999999"}
 										value={value}
@@ -269,7 +310,7 @@ export function CriarOS() {
 								name="solucao"
 								render={({ field: { value, onChange } }) => (
 									<TextInput
-										className="w-full h-20 border-[#000] rounded-sm bg-white text-[#000] pl-2 text-xs font-OpenSansRegular mt-5 pt-3"
+										className="w-full h-20 border-[#459EE8] border-[1px] rounded-sm bg-white text-[#000] pl-2 text-xs font-OpenSansRegular mt-5 pt-3"
 										multiline
 										placeholder="Solução"
 										placeholderTextColor={"#999999"}
