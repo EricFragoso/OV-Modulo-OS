@@ -96,7 +96,7 @@ export function Home() {
 						</View>
 						<View>
 							<Text className={"font-OpenSansSemiBold text-xl"}>
-								Código do usuário 70239214439
+								Código do usuário
 							</Text>
 							<TextInput
 								className={

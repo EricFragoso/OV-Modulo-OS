@@ -220,7 +220,7 @@ export function DetailAtivo() {
 			console.log(error.response.data);
 			Alert.alert("Erro", "Ocorreu um erro ao salvar a solução.");
 		}
-		handleLimparDados()
+		handleLimparDados();
 	}
 
 	function montarSolucao(reposicao, servicos, atendentes, laudo, geoloc) {
@@ -318,7 +318,7 @@ export function DetailAtivo() {
 									placeholderTextColor={"#999999"}
 									value={laudo}
 									onChangeText={setLaudo}
-								//onChangeText={(inputText) => setUserCode(inputText)}
+									//onChangeText={(inputText) => setUserCode(inputText)}
 								/>
 								{/*	<View>
 								<Text>Estado de conservação do aparelho</Text>

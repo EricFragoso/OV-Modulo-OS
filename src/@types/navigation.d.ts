@@ -20,11 +20,10 @@ export declare global {
 				ID?: string;
 				idAtivo: string;
 			};
-			leitorqrcode: undefined;
-			cameraativo: {
-				ID?: string;
-				idAtivo?: string;
+			leitorqrcode: {
+				flagCriar?: any;
 			};
+			cameraativo: {};
 		}
 	}
 }
