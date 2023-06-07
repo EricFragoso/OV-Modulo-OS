@@ -18,6 +18,9 @@
       "eas": {
         "projectId": "4edf1417-d21e-49d5-96ce-53cb14e73522"
       }
+    },
+    "android": {
+      "package": "com.ericfragoso.overviewApp"
     }
   }
 }

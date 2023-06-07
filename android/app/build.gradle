@@ -121,6 +121,7 @@ android {
         versionCode 1
         versionName "1.0.0"
         missingDimensionStrategy 'react-native-camera', 'general'
+        multiDexEnabled true
     }
 
     splits {
@@ -191,8 +192,11 @@ android {
 }
 
 dependencies {
-    // The version of react-native is set by the React Native Gradle Plugin
+    implementation 'androidx.multidex:multidex:2.0.1'
+    implementation fileTree(dir: "libs", include: ["*.jar"])
+    implementation "com.facebook.react:react-native:+"  
     implementation("com.facebook.react:react-android")
+
 
     def isGifEnabled = (findProperty('expo.gif.enabled') ?: "") == "true";
     def isWebpEnabled = (findProperty('expo.webp.enabled') ?: "") == "true";
@@ -218,6 +222,8 @@ dependencies {
             implementation("com.facebook.fresco:animated-webp:${frescoVersion}")
         }
     }
+
+
 
     implementation("androidx.swiperefreshlayout:swiperefreshlayout:1.0.0")
 
