@@ -21,6 +21,7 @@ import { SelectList } from "react-native-dropdown-select-list";
 import axios from "axios";
 import LoadingModal from "../../components/loadingModal";
 import { TextInputMask } from "react-native-masked-text";
+import { isLength } from "validator";
 import { ContextQR } from "../../../ContextQR";
 
 type RouteParams = {
@@ -44,7 +45,15 @@ type FormData = {
 	created_at: string;
 };
 
+const cnpjValidation = (value: string) => {
+	if (!isLength(value, { min: 18 })) {
+		return "O CNPJ deve ter no mínimo 14 caracteres";
+	}
+	return true;
+};
+
 export function CriarOS() {
+	const { control, handleSubmit, setValue } = useForm<FormData>();
 	const baseURL = "https://overview-os-api.onrender.com";
 
 	const route = useRoute();
@@ -56,9 +65,6 @@ export function CriarOS() {
 	};
 
 	const flagCriar = true;
-
-	const { control, handleSubmit, setValue } = useForm<FormData>();
-	//const { idLido, cnpjLido } = useContext(ContextQR);
 
 	const [loading, setLoading] = useState(false);
 	const [submitted, setSubmitted] = useState(false);
@@ -212,16 +218,20 @@ export function CriarOS() {
 							<Controller
 								control={control}
 								name="cnpj"
-								render={({ field: { value, onChange } }) => (
+								rules={{ validate: cnpjValidation }}
+								render={({
+									field: { value, onChange },
+									fieldState: { error },
+								}) => (
 									<TextInputMask
 										type={"cnpj"}
 										className={
-											submitted && !value
+											error
 												? "w-full h-10 border-[#d12b4f] border-[1.5px] rounded-sm bg-white text-[#000] pl-2 text-xs font-OpenSansRegular mt-5"
 												: "w-full h-10 border-[#459EE8] border-[1px] rounded-sm bg-white text-[#000] pl-2 text-xs font-OpenSansRegular mt-5"
 										}
 										placeholder="CNPJ"
-										placeholderTextColor={"#999999"}
+										placeholderTextColor="#999999"
 										value={cnpjLido !== null ? cnpjLido : value}
 										onChangeText={onChange}
 									/>
