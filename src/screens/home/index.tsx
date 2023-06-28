@@ -156,6 +156,7 @@ export function Home() {
 								}
 								placeholder="Insira o código"
 								maxLength={11}
+								keyboardType="numeric"
 								placeholderTextColor={"#999999"}
 								onChangeText={(inputText) => setUserCode(inputText)}
 							/>
