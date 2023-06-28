@@ -32,6 +32,8 @@ export function Home() {
 	const [laudo, setLaudo] = useState("");
 	const [geoloc, setGeoloc] = useState("");
 
+	const [flagCPF, setFlagCPF] = useState(false);
+
 	const [loading, setLoading] = useState(false);
 
 	const navigation = useNavigation();
@@ -55,12 +57,62 @@ export function Home() {
 		});
 	}
 
-	function handleUserLogin(codigo: string) {
+	function validateCPF(cpf: string) {
+		if (cpf.length !== 11) {
+			console.log("menos de 11");
+
+			setFlagCPF(false);
+			throw new Error("Insira um código válido");
+		}
+		//Validação se todos os caracteres são iguais
+		if (/^(\d)\1+$/.test(cpf)) {
+			console.log("todos iguais");
+			setFlagCPF(false);
+			throw new Error("Insira um código válido");
+		}
+
+		// Verificar o primeiro dígito verificador
+		let sum = 0;
+		for (let i = 0; i < 9; i++) {
+			sum += parseInt(cpf.charAt(i)) * (10 - i);
+		}
+		let mod = sum % 11;
+		let digit1 = mod < 2 ? 0 : 11 - mod;
+		if (parseInt(cpf.charAt(9)) !== digit1) {
+			console.log("tinvalido");
+			setFlagCPF(false);
+			throw new Error("Insira um código válido");
+		}
+
+		// Verificar o segundo dígito verificador
+		sum = 0;
+		for (let i = 0; i < 10; i++) {
+			sum += parseInt(cpf.charAt(i)) * (11 - i);
+		}
+		mod = sum % 11;
+		let digit2 = mod < 2 ? 0 : 11 - mod;
+		if (parseInt(cpf.charAt(10)) !== digit2) {
+			console.log("invalido");
+			setFlagCPF(false);
+			throw new Error("Insira um código válido");
+		}
+
+		// CPF válido
+		return setFlagCPF(true);
+	}
+
+	async function handleUserLogin(codigo: string) {
 		if (codigo == "") {
 			return Alert.alert("Atenção", "Código em branco");
 		} else {
-			setLoading(true);
-			getList(codigo);
+			try {
+				await validateCPF(codigo);
+
+				setLoading(true);
+				getList(codigo);
+			} catch (error) {
+				Alert.alert("Atenção", error.message);
+			}
 		}
 	}
 	function handleLimparDados() {
@@ -103,6 +155,7 @@ export function Home() {
 									"w-60 h-10 bg-[#FFF] rounded-md border-[1.5px] border-[#459EE8] pl-2 text-base font-OpenSansLight"
 								}
 								placeholder="Insira o código"
+								maxLength={11}
 								placeholderTextColor={"#999999"}
 								onChangeText={(inputText) => setUserCode(inputText)}
 							/>
