@@ -13,6 +13,12 @@
     "preview3": {
       "developmentClient": true
     },
-    "production": {}
+    "production": {
+      "env": {
+        "APP_ICON": "./src/assets/img/ID-VISUAL-OV-OVERVIEW-SISTEMAS-SIMBOLO-PNG.ico",
+        "APP_NAME": "Módulo de OS",
+        "EXPO_PUBLIC_API_URL": "https://overview-os-api.onrender.com/"
+      }
+    }
   }
 }
